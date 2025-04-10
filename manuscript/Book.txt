@@ -5,3 +5,4 @@ google_ai_ecosystem.md
 who_is_book_for.md
 part_2_foundations.md
 part_3_gemini_use_cases.md
+part_4_programming.md

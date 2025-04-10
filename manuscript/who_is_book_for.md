@@ -12,9 +12,12 @@ Writers, designers, and marketers  often face challenges such as inconsistent wo
 
 I am a software developer and using LLMs has totally changed my personal work flows, including:
 
-- Entering source code and runtime errors into a prompt and ask for debugging advice. Often systems like Gemini and ChatGPT will ask for addition debug printout statements to be added, then offer advice on fixing errors.
+- Entering source code and runtime errors into a prompt and ask for debugging advice. Often systems like Gemini and ChatGPT will ask for addition debug printout statements to be added, then after having this additional debug printouts added to the chat context, LLMs can offer advice on fixing errors.
 - Entering source code and asking for additional error handling to be added.
+- Entering source code and asking for an LLM to make the code more concise, or alternatively ask for the code to be annotated with detailed comments.
 - Writing new code.
+
+As I write this chapter in April 2025, I estimate that on average using LLM-based tools reduces my development time on projects by about 50%.
 
 ## AI for Marketing Tasks
 
@@ -22,3 +25,4 @@ Gemini can be used to analyze marketing data, identify trends, and even help dra
 
 ## Consultants and Researchers
 
+TBD
