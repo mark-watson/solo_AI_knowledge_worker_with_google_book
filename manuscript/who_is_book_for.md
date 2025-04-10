@@ -10,7 +10,11 @@ Writers, designers, and marketers  often face challenges such as inconsistent wo
 
 ## Software Developers
 
-TBD
+I am a software developer and using LLMs has totally changed my personal work flows, including:
+
+- Entering source code and runtime errors into a prompt and ask for debugging advice. Often systems like Gemini and ChatGPT will ask for addition debug printout statements to be added, then offer advice on fixing errors.
+- Entering source code and asking for additional error handling to be added.
+- 
 
 ## AI for Marketing Tasks
 
