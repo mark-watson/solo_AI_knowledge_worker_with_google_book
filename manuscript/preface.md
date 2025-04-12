@@ -8,15 +8,15 @@ This book is fairly narrow in scope: it is written for solo knowledge workers wh
 
 For the purposes of this book we consider solo knowledge workers to engage in activities of freelance creatives, small business owners, solo software developers, independent marketing people, general consultants and independent researchers.
 
-## Who is a Co-pilot for who?
+## Who is a Copilot for who?
 
 The best advice for young people starting their education or careers (as well as older workers who are updating their skillsets) is:
 
-*Learn to use AI as an effective co-pilot for your work and research.*
+*Learn to use AI as an effective copilot for your work and research.*
 
-*Learn to be an effective co-pilot for AIs that are helping you.*
+*Learn to be an effective copilot for AIs that are helping you.*
 
-These will be recurring themes in this book.
+These will be recurring themes in this book. Please note that I am using the expression *copilot* as a general term, an I am not referring to Microsoft’s Copilot product.
 
 ## Why is this book important to you?
 
