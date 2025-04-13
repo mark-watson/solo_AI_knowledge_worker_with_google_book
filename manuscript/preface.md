@@ -8,7 +8,7 @@ This book is fairly narrow in scope: it is written for solo knowledge workers wh
 
 For the purposes of this book we consider solo knowledge workers to engage in activities of freelance creatives, small business owners, solo software developers, independent marketing people, general consultants and independent researchers.
 
-## Who is a Copilot for who?
+## Who is a Copilot for whom?
 
 The best advice for young people starting their education or careers (as well as older workers who are updating their skillsets) is:
 
@@ -16,7 +16,7 @@ The best advice for young people starting their education or careers (as well as
 
 *Learn to be an effective copilot for AIs that are helping you.*
 
-These will be recurring themes in this book. Please note that I am using the expression *copilot* as a general term, an I am not referring to Microsoft’s Copilot product.
+These will be recurring themes in this book. Please note that I am using the expression *copilot* as a general term, an I am not referring to Microsoft’s and GitHub’s Copilot commercial products.
 
 ## Why is this book important to you?
 
@@ -32,7 +32,7 @@ Technology exists to serve human interests. My hope is that this book empowers y
 
 I hope that you both enjoy this book and find it useful!
 
-![Mark Watson](resources/Mark.png)
+![Author and Consultant Mark Watson](resources/Mark.png)
 
 ## Structure of This Book
 
