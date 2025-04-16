@@ -14,10 +14,23 @@ Gemini serves as a versatile conversational AI assistant, capable of understandi
 
 TBD
 
-TBD - might as well start with some simple example promptss here
+TBD - might as well start with some simple example prompts here
 
 ## Gemini Integration with Google Workspace
 
 TBD
 
 
+## Google AI Studio
+
+Before starting to read this section, dear reader, please open the [Google AI Studio web app](https://aistudio.google.com/) and login with your Google (or Gmail) account. For macOS, you can also download an application []
+
+Here is a screenshot of the web app:
+
+![Google AI Studio web app](GoogleAIStudio1.jpg)
+
+Google AI Studio serves as an accessible gateway to Google's powerful generative artificial intelligence models, most notably the Gemini family. It's a web-based platform designed for rapid experimentation and prototyping with AI. Whether you're looking to understand what modern AI can do, build a proof-of-concept for a new application, or simply explore creative possibilities, AI Studio provides an interactive environment to directly engage with sophisticated AI capabilities without complex setup requirements.
+
+For developers, AI Studio is an invaluable tool for quickly iterating on prompts and tuning model parameters like temperature or top-k to achieve desired outputs before integration. You can craft and refine prompts for various tasks, test different model versions, and seamlessly generate API keys to embed the power of Gemini models directly into your own applications and workflows. This significantly accelerates the development cycle for AI-powered features, allowing for faster testing and deployment.
+
+For marketing professionals, small business owners, and other non-technical users, AI Studio demystifies generative AI by providing an intuitive interface to explore its potential. You can experiment with generating creative text formats, brainstorming ideas, summarizing information, drafting communications, or even analyzing images, all through simple prompt interactions. This hands-on experience allows users to discover practical applications for AI within their specific business context or creative endeavors, fostering innovation without needing to write a single line of code.
