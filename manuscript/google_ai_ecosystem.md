@@ -1,5 +1,7 @@
 # Google's AI Ecosystem
 
+The chapter serves as an introduction to tools we will use repeatedly in many examples.
+
 The Google AI ecosystem offers a diverse range of tools, from user-friendly applications integrated into daily workflows to powerful cloud-based platforms and APIs. For the solo knowledge worker, navigating this landscape requires focusing on tools that are realistically accessible, useful for individual or very small team contexts, and considerate of potential budget and technical expertise limitations.
 
 ## Differences Between AI Support in Paid For Google Workspace and Free Apps Like Gmail, Calendar, and Docs.
@@ -8,7 +10,7 @@ Gemini’s integration is deeper in the commercial Workspace product because it 
 
 When using the free apps like Gmail, Calendar, and Docs Gemini’s integration is the connection between the Gemini app (mobile on Android and iPhone, and the Gemini web app) and the data in Gmail, Calendar, and Docs.
 
-## Conversational AI Using Gemini
+## Conversational AI Using the Gemini App and Web App
 
 Gemini serves as a versatile conversational AI assistant, capable of understanding and generating human-like text, engaging in dialogue, summarizing information, translating languages, writing different kinds of creative content, and generating software code.
 
@@ -23,11 +25,13 @@ TBD
 
 ## Google AI Studio
 
-Before starting to read this section, dear reader, please open the [Google AI Studio web app](https://aistudio.google.com/) and login with your Google (or Gmail) account. For macOS, you can also download an application []
+Before starting to read this section, dear reader, please open the [Google AI Studio web app](https://aistudio.google.com/) and login with your Google (or Gmail) account.
 
 Here is a screenshot of the web app:
 
 ![Google AI Studio web app](GoogleAIStudio1.jpg)
+
+This screenshot shows what you will see the first time you open the web app with one exception: on the lower left corned of the app window, under **History** you see a few of my exiting projects like “Hy playground”, Clojure Research agent, Prolog and LLMs, etc.
 
 Google AI Studio serves as an accessible gateway to Google's powerful generative artificial intelligence models, most notably the Gemini family. It's a web-based platform designed for rapid experimentation and prototyping with AI. Whether you're looking to understand what modern AI can do, build a proof-of-concept for a new application, or simply explore creative possibilities, AI Studio provides an interactive environment to directly engage with sophisticated AI capabilities without complex setup requirements.
 

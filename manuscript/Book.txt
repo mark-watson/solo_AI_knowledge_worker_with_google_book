@@ -2,6 +2,8 @@ preface.md
 part_1_introduction.md
 rise_of_solo_ai_kw.md
 google_ai_ecosystem.md
+gemini_gmail_docs_sheets_meet.md
+gemini_drive_calendar_tasks_keep.md
 who_is_book_for.md
 part_2_foundations.md
 part_3_gemini_use_cases.md
