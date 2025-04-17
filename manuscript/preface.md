@@ -47,7 +47,7 @@ I leave out most material specific to enterprise use of the Google AI Platform a
 - We will concentrate on Gemini App, Google AI Studio App, and directly calling the Gemini model APIs (requires a simple to obtain API key)
 - We will cover in detail the tight Gemini integration with the apps Gmail, Google Docs, Google Sheets, Google Meet, Google Drive, Google Calendar, Google Tasks, and Google Keep.
 - Relatively little coverage here for Google Vertex. Vertex AI is Google Cloud's comprehensive, unified platform for building, deploying, and managing machine learning models and AI applications. If you are a professional software developer you can augment the material here with [https://cloud.google.com/vertex-ai/docs](Google Vertex Documentation).
-- Little coverage of the Google WorkSpace product that is used by companies, schools, and government agencies. Individuals tend to use the Gemini app that interacts directly with data in the free Google apps like Gmail, Google Calendar, Google Docs, etc.
+- Little coverage of the Google WorkSpace product that is used by companies, schools, and government agencies. Individuals tend to use the Gemini app that interacts directly with data in the free Google apps like Gmail, Google Calendar, Google Docs, etc. I created a fresh Google WorkSPace account for the purpose of writing this book but most of the material pertains to the “free” Gmail and other Google apps (the setup I use for my personal work flow).
 
 ## Acknowledgements
 

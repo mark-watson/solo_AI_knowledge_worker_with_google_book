@@ -10,18 +10,31 @@ Gemini’s integration is deeper in the commercial Workspace product because it 
 
 When using the free apps like Gmail, Calendar, and Docs Gemini’s integration is the connection between the Gemini app (mobile on Android and iPhone, and the Gemini web app) and the data in Gmail, Calendar, and Docs.
 
+When I work for corporate customers I use their WorkSpace instantiation but I have never used it for an extended period of time for my own workflow. One feature of WorkSpace is the **Cloud Search** application that searches across all your data in Google apps and Google Drive: very convenient!
+
 ## Conversational AI Using the Gemini App and Web App
 
 Gemini serves as a versatile conversational AI assistant, capable of understanding and generating human-like text, engaging in dialogue, summarizing information, translating languages, writing different kinds of creative content, and generating software code.
 
-TBD
+### Configuring Gemini Advanced Web App
+
+*Note: I use Gemini Advanced but most examples in this book also work with the free version of Gemini.*
+
+After logging into [https://gemini.google.com/](https://gemini.google.com/) use the menu in the upper let hand corner (looks like three horizontal lines: the “hamburger” icon) to expand the menu and select **Settings** (last menu item at the bottom) and then elect the **Apps** submenu. You can now connect Gemini to the Google apps that you want to grant Gemini access to. For work I connect all Google Workspace apps (Gmail, Calendar, Docs, Drive, Keep, and Tasks). For fun and personal use I also connect Google Flights and Hotels, as well as Google Maps, YouTube, and YouTube Music (which I use). Optionally connect to OpenStax to get access to licenses textbooks.
+
+### Ask Gemini Chat
+
+I use Gemini Chat fairly much interchangeably with OpenAI’s ChatGPT and Anthropic’s Claude with one life hack: I usually only pay for one service at a time. As I write this in April 2025, I subscribe to Gemini Advanced and use Claude and ChatGPT in the free mode. Assuming that you subscribe to Gemini Advanced here are the current models to choose from:
+
+![Author and Consultant Mark Watson](resources/GeminiModels.jpg)
+
+
+
+
+
+
 
 TBD - might as well start with some simple example prompts here
-
-## Gemini Integration with Google Workspace
-
-TBD
-
 
 ## Google AI Studio
 
