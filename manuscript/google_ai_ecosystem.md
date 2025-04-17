@@ -28,7 +28,7 @@ I use Gemini Chat fairly much interchangeably with OpenAI’s ChatGPT and Anthro
 
 ![Author and Consultant Mark Watson](resources/GeminiModels.jpg)
 
-
+I usually select Gemini Flash 2.0 for general use because it is fastest and uses less resources (if you care about energy efficiency and the environment; if you want good background on the costs of AI then I recommend reading Kate Crawford’s book **Atlas of AI**.)
 
 
 
