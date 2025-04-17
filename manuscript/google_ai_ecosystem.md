@@ -30,9 +30,26 @@ I use Gemini Chat fairly much interchangeably with OpenAI’s ChatGPT and Anthro
 
 I usually select Gemini Flash 2.0 for general use because it is fastest and uses less resources (if you care about energy efficiency and the environment; if you want good background on the costs of AI then I recommend reading Kate Crawford’s book **Atlas of AI**.)
 
+You have four easily used options in the chat input as seen in this figure:
 
+![Ask Gemini Chat](resources/AskGemini.jpg)
 
+The options are:
 
+- **+** - hit the plus sign to add files to your current context window. For example, if I have a PDF file for a textbook, I will import the book’s PDF before asking questions about the content of the book. You can add several context files.
+- **Deep Research** - useful when you want Gemini to perform a thorough web search, choose which search hits are useful, and add the search results to the context before spending reasoning time answering your question or prompt.
+- **Canvas** - is useful for creating documents and software code that can later be downloaded to your computer.
+- **Microphone** - hit the icon that looks like a microphone to enter prompt text with voice input. If you are in a private work place, this is the option I recommend starting with, then hand edit dictated prompt text.
+
+### Using the macOS Gemini App
+
+If you run on Macs then I recommend that you download the Gemini App. Here is a screenshot of it:
+
+![Gemini App for macOS](resources/GeminiMacOSApp.jpg)
+
+Functionally this app is equivalent to running the web app v on the Chrome or Safari web browsers.
+
+### Quick Introduction to LLM Prompt Writing
 
 TBD - might as well start with some simple example prompts here
 
