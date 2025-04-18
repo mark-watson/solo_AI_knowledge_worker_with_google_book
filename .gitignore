@@ -1,4 +1,5 @@
 .DS_Store
 OLD_STUFF
 *~
-
+.clj-kondo
+.lsp

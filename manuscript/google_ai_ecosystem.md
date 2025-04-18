@@ -49,9 +49,83 @@ If you run on Macs then I recommend that you download the Gemini App. Here is a 
 
 Functionally this app is equivalent to running the web app v on the Chrome or Safari web browsers.
 
-### Quick Introduction to LLM Prompt Writing
+### Advice On Writing LLM Prompts
 
-TBD - might as well start with some simple example prompts here
+Google's Gemini represents a family of sophisticated large language models (LLMs) engineered with powerful multimodal capabilities, capable of processing and understanding not just text, but also image, audio, and video inputs. You can drop image files, text, files containing software, and PDFs int the Gemini chat window and this data supplies context for any text chats and prompts you then manually enter.
+
+You engage with advanced AI systems like Gemini through various interfaces, including web applications and mobile apps, primarily by providing 'prompts'. These prompts, which can range from simple text questions to complex instructions involving uploaded files or even spoken commands, serve as the fundamental mechanism for directing Gemini's behavior and eliciting specific responses, guiding the AI to perform tasks like generating text, analyzing data, creating code, or answering questions based on the provided input.   
+
+The practice of crafting these inputs effectively is known as prompt engineering or prompt writing. It is often described as both an art and a science, requiring a blend of creativity, linguistic precision, and an understanding of how LLMs like Gemini interpret instructions and generate outputs. At its core, prompt writing is the skill of communicating intent clearly to the AI, guiding it to leverage its vast knowledge and capabilities in the desired direction while navigating its inherent limitations. It bridges the gap between human intention and the AI's operational logic, enabling more controlled and predictable interactions.   
+
+Effective prompt writing hinges on several key principles designed to maximize the clarity and relevance of the AI's response. Central among these are clarity and specificity, ensuring instructions are unambiguous and detailed enough for the model to understand the exact task. Providing sufficient context is also crucial, giving Gemini the necessary background information to frame its response appropriately. Furthermore, defining the desired output format (e.g., bullet points, email, code block) and tone (e.g., formal, conversational, humorous) helps shape the final result to meet specific needs. Techniques like including examples (few-shot prompting) can further refine the output. Examples are important, for example, when asking Gemini to pull structured data from input text to formats like JSON.
+
+Mastering the art of prompt writing is paramount for unlocking the full potential and utility of powerful AI models like Gemini. Well-crafted prompts lead directly to higher-quality, more accurate, and significantly more useful responses, minimizing generic or irrelevant outputs. This skill translates into tangible benefits such as enhanced productivity, accelerated workflows, improved decision-making, and the ability to leverage Gemini for more complex creative and analytical tasks. Ultimately, skillful prompt writing transforms the interaction with Gemini from simple querying into a powerful collaboration, allowing users to harness its advanced capabilities more effectively and reliably.
+
+### Creating Gemini Gems
+
+Gemini Gems are essentially customized versions of the Gemini AI assistant that you can create and save for specific purposes. You create Gems using the **Gem manager** menu option.  The Gem manager screen shows **Premade by Google** gems that I suggest you explore for ideas. After you create your own Gems, they appear at the bottom of the Gem manager screen. We will create a new gem after some background:
+
+Think of Gems as specialized "experts" or focused tools built upon the core Gemini model. You define a Gem by providing it with a specific set of instructions, outlining its persona, the task it should perform, the context it needs to consider, and potentially the format for its responses. You can further enhance a Gem's capabilities by providing it with knowledge files, such as uploaded documents or files from your Google Drive, which it can reference to inform its answers and maintain consistency with your specific information or guidelines.
+
+The primary reasons for creating and using Gems revolve around efficiency, personalization, and consistency. By saving detailed instructions within a Gem, you avoid repeatedly typing complex prompts for recurring tasks, saving significant time and effort. This allows you to tailor Gemini's behavior precisely to your needs – whether you require a specific writing tone, adherence to particular coding standards, consideration of dietary restrictions for recipes, or knowledge about a niche topic. Using Gems ensures that Gemini consistently follows your predefined guidelines or consults specific documents every time you interact with that particular Gem, leading to more reliable and relevant outputs for specialized tasks.
+
+Examples of Gems are quite varied, reflecting the flexibility of the concept. You could create a "Coding Partner" Gem instructed on your preferred programming languages and project context, potentially referencing specific code libraries. A "Marketing Copywriter" Gem could be built using your company's brand voice guidelines and target audience details stored in uploaded documents. For personal use, you might design a "Meal Planner" Gem that knows your dietary preferences and budget, a "Workout Generator" Gem aware of your fitness goals and limitations, or a "Brainstorming Assistant" Gem configured to encourage creative, out-of-the-box thinking for your specific projects or hobbies.
+
+![Gemini Gem Manager to create a new Gem](resources/GemManager.jpg)
+
+![Use the new recipes Gem](resources/UseGem.jpg)
+
+Here is a slightly edited (for brevity) output for the prompt:
+
+```text
+I have salmon, leftover brown rice, some broccoli and spinach. Make up a new Asian style stir fry recipe for me.
+```
+
+Here is the generated recipe:
+
+```text
+Here's a recipe idea for Quick Salmon & Veggie Stir-Fried Rice:
+
+Yields: 1-2 servings
+Prep time: 10 minutes
+Cook time: 10-15 minutes
+
+Ingredients:
+
+- Salmon: 1 fillet (about 6 oz), skin removed and cut into 1-inch cubes
+- Broccoli: 1 cup, cut into small florets (similar to Salmon Rice or Lemon Sesame Broccoli)
+- Spinach: 1-2 cups, fresh
+- Leftover Cooked Brown Rice: 1.5 - 2 cups (like in Salmon Rice or Simple Shrimp Fried Rice)
+- Garlic: 1-2 cloves, minced (inspired by multiple recipes like Spicy Shrimp with Vegetables and Rice)
+- Ginger: 1 teaspoon, freshly grated (optional, inspired by Simple Shrimp Fried Rice)
+- Soy Sauce: 2 tablespoons (a common ingredient in Asian-style recipes provided)
+- Sesame Oil: 1 tablespoon (used in Salmon Rice, Honey Chinese Shrimp, Simple Shrimp Fried Rice)
+- Honey or Brown Sugar: 1 teaspoon (optional, for a touch of sweetness like in Honey Chinese Shrimp)
+- Oil for cooking: 1-2 tablespoons (e.g., vegetable, canola, or olive oil, as seen in various recipes)
+- Optional: Red pepper flakes (like in Spicy Shrimp with Vegetables and Rice or Marinara Sauce), sliced green onions for garnish.
+
+Directions:
+
+Prepare the Sauce: In a small bowl, whisk together the soy sauce, sesame oil, and optional honey/brown sugar and red pepper flakes. Set aside.
+
+Sauté Aromatics & Broccoli: Heat 1 tablespoon of cooking oil in a large skillet or wok over medium-high heat. Add the minced garlic and grated ginger (if using) and stir-fry for about 30 seconds until fragrant. Add the broccoli florets and stir-fry for 3-4 minutes until crisp-tender.
+
+Cook Salmon: Push the broccoli to one side of the skillet. Add the cubed salmon to the empty side. Cook for 2-3 minutes per side, until opaque and cooked through. Try not to break the pieces up too much.
+
+Add Rice & Spinach: Add the leftover brown rice to the skillet, breaking up any clumps. Stir-fry for 2-3 minutes until heated through. Add the spinach and stir until it begins to wilt (about 1-2 minutes).
+
+Combine & Sauce: Gently toss the salmon, broccoli, rice, and spinach together. Pour the prepared sauce over everything and toss gently to coat evenly. Cook for another minute.
+
+Serve: Serve immediately, garnished with sliced green onions if desired.
+
+Enjoy your quick and healthy Asian-style stir fry!
+```
+
+
+
+#### Creating a Gem for Suggesting Recipes Given the Context of Some of Your Favorite Recipes
+
+I will run through this example step by step. Click on the **+ New Gem** button.
 
 ## Google AI Studio
 
