@@ -81,7 +81,11 @@ Examples of Gems are quite varied, reflecting the flexibility of the concept. Yo
 
 #### Creating a Gem for Suggesting Recipes Given the Context of Some Favorite Recipes
 
-I will run through this example step by step. Click on the **+ New Gem** button. Here I create a new Gem by dropping three JSON recipe files from my CookingSpace.com project into the **Knowledge** input form at the bottom of the screen, name the gem, and provide instructions:
+I will run through this example step by step. Click on the **+ New Gem** button. Here I create a new Gem by dropping three JSON recipe files from my CookingSpace.com project into the **Knowledge** input form at the bottom of the screen, name the gem, and provide instructions.
+
+Writing new Gems is simple, so if you repeatedly run similar prompts, then by all means customize and personalize Gemini by creating your own Gems!
+
+Here are a few screenshots showing creating and use of a new Gem:
 
 ![Gemini Gem Manager to create a new Gem](resources/GemManager.jpg)
 
@@ -149,10 +153,24 @@ Most of the books that I write are tech-heavy with many programming examples. I 
 
 I believe that the more effort you put into personalizing AI tools, the more benefit you get.
 
+## Google NotebookLM
+
+NotebookLM notebooks in a similar way as custom Gemini Gems, with a few differences:
+
+- I use NotebookLM notebooks when I want to study 3rd party technology (i.e., something that I did not create myself) to collect relevant documents and web sites to study in one place, with a Gemini chat interface for “taking about” this content.
+- I use NotebookLM notebooks when I am starting a new writing or software development project to organize my thoughts and to “brainstorm” with Gemini, given as context the material in a notebook.
+
+I tend to remove old notebooks when I am done with them. I find this to be analogous to how twenty years ago I used to organize new writing and also software projects with handwritten notes on yellow pads and spread the sheets of paper around. I would clean up the paper artifacts when a project is done, and I also like to keep my NotebookLM work environment tidy. Here is a screenshot of the notebooks that I am currently using:
+
+![My current NotebookLM notebooks](NotebookLM.jpg)
+
+Using the NotebookLM web app is straightforward and I will not discuss it further.
 
 ## Google AI Studio
 
-Before starting to read this section, dear reader, please open the [Google AI Studio web app](https://aistudio.google.com/) and login with your Google (or Gmail) account.
+Before starting to read this section, dear reader, please open the [Google AI Studio web app](https://aistudio.google.com/) and login with your Google (or Gmail) account. Google AI Studio is tailored to workflows for developers:
+
+The fundamental distinction between the Google AI Studio (aistudio.google.com) and the Gemini web application (gemini.google.com) lies in their target audience and primary purpose: AI Studio is a web-based developer tool focused on prototyping and experimenting with Google's generative models via the Gemini API, whereas the Gemini web app is a direct-to-consumer application designed for general users to interact conversationally with the Gemini models for assistance, content generation, and information retrieval. While both interfaces ultimately leverage Google's powerful AI models like Gemini, AI Studio provides a structured environment specifically for developers and builders to craft, test, and refine prompts, adjust model parameters (like temperature, top-k, top-p), compare outputs from different prompt variations, and ultimately generate API keys and corresponding code snippets (in languages like Python, JavaScript, curl, etc.) to integrate the model's capabilities into their own applications or services. In contrast, the Gemini web app offers a more streamlined, conversational chat interface optimized for direct interaction, task completion, and creative exploration by end-users, without exposing the underlying API controls, parameter tuning, or explicit code generation features found in AI Studio; its focus is on the experience of using AI, while AI Studio's focus is on the process of building with the AI via its API.
 
 Here is a screenshot of the web app:
 
