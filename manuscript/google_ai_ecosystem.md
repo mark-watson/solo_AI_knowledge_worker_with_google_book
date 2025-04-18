@@ -6,9 +6,16 @@ The Google AI ecosystem offers a diverse range of tools, from user-friendly appl
 
 ## Differences Between AI Support in Paid For Google Workspace and Free Apps Like Gmail, Calendar, and Docs.
 
-Gemini’s integration is deeper in the commercial Workspace product because it functions as a co-pilot when dealing with workflows across Workspace apps.
+The integration of AI capabilities, primarily through Gemini, differs significantly between the paid Google Workspace platform and the suite of free Google applications (Gmail, Calendar, Docs, Drive, etc.) accessible with a standard Google account. The core distinction lies in the depth and nature of this integration, impacting user workflow and the scope of AI assistance.
 
-When using the free apps like Gmail, Calendar, and Docs Gemini’s integration is the connection between the Gemini app (mobile on Android and iPhone, and the Gemini web app) and the data in Gmail, Calendar, and Docs.
+Gemini’s integration is deeper in the commercial Workspace product because it functions as a co-pilot when dealing with workflows across Workspace apps.  Gemini operates within the application you're using. When drafting in Docs, it can help write, summarize, or change the tone based on the existing document content. In Gmail, it can draft replies aware of the email thread's context. In Sheets, it can help generate formulas or analyze data present in the sheet.
+
+For users of the free Google apps, Gemini integration operates differently. It's not typically embedded directly within the free versions of Docs, Sheets, or standard Gmail in the same co-pilot manner. Instead, the interaction primarily occurs:
+
+- Through the Gemini App/Web Interface: Users interact with Gemini via its dedicated mobile apps (Android/iOS) or the web interface (gemini.google.com).
+- Via Extensions/Connections: To allow Gemini to access data from free apps like Gmail, Drive, or Calendar, users must explicitly enable specific "Extensions" or connections within the Gemini settings. This grants Gemini permission to query that data.
+- Querying and Summarization: The focus is more on using Gemini as a central hub to ask questions about or summarize information from your connected services. For example, you can ask Gemini to "summarize my recent emails from John Doe," "find the document titled 'Project Phoenix proposal'," or "what's on my calendar tomorrow?".
+- Less Integrated Workflow: While Gemini can access this data, the workflow is less seamless. You generally need to switch from your primary application (e.g., Gmail) to the Gemini interface to invoke its capabilities regarding that application's data. While it might help draft a basic email from the Gemini interface, it doesn't offer the same level of contextual, in-app writing assistance as the Workspace version.
 
 When I work for corporate customers I use their WorkSpace instantiation but I have never used it for an extended period of time for my own workflow. One feature of WorkSpace is the **Cloud Search** application that searches across all your data in Google apps and Google Drive: very convenient!
 
@@ -74,9 +81,11 @@ Examples of Gems are quite varied, reflecting the flexibility of the concept. Yo
 
 #### Creating a Gem for Suggesting Recipes Given the Context of Some Favorite Recipes
 
-I will run through this example step by step. Click on the **+ New Gem** button.
+I will run through this example step by step. Click on the **+ New Gem** button. Here I create a new Gem by dropping three JSON recipe files from my CookingSpace.com project into the **Knowledge** input form at the bottom of the screen, name the gem, and provide instructions:
 
 ![Gemini Gem Manager to create a new Gem](resources/GemManager.jpg)
+
+OK, we have a new Gem, let’s use it:
 
 ![Use the new recipes Gem](resources/UseGem.jpg)
 
@@ -126,6 +135,19 @@ Serve: Serve immediately, garnished with sliced green onions if desired.
 Enjoy your quick and healthy Asian-style stir fry!
 ```
 
+It took me one minute to create this Gem and it is functional for generating new recipes.
+
+Once Gems are written, try using them and then keep improving them! After I wrote this section I went back to edit my Recipe Gem, adding all eight JSON recipe files from my old recipes project so it has a broader context to suggest new and novel recipes that I might like.
+
+#### Ideas For Your Own Gems
+
+What, dear reader, do you do for a living and what are your hobbies? I suggest that you start with a fresh sheet of paper (or an empty note file on your computer) and write down three or four of your interests. For each or your interests, write down what data you have for each interest. It is better if the data is something that you produced yourself so the Gems that you create will generate text, audio, images, and videos in your own personal style.
+
+Let’s look at an example use case:
+
+Most of the books that I write are tech-heavy with many programming examples. I very much enjoy both programming and writing but there is one task that I do not enjoy: when I place a software listing in one of my books I need to add several paragraphs describing the code, what libraries I used in the code, etc. This is tedious so I automated this process two years ago with a custom ChatGPT and more recently I automated it once again using Gemini: I collected many examples in my older books of my program listings followed by the explanatory text I wrote myself. Now I can use my Gemini Gem called “Mark Watson Writing Assistant” and drop in any new program listing I have created and I get several paragraphs of explanatory text that I can edit and tweak, and then insert into my manuscript.
+
+I believe that the more effort you put into personalizing AI tools, the more benefit you get.
 
 
 ## Google AI Studio
