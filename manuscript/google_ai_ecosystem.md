@@ -71,6 +71,11 @@ The primary reasons for creating and using Gems revolve around efficiency, perso
 
 Examples of Gems are quite varied, reflecting the flexibility of the concept. You could create a "Coding Partner" Gem instructed on your preferred programming languages and project context, potentially referencing specific code libraries. A "Marketing Copywriter" Gem could be built using your company's brand voice guidelines and target audience details stored in uploaded documents. For personal use, you might design a "Meal Planner" Gem that knows your dietary preferences and budget, a "Workout Generator" Gem aware of your fitness goals and limitations, or a "Brainstorming Assistant" Gem configured to encourage creative, out-of-the-box thinking for your specific projects or hobbies.
 
+
+#### Creating a Gem for Suggesting Recipes Given the Context of Some Favorite Recipes
+
+I will run through this example step by step. Click on the **+ New Gem** button.
+
 ![Gemini Gem Manager to create a new Gem](resources/GemManager.jpg)
 
 ![Use the new recipes Gem](resources/UseGem.jpg)
@@ -122,10 +127,6 @@ Enjoy your quick and healthy Asian-style stir fry!
 ```
 
 
-
-#### Creating a Gem for Suggesting Recipes Given the Context of Some of Your Favorite Recipes
-
-I will run through this example step by step. Click on the **+ New Gem** button.
 
 ## Google AI Studio
 
