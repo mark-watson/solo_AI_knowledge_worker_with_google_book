@@ -1,4 +1,4 @@
-# Gemini integration with Gmail, Google Docs, Google Sheets and Google Meet, Google Drive, Google Calendar
+# Gemini Integration with Gmail, Google Docs, Google Sheets and Google Meet, Google Drive, Google Calendar
 
 In the last section of this book we will look at short Python programs that utilize the Gemini APIs accessing Google WorkSpace apps like Gmail, etc. Here we show examples of interacting with the WorkSpace web apps and Gemini.
 
