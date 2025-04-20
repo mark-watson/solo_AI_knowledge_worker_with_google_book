@@ -14,7 +14,7 @@ Currently there is some support for:
 - Google Sheets & Slides: While the core integration is strong in Docs, Gemini capabilities extend to Sheets (like analyzing data) and Slides (like creating presentations), often accessible via the Gemini side panel within those apps or the main Gemini interface connected to your Workspace account. Information from these might be referenced or summarized within Gmail.
 - Google Meet: Gemini can help with meeting-related tasks like taking notes or summarizing, and this information might be accessible or summarized through Gmail.
 
-A few days ago I received a request for [free mentoring](https://markwatson.com/#mentoring) and while I was reading this person’s email I activated Gemini inside Gmail and prompted “Find my @doc Google Docs that might be useful for answering this person's questions?”
+A few days ago I received a request for [free mentoring](https://markwatson.com/#mentoring) and while I was reading this person’s email I activated Gemini inside Gmail and prompted “Find my @doc Google Docs that might be useful for answering this person's questions.”
 
 This was useful because it surfaced two notes in Google Docs that were relevant to the mentoring request email. I didn’t want to use this person’s email as a book example so I sent myself a similar question, opened the email in Gmail and activated Gemini. Again, I used the prompt “Find my @doc Google Docs that might be useful for answering this person's questions?” And show the screenshot of this here:
 
@@ -23,13 +23,17 @@ This was useful because it surfaced two notes in Google Docs that were relevant 
 
 ## Combining Gemini with Google Calendar and Gmail
 
-This example uses the same test email but now the prompt is “Please find Calendar entries for tasks relating to this email” and here is the calendar entries it found:
+Gemini's integration with Gmail and Google Calendar enhances productivity by allowing you to summarize email threads, draft contextual replies, and extract action items directly within Gmail; crucially, it bridges communication to scheduling by identifying potential meeting details in emails and helping you create corresponding Google Calendar events, intelligently checking your availability—including across shared calendars like (like my wife Carol’s and my calendars). 
+
+The following example uses the same test email but now the prompt is “Please find Calendar entries for tasks relating to this email” and here is the calendar entries it found:
 
 ![Example combining Gemini with Google Calendar and Gmail](gmail_gemini_calendar.jpg)
 
 ## Using Gemini in a Google Doc Specifying a Design Document for a New Software Project
 
-Here we open an old design document in Google Docs that I wrote many years ago and after activating Gemini, I prompted “Write the software specified in this design document” and Gemini used the text in the document to write an initial Haskell implementation:
+Integrating Gemini directly within Google Docs, typically via Gemini for Workspace, embeds an AI writing assistant into your workflow; accessible through a side panel or contextual menus ("Help me write"), it allows you to generate drafts, outlines, or summaries, rewrite selected text to adjust tone, length, or formality, brainstorm ideas, and even create images based on prompts, all without leaving the document interface, thus streamlining content creation and refinement.
+
+Gemini can also use the contents of the current document as prompt context. Here I opened an old design document in Google Docs that I wrote many years ago and after activating Gemini, I prompted “Write the software specified in this design document” and Gemini used the text in the document to write an initial Haskell implementation:
 
 ![Example combining Gemini with Google Calendar and Gmail](google-doc-gemini.jpg)
 
