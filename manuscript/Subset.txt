@@ -1,7 +1,6 @@
-preface.md
-part_1_introduction.md
-who_is_book_for.md
-rise_of_solo_ai_kw.md
-google_ai_ecosystem.md
-gemini_gmail_docs_sheets_meet.md
 part_2_programming.md
+python_tutorial.md
+python_auth_setup.md
+python_thinking.md
+python_images_text.md
+python_gemini_and_google_colab.md
