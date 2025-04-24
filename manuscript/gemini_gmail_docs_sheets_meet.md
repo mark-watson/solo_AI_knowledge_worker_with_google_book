@@ -35,8 +35,22 @@ Integrating Gemini directly within Google Docs, typically via Gemini for Workspa
 
 Gemini can also use the contents of the current document as prompt context. Here I opened an old design document in Google Docs that I wrote many years ago and after activating Gemini, I prompted “Write the software specified in this design document” and Gemini used the text in the document to write an initial Haskell implementation:
 
+{width: "50%"}
 ![Example combining Gemini with Google Calendar and Gmail](google-doc-gemini.jpg)
 
+## Using Gemini with Google Sheets
+
+My favorite use of Gemini with Google Sheets spreadsheets is creating new test data sets for machine learning. Here I use a prompt to create a spreadsheet with three columns:
+
+```text
+Search the web to make a spreadsheet of dow industrial average and S&P for every day in March 2025
+```
+
+Gemini searched the web and created this table.
+
+![Example combining Gemini with Google Sheets](sheets_indices.jpg)
+
+I used the **File -> Download -> Comma Separated Values (CSV)** menu to save the file **DowSPMarch2025.csv** that is available on the web at the URI [https://markwatson.com/data/DowSPMarch2025.csv](https://markwatson.com/data/DowSPMarch2025.csv). We will use this file later in this book in a Python + Gemini + Google Colab example.
 
 ## Wrap Up for Gemini Integration with Google WorkSpace Apps
 
