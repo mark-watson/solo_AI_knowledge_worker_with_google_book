@@ -1,7 +1,5 @@
 # Python Introduction and Tutorial
 
-
-
 Here is a Python tutorial designed for intelligent individuals new to programming, focusing on the core concepts needed to understand the example scripts later in this book.
 
 Follow one of these links to set up Python on your computer:

@@ -1,18 +1,13 @@
 # Gemini Thinking Mode
 
-Okay, let's draft the next chapter on Gemini Thinking Mode.
 
----
-
-## Chapter 3: Gemini Thinking Mode
-
-### Introduction
+**Introduction**
 
 In the previous chapter, we covered the fundamentals of authenticating with the Gemini API and performing basic text generation using the Python SDK. Those examples focused on getting a direct response to a prompt. However, some tasks benefit from the model having more allocated time or computational resources to "think" or plan *before* generating the final output. This is where **Gemini Thinking Mode** comes into play.
 
 Thinking Mode is an advanced feature designed for complex prompts that might involve multi-step reasoning, intricate analysis, or detailed planning. By enabling Thinking Mode, you instruct the API to dedicate a specific budget of internal processing time or compute units towards understanding and structuring its response *before* it begins generating the text you see. This can lead to higher-quality, more coherent, and better-reasoned outputs for challenging tasks.
 
-### When to Use Thinking Mode
+## When to Use Thinking Mode
 
 While standard generation is fast and efficient for many prompts, Thinking Mode is particularly beneficial when:
 

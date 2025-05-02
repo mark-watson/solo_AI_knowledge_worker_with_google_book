@@ -1,6 +1,6 @@
 # Using Gemini For Both Images and Text (Multimodal Capabilities)
 
-### Introduction
+**Introduction**
 
 In the previous chapters, we explored how to interact with Gemini models using text-based prompts, including leveraging Thinking Mode for complex reasoning tasks. However, one of the significant advancements in modern AI is **multimodality** – the ability of models to process and understand information from multiple types of input simultaneously. Several Gemini models excel at this, allowing you to combine text prompts with images (and potentially other data types like audio or video in the future) in a single request.
 

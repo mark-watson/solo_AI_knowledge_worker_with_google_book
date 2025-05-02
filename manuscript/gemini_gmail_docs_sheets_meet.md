@@ -33,7 +33,7 @@ The following example uses the same test email but now the prompt is “Please f
 
 Integrating Gemini directly within Google Docs, typically via Gemini for Workspace, embeds an AI writing assistant into your workflow; accessible through a side panel or contextual menus ("Help me write"), it allows you to generate drafts, outlines, or summaries, rewrite selected text to adjust tone, length, or formality, brainstorm ideas, and even create images based on prompts, all without leaving the document interface, thus streamlining content creation and refinement.
 
-Gemini can also use the contents of the current document as prompt context. Here I opened an old design document in Google Docs that I wrote many years ago and after activating Gemini, I prompted “Write the software specified in this design document” and Gemini used the text in the document to write an initial Haskell implementation:
+Gemini can also use the contents of the current document as prompt context. Here I opened an old design document in Google Docs that I wrote many years ago and after activating Gemini, I prompted “Write the software specified in this design document in the Haskell programming language” and Gemini used the text in the document to write an initial Haskell implementation:
 
 {width: "50%"}
 ![Example combining Gemini with Google Calendar and Gmail](google-doc-gemini.jpg)
@@ -50,7 +50,7 @@ Gemini searched the web and created this table.
 
 ![Example combining Gemini with Google Sheets](sheets_indices.jpg)
 
-I used the **File -> Download -> Comma Separated Values (CSV)** menu to save the file **DowSPMarch2025.csv** that is available on the web at the URI [https://markwatson.com/data/DowSPMarch2025.csv](https://markwatson.com/data/DowSPMarch2025.csv). We will use this file later in this book in a Python + Gemini + Google Colab example.
+I used the **File -> Download -> Comma Separated Values (CSV)** menu to save the file on my laptop.
 
 ## Wrap Up for Gemini Integration with Google WorkSpace Apps
 

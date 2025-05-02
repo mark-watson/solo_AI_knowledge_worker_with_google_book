@@ -6,18 +6,22 @@ The Google AI ecosystem offers a diverse range of tools, from user-friendly appl
 
 ## Differences Between AI Support in Paid For Google Workspace and Free Apps Like Gmail, Calendar, and Docs.
 
-The integration of AI capabilities, primarily through Gemini, differs significantly between the paid Google Workspace platform and the suite of free Google applications (Gmail, Calendar, Docs, Drive, etc.) accessible with a standard Google account. The core distinction lies in the depth and nature of this integration, impacting user workflow and the scope of AI assistance.
+The integration of AI capabilities, primarily through Gemini, differs somewhat between the paid Google Workspace platform and the suite of free Google applications (Gmail, Calendar, Docs, Drive, etc.) accessible with a standard Google account. The core distinction lies in the depth and nature of this integration, impacting user workflow and the scope of AI assistance.
 
 Gemini’s integration is deeper in the commercial Workspace product because it functions as a co-pilot when dealing with workflows across Workspace apps.  Gemini operates within the application you're using. When drafting in Docs, it can help write, summarize, or change the tone based on the existing document content. In Gmail, it can draft replies aware of the email thread's context. In Sheets, it can help generate formulas or analyze data present in the sheet.
 
 For users of the free Google apps, Gemini integration operates differently. It's not typically embedded directly within the free versions of Docs, Sheets, or standard Gmail in the same co-pilot manner. Instead, the interaction primarily occurs:
 
 - Through the Gemini App/Web Interface: Users interact with Gemini via its dedicated mobile apps (Android/iOS) or the web interface (gemini.google.com).
-- Via Extensions/Connections: To allow Gemini to access data from free apps like Gmail, Drive, or Calendar, users must explicitly enable specific "Extensions" or connections within the Gemini settings. This grants Gemini permission to query that data.
+- Via Extensions/Connections: To allow Gemini to access data from free apps like Gmail, Drive, or Calendar, users must explicitly enable specific "Extensions" or connections within the Gemini settings. This grants Gemini permission to query that data. (See figure below.)
 - Querying and Summarization: The focus is more on using Gemini as a central hub to ask questions about or summarize information from your connected services. For example, you can ask Gemini to "summarize my recent emails from John Doe," "find the document titled 'Project Phoenix proposal'," or "what's on my calendar tomorrow?".
 - Less Integrated Workflow: While Gemini can access this data, the workflow is less seamless. You generally need to switch from your primary application (e.g., Gmail) to the Gemini interface to invoke its capabilities regarding that application's data. While it might help draft a basic email from the Gemini interface, it doesn't offer the same level of contextual, in-app writing assistance as the Workspace version.
 
-When I work for corporate customers I use their WorkSpace instantiation but I have never used it for an extended period of time for my own workflow. One feature of WorkSpace is the **Cloud Search** application that searches across all your data in Google apps and Google Drive: very convenient!
+As seen in the following figure, we need to explicitly allow Gemini access to data in other Google apps:
+
+![In Gemini’s menu, select Settings & help ->Apps and enable data sharing with Gemini](permissions.jpg)
+
+When I work for corporate customers I use their WorkSpace instantiation but I have never used it for an extended period of time for my own workflow. One feature I find very useful in WorkSpace is the **Cloud Search** application that searches across all your data in Google apps and Google Drive: very convenient!
 
 ## Conversational AI Using the Gemini App and Web App
 
@@ -27,15 +31,15 @@ Gemini serves as a versatile conversational AI assistant, capable of understandi
 
 *Note: I use Gemini Advanced but most examples in this book also work with the free version of Gemini.*
 
-After logging into [https://gemini.google.com/](https://gemini.google.com/) use the menu in the upper let hand corner (looks like three horizontal lines: the “hamburger” icon) to expand the menu and select **Settings** (last menu item at the bottom) and then elect the **Apps** submenu. You can now connect Gemini to the Google apps that you want to grant Gemini access to. For work I connect all Google Workspace apps (Gmail, Calendar, Docs, Drive, Keep, and Tasks). For fun and personal use I also connect Google Flights and Hotels, as well as Google Maps, YouTube, and YouTube Music (which I use). Optionally connect to OpenStax to get access to licenses textbooks.
+After logging into [https://gemini.google.com/](https://gemini.google.com/) use the menu in the upper let hand corner (looks like three horizontal lines: the “hamburger” icon) to expand the menu and select **Settings** (last menu item at the bottom) and then elect the **Apps** submenu. This is shown in the last figure. You can now connect Gemini to the Google apps that you want to grant Gemini access to. For work I connect all Google Workspace apps (Gmail, Calendar, Docs, Drive, Keep, and Tasks). For fun and personal use I also connect Google Flights and Hotels, as well as Google Maps, YouTube, and YouTube Music (which I use). Optionally connect to OpenStax to get access to licensed textbooks.
 
 ### Ask Gemini Chat
 
 I use Gemini Chat fairly much interchangeably with OpenAI’s ChatGPT and Anthropic’s Claude with one life hack: I usually only pay for one service at a time. As I write this in April 2025, I subscribe to Gemini Advanced and use Claude and ChatGPT in the free mode. Assuming that you subscribe to Gemini Advanced here are the current models to choose from:
 
-![Author and Consultant Mark Watson](resources/GeminiModels.jpg)
+![Available Gemini Advanced models](resources/GeminiModels.jpg)
 
-I usually select Gemini Flash 2.0 for general use because it is fastest and uses less resources (if you care about energy efficiency and the environment; if you want good background on the costs of AI then I recommend reading Kate Crawford’s book **Atlas of AI**.)
+I usually select Gemini Flash 2.0 for general use because it is fastest and uses less resources (if you care about energy efficiency and the environment; if you want good background on the environmental costs of AI then I recommend reading Kate Crawford’s book **Atlas of AI**.)
 
 You have four easily used options in the chat input as seen in this figure:
 
@@ -64,7 +68,7 @@ You engage with advanced AI systems like Gemini through various interfaces, incl
 
 The practice of crafting these inputs effectively is known as prompt engineering or prompt writing. It is often described as both an art and a science, requiring a blend of creativity, linguistic precision, and an understanding of how LLMs like Gemini interpret instructions and generate outputs. At its core, prompt writing is the skill of communicating intent clearly to the AI, guiding it to leverage its vast knowledge and capabilities in the desired direction while navigating its inherent limitations. It bridges the gap between human intention and the AI's operational logic, enabling more controlled and predictable interactions.   
 
-Effective prompt writing hinges on several key principles designed to maximize the clarity and relevance of the AI's response. Central among these are clarity and specificity, ensuring instructions are unambiguous and detailed enough for the model to understand the exact task. Providing sufficient context is also crucial, giving Gemini the necessary background information to frame its response appropriately. Furthermore, defining the desired output format (e.g., bullet points, email, code block) and tone (e.g., formal, conversational, humorous) helps shape the final result to meet specific needs. Techniques like including examples (few-shot prompting) can further refine the output. Examples are important, for example, when asking Gemini to pull structured data from input text to formats like JSON.
+Effective prompt writing hinges on several key principles designed to maximize the clarity and relevance of the AI's response. Central among these are clarity and specificity, ensuring instructions are unambiguous and detailed enough for the model to understand the exact task. Providing sufficient context is also crucial, giving Gemini the necessary background information to frame its response appropriately. Furthermore, defining the desired output format (e.g., bullet points, email, code block, or Markdown) and tone (e.g., formal, conversational, humorous) helps shape the final result to meet specific needs. Techniques like including examples (few-shot prompting) can further refine the output. Examples are important, for example, when asking Gemini to pull structured data from input text to formats like JSON it is useful to provide an example JSON output.
 
 Mastering the art of prompt writing is paramount for unlocking the full potential and utility of powerful AI models like Gemini. Well-crafted prompts lead directly to higher-quality, more accurate, and significantly more useful responses, minimizing generic or irrelevant outputs. This skill translates into tangible benefits such as enhanced productivity, accelerated workflows, improved decision-making, and the ability to leverage Gemini for more complex creative and analytical tasks. Ultimately, skillful prompt writing transforms the interaction with Gemini from simple querying into a powerful collaboration, allowing users to harness its advanced capabilities more effectively and reliably.
 
@@ -174,7 +178,7 @@ Before starting to read this section, dear reader, please open the [Google AI St
 
 The fundamental distinction between the Google AI Studio (aistudio.google.com) and the Gemini web application (gemini.google.com) lies in their target audience and primary purpose: AI Studio is a web-based developer tool focused on prototyping and experimenting with Google's generative models via the Gemini APIs, whereas the Gemini web app is a direct-to-consumer application designed for general users to interact conversationally with the Gemini models for assistance, content generation, and information retrieval. While both interfaces ultimately leverage Google's powerful AI models like Gemini, AI Studio provides a structured environment specifically for developers and builders to craft, test, and refine prompts, adjust model parameters (like temperature, top-k, top-p), compare outputs from different prompt variations, and ultimately generate API keys and corresponding code snippets (in languages like Python, JavaScript, curl, etc.) to integrate the model's capabilities into their own applications or services. In contrast, the Gemini web app offers a more streamlined, conversational chat interface optimized for direct interaction, task completion, and creative exploration by end-users, without exposing the underlying API controls, parameter tuning, or explicit code generation features found in AI Studio; its focus is on the experience of using AI, while AI Studio's focus is on the process of building with the AI via its API.
 
-Here is a screenshot of the web app:
+Here is a screenshot of the Google AI Studio web app:
 
 ![Google AI Studio web app](GoogleAIStudio1.jpg)
 
@@ -185,3 +189,5 @@ Google AI Studio serves as an accessible gateway to Google's powerful generative
 For developers, AI Studio is an invaluable tool for quickly iterating on prompts and tuning model parameters like temperature or top-k to achieve desired outputs before integration. You can craft and refine prompts for various tasks, test different model versions, and seamlessly generate API keys to embed the power of Gemini models directly into your own applications and workflows. This significantly accelerates the development cycle for AI-powered features, allowing for faster testing and deployment.
 
 For marketing professionals, small business owners, and other non-technical users, AI Studio demystifies generative AI by providing an intuitive interface to explore its potential. You can experiment with generating creative text formats, brainstorming ideas, summarizing information, drafting communications, or even analyzing images, all through simple prompt interactions. This hands-on experience allows users to discover practical applications for AI within their specific business context or creative endeavors, fostering innovation without needing to write a single line of code.
+
+The last section of this book contains Python programs using the Gemini APIs. When writing Python applications using Gemini you can save time prototyping prompts and API parameters using the AI Studio.

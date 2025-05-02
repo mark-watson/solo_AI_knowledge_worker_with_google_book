@@ -1,6 +1,6 @@
 # Preface
 
-Most books I have written are deeply technical - this is not one of them. Here, I attempt to make state of the art AI approachable and usable to a wider and not necessarily technical audience.
+Most books I have written are deeply technical - this is not one of them. Here, I attempt to make state of the art AI approachable and usable to a wider and not necessarily technical audience. For those readers most interested in practical examples, you can skip to the chapter “Google’s AI Ecosystem.”
 
 Since the 1980s, I've been deeply involved in the development of commercial Artificial Intelligence (AI) tools and applications. My journey has led me to deliver AI systems and conduct research for organizations like Capital One, Google, SAIC, DARPA, Olive AI, PacBell, and Babylist. I have 55 US patents and I have written over 20 books on AI.
 
