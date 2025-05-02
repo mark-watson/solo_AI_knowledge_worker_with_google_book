@@ -10,3 +10,4 @@ python_auth_setup.md
 python_thinking.md
 python_images_text.md
 python_gemini_and_google_colab.md
+wrapup.md
