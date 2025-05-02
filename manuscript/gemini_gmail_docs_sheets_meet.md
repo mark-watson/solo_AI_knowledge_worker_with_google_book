@@ -4,7 +4,7 @@ In the last section of this book we will look at short Python programs that util
 
 ## Combining Gemini in Gmail with Google Docs, Drive, and Calendar
 
-As I write this in April 2025, Gemini in Gmail is tightly integrated with your document files in Google Docs and also supports:
+As I write this in May 2025, Gemini in Gmail is tightly integrated with your document files in Google Docs and also supports:
 
 - Google Drive: Gemini can find and summarize information from your files stored in Google Drive directly within Gmail.
 - Google Calendar: You can ask Gemini in Gmail to find information about events on your primary calendar or even create new calendar events.
@@ -16,7 +16,7 @@ Currently there is some support for:
 
 A few days ago I received a request for [free mentoring](https://markwatson.com/#mentoring) and while I was reading this person’s email I activated Gemini inside Gmail and prompted “Find my @doc Google Docs that might be useful for answering this person's questions.”
 
-This was useful because it surfaced two notes in Google Docs that were relevant to the mentoring request email. I didn’t want to use this person’s email as a book example so I sent myself a similar question, opened the email in Gmail and activated Gemini. Again, I used the prompt “Find my @doc Google Docs that might be useful for answering this person's questions?” And show the screenshot of this here:
+This was useful because it surfaced two notes in Google Docs that were relevant to the mentoring request email. I didn’t want to use this person’s email as a book example so I sent myself a similar question, opened the email in Gmail and activated Gemini. Again, I used the prompt “Find my @doc Google Docs that might be useful for answering this person's questions.” And show the screenshot of this here:
 
 ![Example combining Gemini with Google Docs and Gmail](gmail_gemini_docs.jpg)
 
@@ -54,4 +54,4 @@ I used the **File -> Download -> Comma Separated Values (CSV)** menu to save the
 
 ## Wrap Up for Gemini Integration with Google WorkSpace Apps
 
-I have been experimenting with Gemini integration in Google apps since the summer of 2024 and tool features and capabilities have greatly improved. As I write this in April 2025 I now use Gemini integration with Google apps as a daily tool.
+I have been experimenting with Gemini integration in Google apps since the summer of 2024 and tool features and capabilities have greatly improved. As I write this in May 2025 I now use Gemini integration with Google apps as a daily tool.

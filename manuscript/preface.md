@@ -18,7 +18,7 @@ The best advice for young people starting their education or careers (as well as
 
 *Learn to be an effective copilot for AIs that are helping you.*
 
-These will be recurring themes in this book. Please note that I am using the expression *copilot* as a general term, an I am not referring to Microsoft’s and GitHub’s Copilot commercial products.
+These will be recurring themes in this book. Please note that I am using the expression *copilot* as a general term, and I am not referring to Microsoft’s and GitHub’s Copilot commercial products.
 
 ## Why is this Book Important to You? What is a Knowledge Worker?
 

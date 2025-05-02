@@ -2,7 +2,7 @@
 
 Solo Knowledge Workers are individuals who primarily use their thinking and intellectual abilities to work independently, often with a focus on autonomy and flexibility. This could range from managing their own business operations to handling projects on a contract basis as consultants. We will look at types of solo knowledge workers and how AI can help them in their work, research, and often just *brain storming*.
 
-The modern economy is witnessing a significant rise in independent professionals. These individuals, operating outside traditional employment structures, leverage their intellectual skills and expertise to offer specialized services across diverse industries. While this path offers appealing benefits like autonomy and flexibility , it also presents unique challenges. Solo knowledge workers often face resource constraints, potential isolation, and the burden of managing all aspects of their business single-handedly, from marketing and administration to client delivery.
+The modern economy is witnessing a significant rise in independent professionals. These individuals, operating outside traditional employment structures, leverage their intellectual skills and expertise to offer specialized services across diverse industries. While this path offers appealing benefits like autonomy and flexibility, it also presents unique challenges. Solo knowledge workers often face resource constraints, potential isolation, and the burden of managing all aspects of their business single-handedly, from marketing and administration to client delivery.
 
 ## Freelance Creatives
 
@@ -12,7 +12,7 @@ Writers, designers, and marketers  often face challenges such as inconsistent wo
 
 I am a software developer and using LLMs has totally changed my work flows, including:
 
-- Entering source code and runtime errors into a prompt and ask for debugging advice. Often systems like Gemini and ChatGPT will ask for addition debug printout statements to be added, then after having this additional debug printouts added to the chat context, LLMs can offer advice on fixing errors.
+- Entering source code and runtime errors into a prompt and ask for debugging advice. Often systems like Gemini and ChatGPT will ask for additional debug printout statements to be added, then after having these additional debug printouts added to the chat context, LLMs can offer advice on fixing errors.
 - Entering source code and asking for additional error handling to be added.
 - Entering source code and asking for an LLM to make the code more concise, or alternatively ask for the code to be annotated with detailed comments.
 - Writing new code.

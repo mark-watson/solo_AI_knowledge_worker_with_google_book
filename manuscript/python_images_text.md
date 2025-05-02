@@ -157,7 +157,7 @@ except Exception as e:
     * `config=...`: Thinking Mode is configured, but `thinking_budget=0` suggests minimal or default pre-computation is requested for this task, prioritizing speed or assuming the task doesn't require extended reasoning time.
 6.  **Response 1:** The generated `response.text` should contain the JSON array of bounding boxes and the general descriptions requested.
 7.  **Prompt 2:** A new prompt is defined, refining the request to focus specifically on what each person is holding.
-8.  **API Call 2:** A second call is made using the *same* loaded image (`im`) but the *new* text prompt (`prompt2`). The structure is identical, demonstrating how you can ask different questions about the same visual input.
+8.  **API Call 2:** A second call is made using the *same* loaded image (`im`) but a *new* text prompt (`prompt2`). The structure is identical, demonstrating how you can ask different questions about the same visual input.
 9.  **Response 2:** The output text should now contain the bounding boxes and descriptions focused on the objects held by the people in the image.
 
 ### Interpreting the Output

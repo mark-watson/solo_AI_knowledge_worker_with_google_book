@@ -1,10 +1,10 @@
 # Google's AI Ecosystem
 
-The chapter serves as an introduction to tools we will use repeatedly in many examples.
+This chapter serves as an introduction to tools we will use repeatedly in many examples.
 
 The Google AI ecosystem offers a diverse range of tools, from user-friendly applications integrated into daily workflows to powerful cloud-based platforms and APIs. For the solo knowledge worker, navigating this landscape requires focusing on tools that are realistically accessible, useful for individual or very small team contexts, and considerate of potential budget and technical expertise limitations.
 
-## Differences Between AI Support in Paid For Google Workspace and Free Apps Like Gmail, Calendar, and Docs.
+## Differences Between AI Support in Paid For Google Workspace and Free Apps Like Gmail, Calendar, and Docs
 
 The integration of AI capabilities, primarily through Gemini, differs somewhat between the paid Google Workspace platform and the suite of free Google applications (Gmail, Calendar, Docs, Drive, etc.) accessible with a standard Google account. The core distinction lies in the depth and nature of this integration, impacting user workflow and the scope of AI assistance.
 
@@ -35,11 +35,11 @@ After logging into [https://gemini.google.com/](https://gemini.google.com/) use 
 
 ### Ask Gemini Chat
 
-I use Gemini Chat fairly much interchangeably with OpenAI’s ChatGPT and Anthropic’s Claude with one life hack: I usually only pay for one service at a time. As I write this in April 2025, I subscribe to Gemini Advanced and use Claude and ChatGPT in the free mode. Assuming that you subscribe to Gemini Advanced here are the current models to choose from:
+I use Gemini Chat fairly often interchangeably with OpenAI’s ChatGPT and Anthropic’s Claude with one life hack: I usually only pay for one service at a time. As I write this in May 2025, I subscribe to Gemini Advanced and use Claude and ChatGPT in the free mode. Assuming that you subscribe to Gemini Advanced here are the current models to choose from:
 
 ![Available Gemini Advanced models](resources/GeminiModels.jpg)
 
-I usually select Gemini Flash 2.0 for general use because it is fastest and uses less resources (if you care about energy efficiency and the environment; if you want good background on the environmental costs of AI then I recommend reading Kate Crawford’s book **Atlas of AI**.)
+I usually select Gemini Flash 2.0 for general use because it is fastest and uses less resources (if you care about energy efficiency and the environment. If you want good background on the environmental costs of AI then I recommend reading Kate Crawford’s book **Atlas of AI**.)
 
 You have four easily used options in the chat input as seen in this figure:
 
@@ -54,21 +54,21 @@ The options are:
 
 ### Using the macOS Gemini App
 
-If you run on Macs then I recommend that you download the Gemini App. Here is a screenshot of it:
+If you run on Macs then I recommend that you download the Gemini App. Here is a screenshot:
 
 ![Gemini App for macOS](resources/GeminiMacOSApp.jpg)
 
-Functionally this app is equivalent to running the web app v on the Chrome or Safari web browsers.
+Functionally this app is equivalent to running the web app in the Chrome or Safari web browsers.
 
 ### Advice On Writing LLM Prompts
 
-Google's Gemini represents a family of sophisticated large language models (LLMs) engineered with powerful multimodal capabilities, capable of processing and understanding not just text, but also image, audio, and video inputs. You can drop image files, text, files containing software, and PDFs int the Gemini chat window and this data supplies context for any text chats and prompts you then manually enter.
+Google's Gemini represents a family of sophisticated large language models (LLMs) engineered with powerful multimodal capabilities, capable of processing and understanding not just text, but also image, audio, and video inputs. You can drop image files, text, files containing software, and PDFs into the Gemini chat window and this data supplies context for any text chats and prompts you then manually enter.
 
 You engage with advanced AI systems like Gemini through various interfaces, including web applications and mobile apps, primarily by providing 'prompts'. These prompts, which can range from simple text questions to complex instructions involving uploaded files or even spoken commands, serve as the fundamental mechanism for directing Gemini's behavior and eliciting specific responses, guiding the AI to perform tasks like generating text, analyzing data, creating code, or answering questions based on the provided input.   
 
 The practice of crafting these inputs effectively is known as prompt engineering or prompt writing. It is often described as both an art and a science, requiring a blend of creativity, linguistic precision, and an understanding of how LLMs like Gemini interpret instructions and generate outputs. At its core, prompt writing is the skill of communicating intent clearly to the AI, guiding it to leverage its vast knowledge and capabilities in the desired direction while navigating its inherent limitations. It bridges the gap between human intention and the AI's operational logic, enabling more controlled and predictable interactions.   
 
-Effective prompt writing hinges on several key principles designed to maximize the clarity and relevance of the AI's response. Central among these are clarity and specificity, ensuring instructions are unambiguous and detailed enough for the model to understand the exact task. Providing sufficient context is also crucial, giving Gemini the necessary background information to frame its response appropriately. Furthermore, defining the desired output format (e.g., bullet points, email, code block, or Markdown) and tone (e.g., formal, conversational, humorous) helps shape the final result to meet specific needs. Techniques like including examples (few-shot prompting) can further refine the output. Examples are important, for example, when asking Gemini to pull structured data from input text to formats like JSON it is useful to provide an example JSON output.
+Effective prompt writing hinges on several key principles designed to maximize the clarity and relevance of the AI's response. Central among these are clarity and specificity, ensuring instructions are unambiguous and detailed enough for the model to understand the exact task. Providing sufficient context is also crucial, giving Gemini the necessary background information to frame its response appropriately. Furthermore, defining the desired output format (e.g., bullet points, email, code block, or Markdown) and tone (e.g., formal, conversational, humorous) helps shape the final result to meet specific needs. Techniques like including examples (few-shot prompting) can further refine the output. Examples are important; for example, when asking Gemini to pull structured data from input text to formats like JSON it is useful to provide an example JSON output.
 
 Mastering the art of prompt writing is paramount for unlocking the full potential and utility of powerful AI models like Gemini. Well-crafted prompts lead directly to higher-quality, more accurate, and significantly more useful responses, minimizing generic or irrelevant outputs. This skill translates into tangible benefits such as enhanced productivity, accelerated workflows, improved decision-making, and the ability to leverage Gemini for more complex creative and analytical tasks. Ultimately, skillful prompt writing transforms the interaction with Gemini from simple querying into a powerful collaboration, allowing users to harness its advanced capabilities more effectively and reliably.
 
@@ -153,7 +153,7 @@ What, dear reader, do you do for a living and what are your hobbies? I suggest t
 
 Let’s look at an example use case:
 
-Most of the books that I write are tech-heavy with many programming examples. I very much enjoy both programming and writing but there is one task that I do not enjoy: when I place a software listing in one of my books I need to add several paragraphs describing the code, what libraries I used in the code, etc. This is tedious so I automated this process two years ago with a custom ChatGPT and more recently I automated it once again using Gemini: I collected many examples in my older books of my program listings followed by the explanatory text I wrote myself. Now I can use my Gemini Gem called “Mark Watson Writing Assistant” and drop in any new program listing I have created and I get several paragraphs of explanatory text that I can edit and tweak, and then insert into my manuscript.
+Most of the books that I write are tech-heavy with many programming examples. I very much enjoy both programming and writing but there is one task that I do not enjoy: when I place a software listing in one of my books I need to add several paragraphs describing the code, which libraries I used in the code, etc. This is tedious so I automated this process two years ago with a custom ChatGPT and more recently I automated it once again using Gemini: I collected many examples in my older books of my program listings followed by the explanatory text I wrote myself. Now I can use my Gemini Gem called “Mark Watson Writing Assistant” and drop in any new program listing I have created and I get several paragraphs of explanatory text that I can edit and tweak, and then insert into my manuscript.
 
 I believe that the more effort you put into personalizing AI tools, the more benefit you get.
 
@@ -170,7 +170,7 @@ I tend to remove old notebooks when I am done with them. I find this to be analo
 
 ![My current NotebookLM notebooks](NotebookLM.jpg)
 
-Using the NotebookLM web app is straightforward and I will not discuss it further.
+Using the NotebookLM web app is straightforward and I know you will find it useful.
 
 ## Google AI Studio
 
@@ -182,7 +182,7 @@ Here is a screenshot of the Google AI Studio web app:
 
 ![Google AI Studio web app](GoogleAIStudio1.jpg)
 
-This screenshot shows what you will see the first time you open the web app with one exception: on the lower left corned of the app window, under **History** you see a few of my exiting projects like “Hy playground”, Clojure Research agent, Prolog and LLMs, etc.
+This screenshot shows what you will see the first time you open the web app with one exception: on the lower left corner of the app window under **History** you see a few of my existing projects like “Hy playground”, Clojure Research agent, Prolog and LLMs, etc.
 
 Google AI Studio serves as an accessible gateway to Google's powerful generative artificial intelligence models, most notably the Gemini family. It's a web-based platform designed for rapid experimentation and prototyping with AI. Whether you're looking to understand what modern AI can do, build a proof-of-concept for a new application, or simply explore creative possibilities, AI Studio provides an interactive environment to directly engage with sophisticated AI capabilities without complex setup requirements.
 
