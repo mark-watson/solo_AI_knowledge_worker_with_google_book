@@ -6,7 +6,7 @@ In the previous chapters, we explored how to interact with Gemini models using t
 
 This chapter focuses on demonstrating how to use the Gemini Python SDK to send both an image and a text prompt to a capable Gemini model. We will ask the model to analyze the content of the image based on instructions provided in the text prompt. This opens up powerful possibilities for visual question answering, image description, object recognition, and more.
 
-### Prerequisites & Setup
+## Prerequisites and Setup
 
 1.  **Multimodal Model:** Ensure the `MODEL_ID` you use corresponds to a Gemini model version that supports image input (e.g., `gemini-1.5-pro`, `gemini-1.5-flash`, or specific preview versions like the one in the example).
 2.  **Python Environment:** You need your Python environment set up as discussed in Chapter 2.
@@ -25,7 +25,7 @@ This chapter focuses on demonstrating how to use the Gemini Python SDK to send b
     pip install -r requirements.txt
     ```
 
-### Combining Text and Images in Prompts
+## Combining Text and Images in Prompts
 
 The key to sending multimodal input using the Gemini Python SDK lies in how you structure the `contents` argument passed to the `generate_content` method. Instead of passing a single string (like we did for text-only prompts), you pass a **list** where each element represents a different part of the input.
 
@@ -36,7 +36,7 @@ For a text-and-image prompt, this list will typically contain:
 
 The SDK handles the necessary encoding and formatting to send both the text instructions and the image pixels to the Gemini API endpoint.
 
-### Example: `photo_understanding.py` - Analyzing an Image
+## Example: `photo_understanding.py` - Analyzing an Image
 
 This script demonstrates loading a local image file and sending it along with two different text prompts to a multimodal Gemini model to analyze the people depicted.
 
@@ -194,7 +194,7 @@ The `response.text` from these calls will contain the model's analysis based on 
 
 Parsing the JSON and associating it with the descriptions would be the next step in a real application.
 
-### Potential Applications
+## Potential Applications
 
 This ability to process images and text together enables many applications, including:
 
@@ -204,6 +204,6 @@ This ability to process images and text together enables many applications, incl
 * **Data Extraction from Images:** Pull text or structured data from photos of documents, whiteboards, or signs.
 * **Image Comparison:** Provide two images and ask the model to describe the differences.
 
-### Wrap Up
+## Wrap Up
 
 Gemini's multimodal capabilities significantly broaden the scope of tasks you can accomplish. By leveraging the Python SDK and libraries like Pillow, you can easily combine text prompts and image data in a single API call. The key is structuring the `contents` parameter as a list containing both your textual instructions and the loaded image object. This allows you to build sophisticated applications that can "see" and reason about visual information based on your specific textual guidance. Remember to use a model that supports multimodal input and include `Pillow` in your project dependencies.

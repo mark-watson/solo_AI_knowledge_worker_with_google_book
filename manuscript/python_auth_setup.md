@@ -1,12 +1,6 @@
 # First Steps Using Python with the Gemini Python Library
 
-Okay, here is a draft for the chapter focusing on authentication using the Gemini Python SDK.
-
----
-
-## Chapter 2: First Steps Using Python with the Gemini Python Library - Authentication
-
-### Introduction
+**Introduction**
 
 Welcome to your first practical steps in harnessing the power of Google's Gemini models using Python. The Gemini API provides access to Google's state-of-the-art large language models, enabling you to integrate generative AI capabilities into your applications. To facilitate this interaction within a Python environment, Google provides the `google-generativeai` library, often referred to as the Gemini Python SDK (Software Development Kit).
 
@@ -14,7 +8,7 @@ Welcome to your first practical steps in harnessing the power of Google's Gemini
 
 This chapter focuses on the crucial first step: setting up your environment, installing the necessary library, and authenticating your requests to the Gemini API. Authentication verifies your identity and authorizes your application to use the API, often tying usage to your Google Cloud project for billing and quota management.
 
-### Prerequisites
+## Prerequisites
 
 Before you begin coding, ensure you have the following:
 
@@ -26,7 +20,7 @@ Before you begin coding, ensure you have the following:
     * Go to the "Credentials" section and create an API key.
     * **Important:** Treat your API key like a password. Keep it secure and do not embed it directly in your source code or commit it to version control.
 
-### Installation and the `requirements.txt` File
+## Installation and the `requirements.txt` File
 
 To use the Gemini Python SDK, you first need to install it. Python projects commonly manage dependencies using a file named `requirements.txt`.
 
@@ -57,7 +51,7 @@ google-generativeai
     ```
     Pip will read the file and download/install the `google-generativeai` library and any packages it depends on.
 
-### Authentication: Connecting Securely
+## Authentication: Connecting Securely
 
 Authentication is how the Gemini API verifies that your request is legitimate and associated with your account. The primary method used by the SDK, especially for development and server-side applications, is an API key.
 
@@ -146,7 +140,7 @@ python auth_test1.py
 ```
 If successful, you should see a list of model names printed to the console. If not, the error messages should guide you.
 
-### Making Your First API Call: Text Generation
+## Making Your First API Call: Text Generation
 
 Once the SDK is configured via `genai.configure()`, you can start using the models. Let's look at a simple text generation example.
 
@@ -232,7 +226,7 @@ python text_generation.py
 ```
 You should see the brainstormed blog post ideas printed to your console.
 
-### Wrap Up
+## Wrap Up
 
 You have now successfully set up your Python environment, installed the Gemini SDK using `pip` and `requirements.txt`, and learned the fundamental process of authenticating with the Gemini API using an API key stored securely in an environment variable. You've also run your first text generation query.
 

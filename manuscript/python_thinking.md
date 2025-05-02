@@ -18,7 +18,7 @@ While standard generation is fast and efficient for many prompts, Thinking Mode 
 
 For simple prompts (e.g., "What is the capital of France?"), Thinking Mode is likely unnecessary and might only add latency without significantly improving the output. It's a tool best reserved for computationally intensive generative tasks.
 
-### Enabling Thinking Mode with the Python SDK
+## Enabling Thinking Mode with the Python SDK
 
 Activating Thinking Mode involves configuring specific parameters within the `generate_content` method call, using helper objects from the `google.genai.types` module.
 
@@ -31,7 +31,7 @@ Note that the example below uses `genai.Client(api_key=...)` to initialize the c
 * `genai.configure()` sets up a default global client.
 * `genai.Client()` creates an explicit client instance. This can be useful if you need to manage multiple clients with different settings or prefer explicit object management over global configuration. Both methods achieve the goal of authenticating your requests using the API key.
 
-### Example: `demo_1.py` - Advertising Strategy Brainstorm with Thinking Mode
+## Example: `demo_1.py` - Advertising Strategy Brainstorm with Thinking Mode
 
 This script demonstrates how to request advertising ideas for a new consulting company, specifically enabling Thinking Mode to potentially generate more structured or well-reasoned options.
 
@@ -97,7 +97,7 @@ Okay, starting an AI/LLM consulting company is exciting! Since it's a B2B servic
 
 Run the example to see a full report.
 
-### Observing the Difference
+## Observing the Difference
 
 While this example doesn't run a side-by-side comparison, if you were to run the same complex prompt *with* and *without* Thinking Mode (and an appropriate `thinking_budget`), you might observe:
 
@@ -107,6 +107,6 @@ While this example doesn't run a side-by-side comparison, if you were to run the
 
 The key is that Thinking Mode provides an *opportunity* for the model to improve its response quality on complex tasks by allocating specific resources *before* generation starts.
 
-### Wrap Up
+## Wrap Up
 
 Gemini Thinking Mode offers a powerful way to enhance the quality of responses for complex prompts by allowing the model dedicated time and resources for planning and reasoning. By using `types.GenerateContentConfig` and `types.ThinkingConfig` with an appropriate `thinking_budget` in your `generate_content` calls via the Python SDK, you can leverage this feature for tasks demanding deeper analysis, structuring, or problem-solving. Remember to experiment with the `thinking_budget` and reserve this feature for prompts where the added pre-computation phase is likely to yield significant benefits.
