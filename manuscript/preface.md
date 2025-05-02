@@ -1,5 +1,7 @@
 # Preface
 
+Most books I have written are deeply technical - this is not one of them. Here, I attempt to make state of the art AI approachable and usable to a wider and not necessarily technical audience.
+
 Since the 1980s, I've been deeply involved in the development of commercial Artificial Intelligence (AI) tools and applications. My journey has led me to deliver AI systems and conduct research for organizations like Capital One, Google, SAIC, DARPA, Olive AI, PacBell, and Babylist. I have 55 US patents and I have written over 20 books on AI.
 
 For my work and personal research, I use Large Language Model (LLM)-based AI tools from various vendors, including OpenAI, Google, and Groq Cloud. I also run open models from Meta, DeepSeek, Mistral, and Alibaba on my personal Mac system using Ollama.
@@ -18,13 +20,13 @@ The best advice for young people starting their education or careers (as well as
 
 These will be recurring themes in this book. Please note that I am using the expression *copilot* as a general term, an I am not referring to Microsoft’s and GitHub’s Copilot commercial products.
 
-## Why is this book important to you?
+## Why is this book important to you? What is a Knowledge Worker?
 
 There are many fine AI tools that you can use for your work and choosing the Google AI platform is a good choice. For my work I like to choose a particular platform and “stick with it” until either a project is done or other compelling technology and tools surface.
 
 Many developers and knowledge workers have begun using Large Language Models (LLMs) without fully understanding their functionality, limitations, and optimal use for practical applications and personal knowledge worker assistance.
 
-My dual goal is to intertwine a solid understanding of core technologies with practical techniques for using AI effectively in your job.
+My dual goal is to intertwine an understanding of core technologies with practical techniques for using AI effectively in your job.
 
 We can also define the "Solo Knowledge Worker" by building on Peter Drucker's foundational concept of the knowledge worker: individuals whose main capital is knowledge and who rely on their intellectual skills. The modern knowledge worker utilizes cognitive, relational, and communicative faculties, often in collaboration with technology, to perform their work. Their focus is on generating value through thought and expertise, rather than merely completing tasks efficiently.
 
@@ -45,8 +47,8 @@ The last part of the book is aimed at readers who have some knowledge of the Pyt
 I leave out most material specific to enterprise use of the Google AI Platform and concentrate on tools more likely used by individuals. As a result:
 
 - We will concentrate on Gemini App, Google AI Studio App, and directly calling the Gemini model APIs (requires a simple to obtain API key)
-- We will cover in detail the tight Gemini integration with the apps Gmail, Google Docs, Google Sheets, Google Meet, Google Drive, Google Calendar, Google Tasks, and Google Keep.
-- Relatively little coverage here for Google Vertex. Vertex AI is Google Cloud's comprehensive, unified platform for building, deploying, and managing machine learning models and AI applications. If you are a professional software developer you can augment the material here with [https://cloud.google.com/vertex-ai/docs](Google Vertex Documentation).
+- We will cover with simple examples the tight Gemini integration with the apps Gmail, Google Docs, Google Sheets, Google Meet, Google Drive, and Google Calendar.
+- Relatively little coverage here for Google Vertex. Vertex AI is Google Cloud's comprehensive, unified platform for building, deploying, and managing machine learning models and AI applications. If you are a professional software developer you can augment the material here with [https://cloud.google.com/vertex-ai/docs](https://cloud.google.com/vertex-ai/docs).
 - Little coverage of the Google WorkSpace product that is used by companies, schools, and government agencies. Individuals tend to use the Gemini app that interacts directly with data in the free Google apps like Gmail, Google Calendar, Google Docs, etc. I created a fresh Google WorkSPace account for the purpose of writing this book but most of the material pertains to the “free” Gmail and other Google apps (the setup I use for my personal work flow).
 
 ## Acknowledgements
