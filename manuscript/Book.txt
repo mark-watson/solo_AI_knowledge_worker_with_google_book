@@ -11,4 +11,8 @@ python_auth_setup.md
 python_thinking.md
 python_images_text.md
 python_gemini_and_google_colab.md
+part_3_agents.md
+gemini-cli-introduction.md
+gemini-cli-advanced.md
+gemini-cli-agent-workflows.md
 wrapup.md
