@@ -1,4 +1,4 @@
-# Building and Utilizing AI Agents
+# Part 3 - Building and Utilizing AI Agents
 
 - Introducing the gemini-cli: Your AI Agent in the Terminal
 - Advanced gemini-cli Techniques and Customization

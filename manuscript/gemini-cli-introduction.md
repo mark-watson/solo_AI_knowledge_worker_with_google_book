@@ -2,7 +2,7 @@
 
 The gemini-cli as a powerful tool for solo knowledge workers to automate tasks and interact with their digital environment in a more dynamic way.
 
-# What is gemini-cli and Why It Matters for Solo Workers:
+## What is gemini-cli and Why It Matters for Solo Workers:
 
 The gemini-cli tool is an open-source AI agent that operates directly from the command line and automates repetitive tasks like working with local files securely, creating digital assets like code and documentation, modifying digital assets, and creating powerful workflows without leaving the terminal.
 
@@ -23,10 +23,9 @@ As we have seen in previous chapter, you should set an environment variable for 
 export GOOGLE_API_KEY="YOUR_API_KEY"
 ```
 
-You can check that your installation is done correctly by running the **gemini** command line tool in non-interactive mode:
-
+You can check that your installation is done correctly by running the **gemini** command line tool
 ```console
-
+gemini
 ```
 
 Note: the first time you run **gemini** you will be asked to choose a color theme. You will also be asked if you want to login with Google (the free tier), or use the paid tier to always use gemini-2.5-pro:
@@ -44,15 +43,12 @@ If you use the default “Login with Google” a new browser tab will open for y
 
 ![Asking gemini-cli a general question](gemini-cli-fig_1.jpg)
 
+As seen in the next figure, you can use the **@** in front of a file name to read that file into the work context for the Gemini LLM. If I am using **gemini-cli** in a directory containing software I often add many source files to the context.
+
+The important thing to remember is **gemini-cli** can be used in any directory containing digital assets.
+
 ![Working with files in the current directory](gemini-cli-fig_2.jpg)
 
-
-
-TBD:
-Provide clear, step-by-step instructions for installing gemini-cli using Node.js and npm, as this will be new for many readers who are not developers.
-Walk through the initial authentication process with a Google account.
-Briefly explain the alternative of using an API key from Google AI Studio.
-END OF TBD
 
 ## Core Concepts and Commands
 
