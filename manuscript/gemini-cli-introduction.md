@@ -164,7 +164,7 @@ I created an empty directory and copied a University of Wisconsin cancer data fi
 
 This is routine data analysis that would have taken perhaps ten minutes to perform myself. It took me one minute to analyze the file, run the program gemini-client generated, and view the plot:
 
-![Histogram produced byPython script written by gemini-cli](clump_thickness_histogram.png)
+![Histogram produced by Python script written by gemini-cli](clump_thickness_histogram.png)
 
 ### Integrate web search and research in a gemini-cli session
 
