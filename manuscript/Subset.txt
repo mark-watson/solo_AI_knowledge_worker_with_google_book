@@ -1,4 +1,3 @@
 part_3_agents.md
 gemini-cli-introduction.md
-gemini-cli-advanced.md
 gemini-cli-agent-workflows.md

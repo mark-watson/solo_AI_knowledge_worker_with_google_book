@@ -2,6 +2,8 @@
 
 The gemini-cli as a powerful tool for solo knowledge workers to automate tasks and interact with their digital environment in a more dynamic way.
 
+**Note:** Some of the following examples using gemini-cli are screenshots (light brown background) and other are the output text copied to this manuscript file for this chapter.
+
 ## What is gemini-cli and Why It Matters for Solo Workers:
 
 The gemini-cli tool is an open-source AI agent that operates directly from the command line and automates repetitive tasks like working with local files securely, creating digital assets like code and documentation, modifying digital assets, and creating powerful workflows without leaving the terminal.
