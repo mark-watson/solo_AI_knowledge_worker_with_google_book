@@ -164,6 +164,8 @@ I created an empty directory and copied a University of Wisconsin cancer data fi
    1 pip install pandas matplotlib
 ```
 
+Notice that gemini-cli didn’t just show the literal titles in the CSV file, rather gemini-cli analyzed the data in each column and annotated column titles with the range of the data in each column; for example “Cl.thickness: Clump Thickness (1-10).” The original CSV column title was “Cl.thickness.”
+
 This is routine data analysis that would have taken perhaps ten minutes to perform myself. It took me one minute to analyze the file, run the program gemini-client generated, and view the plot:
 
 ![Histogram produced by Python script written by gemini-cli](clump_thickness_histogram.png)

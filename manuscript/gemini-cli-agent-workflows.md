@@ -2,20 +2,20 @@
 
 Here we look at a few high level scenarios for using gemini-cli including sample prompts.
 
+**Note:** Some of the following examples using gemini-cli are screenshots (light brown background) and other are the output text copied to this manuscript file for this chapter.
+
 ## Beyond Single Prompts: Thinking in Workflows
 
 Our objective here, dear reader, is to redefine your personal interaction model from a simple question-and-answer format to one of delegation and process automation.
 
-Content:
-
 What is an agentic workflow? An agent workflow is not a simple single prompt ("Summarize this document”). With an agentic workflow we use a series of steps like:
 
-- Analyze this folder of documents
-- Identify the three key themes
-- Search the web for recent developments on those themes
-- Draft a summary report").
+- Analyze this folder of documents.
+- Identify the three key themes.
+- Search the web for recent developments on those themes.
+- Draft a summary report.
 
-The "Reason and Act" Loop in gemini-cli: Use the power of an agent that comes from its ability to use tools (/tools), access local files (@folder), search the web, and write new files—all within a single, continuous context. This is the core of its "agent-like" behavior. You can use the command **/tools** to see what is available builtin in gemini-cli:
+The "Reason and Act" Loop in gemini-cli: Use the power of an agent that comes from its ability to use tools (/tools), access local files (@folder), search the web, and write new files all within a single, continuous context. This is the core of its "agent-like" behavior. You can use the command **/tools** to see what is available builtin in gemini-cli:
 
 - ReadFolder
 - ReadFile
