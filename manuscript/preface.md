@@ -1,6 +1,16 @@
 # Preface
 
+*This book was substantially updated in November 2025.*
+
 Most books I have written are deeply technical - this is not one of them. Here, I attempt to make state of the art AI approachable and usable to a wider and not necessarily technical audience. For those readers most interested in practical examples, you can skip to the chapter “Google’s AI Ecosystem.”
+
+Here we cover:
+
+- Practical general tips for being an effective solo knowledge worker.
+- Gemini (mostly) non-programming interface to Google's AI models.
+- NotebookLM platform for research and study.
+- Google AI Studio for experimenting with new AI models, software prototyping, and using models for video and image generation.
+- Optional material for writing short Python programs to use the Google AI platform.
 
 Since the 1980s, I've been deeply involved in the development of commercial Artificial Intelligence (AI) tools and applications. My journey has led me to deliver AI systems and conduct research for organizations like Capital One, Google, SAIC, DARPA, Olive AI, PacBell, and Babylist. I have 55 US patents and I have written over 20 books on AI.
 
