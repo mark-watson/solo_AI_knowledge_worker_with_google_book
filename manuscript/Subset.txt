@@ -1,3 +1,5 @@
+preface.md
 part_3_agents.md
 gemini-cli-introduction.md
 gemini-cli-agent-workflows.md
+Book.txt
