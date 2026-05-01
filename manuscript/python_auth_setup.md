@@ -2,7 +2,7 @@
 
 **Introduction**
 
-Welcome to your first practical steps in harnessing the power of Google's Gemini models using Python. The Gemini API provides access to Google's state-of-the-art large language models, enabling you to integrate generative AI capabilities into your applications. To facilitate this interaction within a Python environment, Google provides the `google-generativeai` library, often referred to as the Gemini Python SDK (Software Development Kit).
+Welcome to your first practical steps in harnessing the power of Google's Gemini models using Python. The Gemini API provides access to Google's state-of-the-art large language models, enabling you to integrate generative AI capabilities into your applications. To facilitate this interaction within a Python environment, Google provides the `google-genai` library, often referred to as the Gemini Python SDK (Software Development Kit).
 
 **What is an SDK?** An SDK is a collection of software development tools in one installable package. They ease the creation of applications by providing compilers, debuggers, and often a software framework. In our context, the Gemini Python SDK simplifies interaction with the Gemini API by handling the complexities of HTTP requests, responses, authentication, and data formatting, allowing you to focus on *what* you want to achieve with the model rather than the low-level communication details.
 
@@ -31,13 +31,13 @@ For basic Gemini API interaction, your `requirements.txt` file needs to contain 
 
 ```txt
 # requirements.txt
-google-generativeai
+google-genai
 ```
 
 **Installation Steps:**
 
 1.  Create a file named `requirements.txt` in your project directory.
-2.  Add the line `google-generativeai` to this file.
+2.  Add the line `google-genai` to this file.
 3.  It's highly recommended to use a Python virtual environment (`venv`) to isolate your project's dependencies. Create and activate one:
     ```bash
     python -m venv myenv          # Create the virtual environment (e.g., named 'myenv')
@@ -49,7 +49,7 @@ google-generativeai
     ```bash
     pip install -r requirements.txt
     ```
-    Pip will read the file and download/install the `google-generativeai` library and any packages it depends on.
+    Pip will read the file and download/install the `google-genai` library and any packages it depends on.
 
 ## Authentication: Connecting Securely
 
@@ -79,59 +79,44 @@ The recommended approach is to store your API key in an **environment variable**
 
 **Example 1: `auth_test1.py` - Basic Authentication & Setup**
 
-This script demonstrates the fundamental step of configuring the Gemini SDK with your API key retrieved from the environment.
+This script demonstrates the fundamental step of creating a Gemini client with your API key retrieved from the environment.
 
 ```python
 # --- Example 1: Basic Authentication & Setup ---
 # Purpose: Configure the Gemini API client using an API key
 #          stored securely in an environment variable.
 
-import google.generativeai as genai
+from google import genai
 import os
-import sys # sys is imported but not used in this specific snippet
+import sys
 
 # Best practice: Store your API key in an environment variable
 # (e.g., GOOGLE_API_KEY) rather than hardcoding it.
 # You can set this in your system or using a .env file with python-dotenv.
 try:
-    # 1. Retrieve the API key from the environment variable
-    api_key = os.getenv('GOOGLE_API_KEY')
-    if not api_key:
-        # Raise KeyError if the variable is not set or is empty
-        raise KeyError("GOOGLE_API_KEY environment variable not found or is empty.")
+    client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
 
-    # 2. Configure the SDK with the retrieved API key
-    genai.configure(api_key=api_key)
+    # Verify configuration by listing available models (optional)
+    print("\nAvailable models:")
+    for m in client.models.list():
+        print(m.name)
 
-    # 3. Verify configuration by listing available models (optional but recommended)
-    # This makes a simple API call to confirm authentication works.
-    print("\nAvailable models supporting content generation:")
-    for m in genai.list_models():
-        # Filter for models that can actually generate text/content
-        if 'generateContent' in m.supported_generation_methods:
-            print(m.name)
-
-# 4. Handle potential errors during configuration
-except KeyError as e:
-    # Specific error for missing environment variable
-    print(f"Error: {e}")
+except KeyError:
+    print("Error: GOOGLE_API_KEY environment variable not found.")
     print("Please set the GOOGLE_API_KEY environment variable with your API key.")
-    # Consider adding instructions here on *how* to set it based on OS
 except Exception as e:
-    # Catch any other exceptions during the genai.configure() or list_models() calls
-    print(f"An error occurred during configuration or model listing: {e}")
+    print(f"An error occurred during configuration: {e}")
 
 ```
 
 **Explanation:**
 
-1.  **Import necessary libraries:** `google.generativeai` (the SDK) and `os` (to access environment variables).
-2.  **Retrieve API Key:** `os.getenv('GOOGLE_API_KEY')` attempts to read the value of the environment variable named `GOOGLE_API_KEY`. We add a check to ensure it's not `None` or empty.
-3.  **Configure SDK:** `genai.configure(api_key=api_key)` is the core function call. It initializes the SDK globally within your script's context, setting up the necessary credentials for subsequent API calls.
-4.  **Verify Configuration (Optional but useful):** `genai.list_models()` makes a lightweight call to the API to retrieve a list of available models. Successfully getting this list back confirms that your API key is valid and the SDK is configured correctly. We filter this list to show only models capable of content generation (`'generateContent' in m.supported_generation_methods`).
-5.  **Error Handling:** The `try...except` block gracefully handles potential issues:
+1.  **Import necessary libraries:** `google.genai` (the SDK, imported via `from google import genai`) and `os` (to access environment variables).
+2.  **Create Client:** `genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))` creates an explicit client instance. This is the recommended way to initialize the SDK, setting up the necessary credentials for subsequent API calls.
+3.  **Verify Configuration (Optional but useful):** `client.models.list()` makes a lightweight call to the API to retrieve a list of available models. Successfully getting this list back confirms that your API key is valid and the client is configured correctly.
+4.  **Error Handling:** The `try...except` block gracefully handles potential issues:
     * `KeyError`: Catches the specific error if the `GOOGLE_API_KEY` environment variable isn't set.
-    * `Exception`: Catches other potential errors during the configuration or the `list_models` call (e.g., network issues, invalid API key).
+    * `Exception`: Catches other potential errors during the client creation or the `models.list()` call (e.g., network issues, invalid API key).
 
 **Running the Script:**
 Save the code as `auth_test1.py`. Ensure your `GOOGLE_API_KEY` environment variable is set, then run the script from your terminal:
@@ -142,7 +127,7 @@ If successful, you should see a list of model names printed to the console. If n
 
 ## Making Your First API Call: Text Generation
 
-Once the SDK is configured via `genai.configure()`, you can start using the models. Let's look at a simple text generation example.
+Once the client is created, you can start using the models. Let's look at a simple text generation example.
 
 **Example 2: `text_generation.py`**
 
@@ -150,58 +135,45 @@ This script builds upon the authentication setup to send a prompt to a Gemini mo
 
 ```python
 # --- Example 2: Text Generation ---
-# Purpose: Use the configured Gemini client to generate text
+# Purpose: Use the Gemini client to generate text
 #          based on a given prompt.
 
-import google.generativeai as genai
+from google import genai
 import os
-import sys # sys is imported but not used in this specific snippet
+import sys
 
 # Best practice: Store your API key in an environment variable
 # (e.g., GOOGLE_API_KEY) rather than hardcoding it.
 try:
-    # 1. Configure the SDK (Required in every script/session using the API)
-    api_key = os.getenv('GOOGLE_API_KEY')
-    if not api_key:
-        raise KeyError("GOOGLE_API_KEY environment variable not found or is empty.")
-    genai.configure(api_key=api_key)
+    # 1. Create the client
+    client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
 
-    # 2. Select the model
-    # Use a specific model name from the list obtained in Example 1.
-    # 'gemini-1.5-flash' is often a good balance of speed and capability.
-    # Note: The user example specified 'gemini-2.0-flash', ensure this model is available.
-    model = genai.GenerativeModel('gemini-1.5-flash') # Or 'gemini-pro', 'gemini-1.0-pro' etc.
-
-    # 3. Define the prompt (Your instruction to the model)
+    # 2. Define the prompt (Your instruction to the model)
     prompt = "Brainstorm 5 blog post ideas about remote work productivity for solo knowledge workers."
 
-    # 4. Generate content by calling the model
+    # 3. Generate content by calling the model
     # This makes the actual API request to the Gemini service.
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model='gemini-2.5-flash',
+        contents=prompt
+    )
 
-    # 5. Process and print the response
+    # 4. Process and print the response
     print("\n--- Blog Post Ideas ---")
-    # Check if the response contains parts (text content)
+    # Check if the response contains text content
     # Responses might be empty if blocked due to safety settings or other issues.
-    if response.parts:
+    if response.text:
         print(response.text) # Access the generated text
     else:
         # Provide feedback if the response was empty or blocked
         print("Response was empty or potentially blocked.")
-        # response.prompt_feedback often contains reasons for blocking (e.g., safety ratings)
-        print(f"Safety feedback: {response.prompt_feedback}")
 
 
-# 6. Handle potential errors during generation
-except KeyError as e:
-    # Handle missing API key specifically
-    print(f"Error: {e}")
-    print("Please set the GOOGLE_API_KEY environment variable.")
+# 5. Handle potential errors during generation
 except AttributeError:
-    # This might occur if genai.configure was not called successfully before model usage
     print("Error: Gemini API likely not configured. Ensure GOOGLE_API_KEY is set and valid.")
 except Exception as e:
-    # Catch other errors during model instantiation or generation
+    # Catch other errors during client creation or generation
     print(f"An error occurred during text generation: {e}")
     # This could include API errors, network issues, invalid model names, etc.
 
@@ -209,15 +181,13 @@ except Exception as e:
 
 **Explanation:**
 
-1.  **Configure SDK:** Notice that `genai.configure()` must be called again here. Configuration typically needs to happen once per script execution or application session that intends to use the API.
-2.  **Select Model:** `genai.GenerativeModel('model-name')` creates an instance of the model you want to interact with. You should use one of the model names listed by the `auth_test1.py` script (e.g., `gemini-1.5-flash`, `gemini-pro`).
-3.  **Define Prompt:** This is the input text you provide to the model.
-4.  **Generate Content:** `model.generate_content(prompt)` sends the prompt to the specified Gemini model via the API and waits for the response.
-5.  **Process Response:** The result is a `GenerateContentResponse` object.
+1.  **Create Client:** `genai.Client(api_key=...)` creates the client instance, authenticating using the `GOOGLE_API_KEY` environment variable.
+2.  **Define Prompt:** This is the input text you provide to the model.
+3.  **Generate Content:** `client.models.generate_content(model='gemini-2.5-flash', contents=prompt)` sends the prompt to the specified Gemini model via the API and waits for the response.
+4.  **Process Response:** The result is a response object.
     * `response.text` provides the primary generated text content if available.
-    * It's crucial to check if the response contains content (`if response.parts:`). Sometimes, a response might be blocked due to safety filters or other reasons.
-    * `response.prompt_feedback` can provide information about why content might have been blocked (e.g., safety ratings).
-6.  **Error Handling:** Includes checks for `KeyError` (missing API key), `AttributeError` (if `genai` wasn't configured properly before trying to use `GenerativeModel`), and general `Exception`s for API or network issues during the generation call.
+    * It's crucial to check if the response contains content. Sometimes, a response might be blocked due to safety filters or other reasons.
+5.  **Error Handling:** Includes checks for `AttributeError` (if the client wasn't created properly), and general `Exception`s for API or network issues during the generation call.
 
 **Running the Script:**
 Save the code as `text_generation.py`. Ensure your `GOOGLE_API_KEY` is set, then run:

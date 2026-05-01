@@ -14,10 +14,10 @@ This chapter focuses on demonstrating how to use the Gemini Python SDK to send b
 
     ```txt
     # requirements.txt
-    google-generativeai>=1.10.0
+    google-genai
     Pillow
     ```
-    * `google-generativeai>=1.10.0`: Specifies that we need version 1.10.0 or newer of the Gemini SDK. Version requirements can be important for accessing the latest features or ensuring compatibility.
+    * `google-genai`: The Gemini Python SDK, which provides the `genai.Client` interface for interacting with Gemini models.
     * `Pillow`: This library is essential for opening, manipulating, and preparing image files in Python so they can be sent to the model.
 
     Remember to install or update your dependencies using:
