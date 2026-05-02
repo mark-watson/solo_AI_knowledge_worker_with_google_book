@@ -26,10 +26,8 @@ Activating Thinking Mode involves configuring specific parameters within the `ge
 2.  **`types.ThinkingConfig`:** This object specifically controls the Thinking Mode feature.
 3.  **`thinking_budget`:** This parameter within `ThinkingConfig` specifies the amount of computational resources or time allocated for the model's "thinking" phase. The exact unit is an internal measure, but a higher value generally allows the model more pre-computation time, potentially leading to better results on complex prompts, possibly at the cost of increased latency. You may need to experiment with this value based on the complexity of your prompts and desired output quality.
 
-**Alternative Client Initialization:**
-Note that the example below uses `genai.Client(api_key=...)` to initialize the connection. This is an alternative to the `genai.configure(api_key=...)` method used in the previous chapter.
-* `genai.configure()` sets up a default global client.
-* `genai.Client()` creates an explicit client instance. This can be useful if you need to manage multiple clients with different settings or prefer explicit object management over global configuration. Both methods achieve the goal of authenticating your requests using the API key.
+**Client Initialization:**
+As in the previous chapter, we use `genai.Client(api_key=...)` to create an explicit client instance for authenticating requests using the API key.
 
 ## Example: `demo_1.py` - Advertising Strategy Brainstorm with Thinking Mode
 
