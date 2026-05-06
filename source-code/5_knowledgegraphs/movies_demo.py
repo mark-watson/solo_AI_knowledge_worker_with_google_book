@@ -113,3 +113,10 @@ for question in questions:
     print("-" * 30)
 
 print("\nExample complete.")
+
+# Clean up the database directory
+if os.path.exists(db_path):
+    if os.path.isdir(db_path):
+        shutil.rmtree(db_path)
+    else:
+        os.remove(db_path)
