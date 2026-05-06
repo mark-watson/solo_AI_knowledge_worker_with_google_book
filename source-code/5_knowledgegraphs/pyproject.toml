@@ -1,0 +1,10 @@
+[project]
+name = "5-knowledgegraphs"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "kuzu",
+    "langchain>=1.2.17",
+    "langchain-community>=0.4.1",
+    "langchain-google-genai>=4.2.2",
+]

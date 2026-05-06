@@ -9,6 +9,7 @@ Derived from an example in the "Ollama in Action" book.
 ## Prerequisites
 
 - Python 3.12 (Recommended for Kuzu binary compatibility)
+- CMake (Required to build Kuzu extensions, e.g., `brew install cmake` on macOS)
 - A `GOOGLE_API_KEY` environment variable set with your Google AI API key
 
 Install dependencies and run with `uv`:
