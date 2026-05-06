@@ -3,3 +3,4 @@ OLD_STUFF
 *~
 .clj-kondo
 .lsp
+.venv

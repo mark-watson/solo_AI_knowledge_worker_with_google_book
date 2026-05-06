@@ -1,0 +1,11 @@
+[project]
+name = "9-optional-google-apps"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "google-api-python-client>=2.195.0",
+    "google-auth-httplib2>=0.3.1",
+    "google-auth-oauthlib>=1.3.1",
+    "google-genai>=1.74.0",
+]
