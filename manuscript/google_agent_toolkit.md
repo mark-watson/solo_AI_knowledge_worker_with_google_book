@@ -1,15 +1,15 @@
 # Python Research Agent Using Google Agent Tool Kit
 
-TBD
+The Google Agent Development Kit (ADK) is an open-source Python framework for building multi-agent AI systems. In this chapter we build a deep research agent that plans investigations, executes web searches, evaluates its own findings, and produces a professionally cited report — all orchestrated by cooperating LLM-powered agents running on the Gemini model family.
 
 ## Overview of Google Agent Toolkit
 
-TBD
+The ADK provides composable agent primitives — `LlmAgent`, `SequentialAgent`, `LoopAgent`, and `BaseAgent` — that let you assemble complex workflows from simple, single-purpose agents. Each agent has its own instruction prompt, optional tools (such as Google Search), and structured output schemas enforced via Pydantic models. Agents communicate through shared session state, and the framework handles the event loop, tool dispatch, and callback lifecycle automatically. This design makes it straightforward to build systems where one agent plans, another researches, a third evaluates quality, and a fourth composes the final output.
 
 ## Research Agent
 
 I rewrote Google's full research agent  web app example program, simplyfying it as a command line utility.
-TBD
+The following listing shows the complete deep search agent. It defines seven specialized agents wired together in a sequential pipeline with an inner refinement loop. The `interactive_planner` root agent receives a research topic from the user, delegates plan creation to the `plan_generator`, and upon approval hands off to the `research_pipeline`. Inside the pipeline, the `section_researcher` executes Google searches and synthesizes findings, the `research_evaluator` grades coverage quality, and the `enhanced_search_executor` fills any gaps — looping up to three times until the evaluator passes. Finally, the `report_composer` writes a Markdown report with inline source citations.
 
 ```python
 # Derived from: https://github.com/google/adk-samples/tree/main/python/agents/deep-search
@@ -290,4 +290,4 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-TBD
+The deep search agent demonstrates several patterns that are broadly useful when building agentic AI systems: breaking a complex task into focused sub-agents, using structured Pydantic outputs to enforce data contracts between agents, implementing self-improving loops with quality evaluation, and tracking provenance through source citation callbacks. These same patterns can be adapted for other workflows such as competitive analysis, literature review, market research, or any task where iterative search and synthesis produces better results than a single LLM call.
