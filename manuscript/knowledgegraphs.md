@@ -165,8 +165,8 @@ The last question is particularly noteworthy: Gemini correctly generates a Cyphe
 Ensure your `GOOGLE_API_KEY` environment variable is set, then install the dependencies and run:
 
 ```bash
-pip install kuzu langchain langchain-community langchain-google-genai
-python movies_demo.py
+uv sync
+uv run movies_demo.py
 ```
 
 The script creates a local `test_db_gemini/` directory for the Kuzu database. You can delete this directory to start fresh on subsequent runs.

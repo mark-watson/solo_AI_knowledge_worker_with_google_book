@@ -22,36 +22,32 @@ Before you begin coding, ensure you have the following:
     * Go to the "Credentials" section and create an API key.
     * **Important:** Treat your API key like a password. Keep it secure and do not embed it directly in your source code or commit it to version control.
 
-## Installation and the `requirements.txt` File
+## Installation with `uv`
 
-To use the Gemini Python SDK, you first need to install it. Python projects commonly manage dependencies using a file named `requirements.txt`.
+To use the Gemini Python SDK, you first need to install it. We use **uv** — a fast, modern Python package and project manager — to handle dependencies and virtual environments automatically.
 
-**What is `requirements.txt`?**
-This file lists all the external Python packages that your project depends on, along with optional version specifiers. Using `requirements.txt` ensures that anyone working on the project (or any environment where the project is deployed) can install the exact same set of dependencies easily. This reproducibility is crucial for avoiding compatibility issues.
+**What is `uv`?**
+`uv` is a drop-in replacement for `pip`, `venv`, and `pip-tools` that is dramatically faster and manages project dependencies through a standard `pyproject.toml` file. It automatically creates and manages an isolated virtual environment for each project, and generates a `uv.lock` lockfile for fully reproducible installs. This means you never need to manually create or activate a virtual environment.
 
-For basic Gemini API interaction, your `requirements.txt` file needs to contain at least the SDK library:
+If you don't have `uv` installed yet, install it with:
 
-```txt
-# requirements.txt
-google-genai
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-**Installation Steps:**
+**Project Setup Steps:**
 
-1.  Create a file named `requirements.txt` in your project directory.
-2.  Add the line `google-genai` to this file.
-3.  It's highly recommended to use a Python virtual environment (`venv`) to isolate your project's dependencies. Create and activate one:
+1.  Create a new directory for your project and navigate into it.
+2.  Initialize a bare `uv` project:
     ```bash
-    python -m venv myenv          # Create the virtual environment (e.g., named 'myenv')
-    source myenv/bin/activate   # Activate on Linux/macOS
-    # or
-    .\myenv\Scripts\activate    # Activate on Windows
+    uv init --bare
     ```
-4.  Install the dependencies listed in your `requirements.txt` file using `pip`, Python's package installer:
+    This creates a `pyproject.toml` file that will track your dependencies.
+3.  Add the Gemini SDK as a dependency:
     ```bash
-    pip install -r requirements.txt
+    uv add google-genai
     ```
-    Pip will read the file and download/install the `google-genai` library and any packages it depends on.
+    `uv` will resolve all dependencies, create a virtual environment automatically, and generate a `uv.lock` lockfile for reproducibility.
 
 ## Authentication: Connecting Securely
 
@@ -77,7 +73,7 @@ The recommended approach is to store your API key in an **environment variable**
     ```powershell
     $env:GOOGLE_API_KEY='YOUR_API_KEY_HERE'
     ```
-* **Using `.env` files:** For project-specific variables, you can use a `.env` file in your project root and the `python-dotenv` library to load them. Install it (`pip install python-dotenv`) and load it at the start of your script.
+* **Using `.env` files:** For project-specific variables, you can use a `.env` file in your project root and the `python-dotenv` library to load them. Install it (`uv add python-dotenv`) and load it at the start of your script.
 
 **Example 1: `auth_test1.py` - Basic Authentication & Setup**
 
@@ -121,9 +117,9 @@ except Exception as e:
     * `Exception`: Catches other potential errors during the client creation or the `models.list()` call (e.g., network issues, invalid API key).
 
 **Running the Script:**
-Save the code as `auth_test1.py`. Ensure your `GOOGLE_API_KEY` environment variable is set, then run the script from your terminal:
+Save the code as `auth_test1.py`. Ensure your `GOOGLE_API_KEY` environment variable is set, then run the script from your terminal using `uv run`:
 ```bash
-python auth_test1.py
+uv run python auth_test1.py
 ```
 If successful, you should see a list of model names printed to the console. If not, the error messages should guide you.
 
@@ -194,12 +190,12 @@ except Exception as e:
 **Running the Script:**
 Save the code as `text_generation.py`. Ensure your `GOOGLE_API_KEY` is set, then run:
 ```bash
-python text_generation.py
+uv run python text_generation.py
 ```
 You should see the brainstormed blog post ideas printed to your console.
 
 ## Wrap Up
 
-You have now successfully set up your Python environment, installed the Gemini SDK using `pip` and `requirements.txt`, and learned the fundamental process of authenticating with the Gemini API using an API key stored securely in an environment variable. You've also run your first text generation query.
+You have now successfully set up your Python environment, installed the Gemini SDK using `uv`, and learned the fundamental process of authenticating with the Gemini API using an API key stored securely in an environment variable. You've also run your first text generation query.
 
 Authentication is the gateway to using the API. By following best practices like using environment variables, you ensure your credentials remain secure while enabling your Python applications to leverage the power of Google's Gemini models. In the following chapters, we will explore more advanced features of the API and the Python SDK.

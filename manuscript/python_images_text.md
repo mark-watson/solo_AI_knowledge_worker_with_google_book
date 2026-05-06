@@ -12,20 +12,15 @@ This chapter focuses on demonstrating how to use the Gemini Python SDK to send b
 
 1.  **Multimodal Model:** Ensure the `MODEL_ID` you use corresponds to a Gemini model version that supports image input (e.g., `gemini-1.5-pro`, `gemini-1.5-flash`, or specific preview versions like the one in the example).
 2.  **Python Environment:** You need your Python environment set up as discussed in Chapter 2.
-3.  **Updated Dependencies:** Image processing requires an additional library, Pillow (a fork of PIL - Python Imaging Library). Your `requirements.txt` file should be updated to include it:
+3.  **Updated Dependencies:** Image processing requires an additional library, Pillow (a fork of PIL - Python Imaging Library). Add it to your project using `uv`:
 
-    ```txt
-    # requirements.txt
-    google-genai
-    Pillow
+    ```bash
+    uv add 'google-genai>=1.10.0' Pillow
     ```
     * `google-genai`: The Gemini Python SDK, which provides the `genai.Client` interface for interacting with Gemini models.
     * `Pillow`: This library is essential for opening, manipulating, and preparing image files in Python so they can be sent to the model.
 
-    Remember to install or update your dependencies using:
-    ```bash
-    pip install -r requirements.txt
-    ```
+    `uv` will resolve all dependencies, update your `pyproject.toml`, and regenerate the lockfile automatically.
 
 ## Combining Text and Images in Prompts
 
@@ -208,4 +203,4 @@ This ability to process images and text together enables many applications, incl
 
 ## Wrap Up
 
-Gemini's multimodal capabilities significantly broaden the scope of tasks you can accomplish. By leveraging the Python SDK and libraries like Pillow, you can easily combine text prompts and image data in a single API call. The key is structuring the `contents` parameter as a list containing both your textual instructions and the loaded image object. This allows you to build sophisticated applications that can "see" and reason about visual information based on your specific textual guidance. Remember to use a model that supports multimodal input and include `Pillow` in your project dependencies.
+Gemini's multimodal capabilities significantly broaden the scope of tasks you can accomplish. By leveraging the Python SDK and libraries like Pillow, you can easily combine text prompts and image data in a single API call. The key is structuring the `contents` parameter as a list containing both your textual instructions and the loaded image object. This allows you to build sophisticated applications that can "see" and reason about visual information based on your specific textual guidance. Remember to use a model that supports multimodal input and include `Pillow` in your project dependencies (via `uv add Pillow`).
