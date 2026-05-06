@@ -1,0 +1,9 @@
+[project]
+name = "google-adk-examples"
+version = "0.1.0"
+description = "Derived from Google's ADK example deep-search"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+  "google-adk>=1.8.0",
+]
