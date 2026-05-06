@@ -1,25 +1,60 @@
-# Using Gemini with Google Apps
+# Using Gemini with Google Apps — Gmail Email Summarization
 
-## Get credentials to access Google apps
+![System Design](FIG_9_optional_google_apps.jpg)
 
-Getting the creds object is the crucial step for authorizing your Python script to access Google Workspace data (like Gmail, Calendar, etc.) on behalf of a user (which is likely yourself for your solo work). This uses the OAuth 2.0 protocol.
+This directory demonstrates how to combine Google Workspace APIs with Gemini AI to automatically fetch, parse, and summarize your Gmail emails using natural language.
+
+## Prerequisites
+
+- Python 3.10+
+- A `GOOGLE_API_KEY` environment variable set with your Google AI API key
+- OAuth 2.0 credentials for Google Workspace (see setup instructions below)
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Get Credentials to Access Google Apps
+
+Getting the `creds` object is the crucial step for authorizing your Python script to access Google Workspace data (like Gmail, Calendar, etc.) on behalf of a user (which is likely yourself for your solo work). This uses the OAuth 2.0 protocol.
 
 Here is the Google Cloud Console URI:
 
     https://cloud.google.com/cloud-console/welcome
 
-Create a credential for viewing GMail data and save to a file **~/.gmail_cred**
+Create a credential for viewing Gmail data and save to a file **~/.gmail_cred**
 
-Here's the standard process, particularly relevant for scripts you run locally (like the examples for your book):
+### Setup Steps
 
-Enable the API: Go to the Google Cloud Console (console.cloud.google.com). Select or create a project. Navigate to "APIs & Services" > "Library" and search for the specific APIs you need (e.g., "Gmail API", "Google Calendar API", "Google Drive API", "Google Docs API"). Enable each one you intend to use.
+1. **Enable the API**: Go to the Google Cloud Console → "APIs & Services" → "Library" and enable the Gmail API (and any other APIs you need like Calendar, Drive, Docs).
 
-Create OAuth 2.0 Credentials:
+2. **Create OAuth 2.0 Credentials**:
+   - Go to "APIs & Services" → "Credentials"
+   - Click "+ CREATE CREDENTIALS" → "OAuth client ID"
+   - Configure the OAuth consent screen (select "External" user type for testing)
+   - Choose "Desktop app" as the application type
+   - Download the credentials JSON file and save it securely
 
-Go to "APIs & Services" > "Credentials".
-Click "+ CREATE CREDENTIALS" and choose "OAuth client ID".
-If prompted, configure the "OAuth consent screen" first. For testing/personal use, you can often select "External" user type and fill in the required app name, user support email, and developer contact info. You might need to add your Google account email as a "Test user" while the app is in testing status.
-For "Application type", choose "Desktop app" (this is suitable for scripts run locally).
-Give it a name (e.g., "My Book Script Client").
-Click "Create".
-Download Credentials File: After creation, a pop-up will show your "Client ID" and "Client Secret". More importantly, click the "DOWNLOAD JSON" button. Save this file and rename it to credentials.json. Place this file in the same directory as your Python script, or somewhere secure where your script can access it. Treat this file like a password - keep it secure!
+3. **Treat the credentials file like a password** — keep it secure and never commit it to version control.
+
+## Scripts
+
+### `gmail_test.py`
+
+Fetches recent emails matching a search query, extracts their content (handling both plain text and HTML MIME types via BeautifulSoup), combines them into a context window, and sends them to Gemini for summarization.
+
+```bash
+python gmail_test.py
+```
+
+### `text_generation.py`
+
+A simple Gemini text generation example (same as in `1_start_with_auth_and_setup`) included for reference.
+
+## Key Concepts
+
+- **OAuth 2.0 Authentication**: Required for accessing personal Google Workspace data; uses the `googleapiclient` library to build service objects.
+- **MIME Parsing**: Emails come in various formats; the script handles `text/plain` and `text/html` parts, using BeautifulSoup for HTML-to-text extraction.
+- **AI Summarization Pipeline**: Raw email content is combined into a single prompt context and sent to Gemini for concise summarization.

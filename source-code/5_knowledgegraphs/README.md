@@ -1,83 +1,50 @@
-# KnowledgeGraph example derived from an example in my "Ollama in Action book
+# Knowledge Graph QA with Kuzu, LangChain, and Gemini
 
-## Example output
+![System Design](FIG_5_knowledgegraphs.jpg)
+
+This example builds a movie knowledge graph using the [Kuzu](https://kuzudb.com/) embedded graph database, then uses LangChain's `KuzuQAChain` with Google Gemini to answer natural language questions by automatically generating and executing Cypher queries.
+
+Derived from an example in the "Ollama in Action" book.
+
+## Prerequisites
+
+- Python 3.10+
+- A `GOOGLE_API_KEY` environment variable set with your Google AI API key
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Script
+
+### `movies_demo.py`
+
+1. **Creates a graph schema** with `Person` and `Movie` nodes connected by `ActedIn` relationships
+2. **Populates the graph** with actors (Al Pacino, Robert De Niro, Marlon Brando, Diane Keaton) and classic films
+3. **Runs natural language queries** through the KuzuQAChain, which:
+   - Sends the question to Gemini to generate a Cypher query
+   - Executes the Cypher against the Kuzu database
+   - Sends the results back to Gemini for a natural language answer
+
+```bash
+python movies_demo.py
+```
+
+### Example Output
 
 ```text
-$ p gemini_kuzu.py
-Graph Schema:
-Node properties: [{'properties': [('name', 'STRING')], 'label': 'Movie'}, {'properties': [('name', 'STRING'), ('birthDate', 'STRING')], 'label': 'Person'}]
-Relationships properties: [{'properties': [], 'label': 'ActedIn'}]
-Relationships: ['(:Person)-[:ActedIn]->(:Movie)']
-
-------------------------------
-
 > Question: Who acted in The Godfather: Part II?
-
-
-> Entering new KuzuQAChain chain...
 Generated Cypher:
 MATCH (p:Person)-[:ActedIn]->(m:Movie {name: 'The Godfather: Part II'}) RETURN p.name
 Full Context:
 [{'p.name': 'Al Pacino'}, {'p.name': 'Robert De Niro'}, {'p.name': 'Diane Keaton'}]
-
-> Finished chain.
 < Answer: Al Pacino, Robert De Niro, and Diane Keaton acted in The Godfather: Part II.
-------------------------------
-
-> Question: Robert De Niro played in which movies?
-
-
-> Entering new KuzuQAChain chain...
-Generated Cypher:
-MATCH (p:Person)-[:ActedIn]->(m:Movie) WHERE p.name = 'Robert De Niro' RETURN m.name
-Full Context:
-[{'m.name': 'The Godfather: Part II'}]
-
-> Finished chain.
-< Answer: Robert De Niro played in The Godfather: Part II.
-------------------------------
-
-> Question: Which actors acted in Apocalypse Now?
-
-
-> Entering new KuzuQAChain chain...
-Generated Cypher:
-MATCH (p:Person)-[:ActedIn]->(m:Movie {name: 'Apocalypse Now'}) RETURN p.name
-Full Context:
-[{'p.name': 'Al Pacino'}, {'p.name': 'Marlon Brando'}]
-
-> Finished chain.
-< Answer: Al Pacino, Marlon Brando acted in Apocalypse Now.
-------------------------------
-
-> Question: What movies did Diane Keaton act in?
-
-
-> Entering new KuzuQAChain chain...
-Generated Cypher:
-MATCH (p:Person)-[:ActedIn]->(m:Movie) WHERE p.name = 'Diane Keaton' RETURN m.name
-Full Context:
-[{'m.name': 'The Godfather: Part II'}, {'m.name': 'Annie Hall'}]
-
-> Finished chain.
-< Answer: Diane Keaton acted in *The Godfather: Part II* and *Annie Hall*.
-------------------------------
-
-> Question: Which actors appeared in more than one movie in the database?
-
-
-> Entering new KuzuQAChain chain...
-Generated Cypher:
-MATCH (p:Person)-[:ActedIn]->(m:Movie)
-WITH p, COUNT(m) AS movieCount
-WHERE movieCount > 1
-RETURN p.name
-Full Context:
-[{'p.name': 'Diane Keaton'}, {'p.name': 'Al Pacino'}]
-
-> Finished chain.
-< Answer: Diane Keaton and Al Pacino appeared in more than one movie in the database.
-------------------------------
-
-Example complete.
 ```
+
+## Key Concepts
+
+- **Graph Database**: Kuzu provides an embedded, high-performance graph database — no server setup required.
+- **LangChain Integration**: `KuzuQAChain` orchestrates the full pipeline from natural language question → Cypher generation → query execution → answer synthesis.
+- **Gemini as Cypher Generator**: The LLM translates user questions into valid Cypher queries based on the graph schema, then formulates the answer from query results.

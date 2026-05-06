@@ -1,12 +1,33 @@
-# Using Gemini with images
+# Using Gemini with Images — Multimodal Photo Understanding
 
-Start by installing the Python requirements in requirements.txt
+![System Design](FIG_3_images_and_text.jpg)
 
-Run:
+This directory demonstrates Gemini's multimodal capabilities by sending an image along with a text prompt to the API. The script analyzes a photograph and returns structured JSON with bounding boxes and descriptions of people in the image.
 
-    python photo_understanding.py
+## Prerequisites
 
-The output looks like:
+- Python 3.10+
+- A `GOOGLE_API_KEY` environment variable set with your Google AI API key
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Script
+
+### `photo_understanding.py`
+
+Loads an image (`../data/poker.jpeg`) using PIL, sends it to Gemini with two successive prompts:
+1. **General identification** — detects people and returns bounding boxes with descriptions
+2. **Detailed analysis** — focuses on what each person is holding in their hands
+
+```bash
+python photo_understanding.py
+```
+
+### Example Output
 
 ```json
 [
@@ -18,12 +39,8 @@ The output looks like:
 ]
 ```
 
-```json
-[
-  {"box_2d": [179, 597, 1000, 1000], "label": "a man sitting at a table playing cards with four other people. He is holding cards in his left hand."},
-  {"box_2d": [206, 150, 469, 348], "label": "a man sitting at a table playing cards. He is holding a card in his right hand."},
-  {"box_2d": [256, 739, 523, 875], "label": "a woman sitting at a table playing cards."},
-  {"box_2d": [198, 437, 389, 628], "label": "a woman sitting at a table playing cards. She is holding a card in her right hand."},
-  {"box_2d": [254, 0, 1000, 327], "label": "a man sitting at a table playing cards. He is holding a card in his right hand."}
-]
-```
+## Key Concepts
+
+- **Multimodal Input**: Gemini accepts a list of `[prompt, image]` as the `contents` parameter, enabling combined text+image reasoning.
+- **Bounding Box Detection**: The prompt instructs Gemini to return structured JSON with `box_2d` coordinates and `label` descriptions.
+- **ThinkingConfig with budget=0**: Disables internal reasoning for faster, more direct responses when deep analysis isn't needed.
