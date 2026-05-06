@@ -14,5 +14,6 @@ python_gemini_and_google_colab.md
 part_3_agents.md
 gemini-cli-introduction.md
 gemini-cli-agent-workflows.md
+knowledgegraphs.md
 google_agent_toolkit.md
 wrapup.md

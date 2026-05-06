@@ -1,2 +1,0 @@
-The example in this directory is not yet in the book
-

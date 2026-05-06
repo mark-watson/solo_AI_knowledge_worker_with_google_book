@@ -1,5 +1,7 @@
 # Python Research Agent Using Google Agent Tool Kit
 
+![System architecture for the Deep Search multi-agent research pipeline](resources/FIG_a_google_agent_toolkit_example.jpg)
+
 The Google Agent Development Kit (ADK) is an open-source Python framework for building multi-agent AI systems. In this chapter we build a deep research agent that plans investigations, executes web searches, evaluates its own findings, and produces a professionally cited report — all orchestrated by cooperating LLM-powered agents running on the Gemini model family.
 
 ## Overview of Google Agent Toolkit

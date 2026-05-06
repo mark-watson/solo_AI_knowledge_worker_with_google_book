@@ -1,9 +1,10 @@
 import kuzu
-from langchain.chains import KuzuQAChain
+from langchain_community.chains.graph_qa.kuzu import KuzuQAChain
 from langchain_community.graphs import KuzuGraph
 # Import the Gemini LLM
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
+import shutil
 
 # --- Optional: Set your Google API Key ---
 # If you haven't set it as an environment variable, you can do it here
@@ -11,7 +12,14 @@ import os
 # Alternatively, pass it directly to ChatGoogleGenerativeAI:
 # llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key="YOUR_GOOGLE_API_KEY")
 
-db = kuzu.Database("test_db_gemini") # Use a new DB path to avoid conflicts
+db_path = "test_db_gemini"
+if os.path.exists(db_path):
+    if os.path.isdir(db_path):
+        shutil.rmtree(db_path)
+    else:
+        os.remove(db_path)
+
+db = kuzu.Database(db_path) # Use a new DB path to avoid conflicts
 conn = kuzu.Connection(db)
 
 # --- Schema and Data Creation (same as your original code) ---
@@ -65,9 +73,8 @@ graph = KuzuGraph(db, allow_dangerous_requests=True)
 # --- Instantiate Gemini LLM ---
 # Ensure you have your GOOGLE_API_KEY environment variable set
 # or pass it directly to the constructor.
-# Common models include "gemini-pro" or "gemini-1.5-pro-latest"
 try:
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro-latest")
+    llm = ChatGoogleGenerativeAI(model="gemini-3-flash-preview")
     # You can also specify temperature, top_p, etc.
     # llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro-latest", temperature=0.7)
 except Exception as e:

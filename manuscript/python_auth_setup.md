@@ -1,5 +1,7 @@
 # First Steps Using Python with the Gemini Python Library
 
+![System architecture for authentication and text generation with the Gemini API](resources/FIG_1_start_with_auth_and_setup.jpg)
+
 **Introduction**
 
 Welcome to your first practical steps in harnessing the power of Google's Gemini models using Python. The Gemini API provides access to Google's state-of-the-art large language models, enabling you to integrate generative AI capabilities into your applications. To facilitate this interaction within a Python environment, Google provides the `google-genai` library, often referred to as the Gemini Python SDK (Software Development Kit).

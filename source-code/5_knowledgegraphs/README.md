@@ -8,28 +8,31 @@ Derived from an example in the "Ollama in Action" book.
 
 ## Prerequisites
 
-- Python 3.10+
+- Python 3.12 (Recommended for Kuzu binary compatibility)
 - A `GOOGLE_API_KEY` environment variable set with your Google AI API key
 
-Install dependencies:
+Install dependencies and run with `uv`:
 
 ```bash
-pip install -r requirements.txt
+uv sync
+uv run movies_demo.py
 ```
 
 ## Script
 
 ### `movies_demo.py`
 
-1. **Creates a graph schema** with `Person` and `Movie` nodes connected by `ActedIn` relationships
-2. **Populates the graph** with actors (Al Pacino, Robert De Niro, Marlon Brando, Diane Keaton) and classic films
-3. **Runs natural language queries** through the KuzuQAChain, which:
-   - Sends the question to Gemini to generate a Cypher query
-   - Executes the Cypher against the Kuzu database
-   - Sends the results back to Gemini for a natural language answer
+1. **Cleans up existing database** by removing the `test_db_gemini` path to allow for clean re-runs.
+2. **Creates a graph schema** with `Person` and `Movie` nodes connected by `ActedIn` relationships.
+3. **Populates the graph** with actors and classic films.
+4. **Runs natural language queries** through the `KuzuQAChain` (from `langchain_community`), which:
+   - Sends the question to **Gemini 2.0** to generate a Cypher query.
+   - Executes the Cypher against the Kuzu database.
+   - Sends the results back to Gemini for a natural language answer.
+
 
 ```bash
-python movies_demo.py
+uv run movies_demo.py
 ```
 
 ### Example Output
