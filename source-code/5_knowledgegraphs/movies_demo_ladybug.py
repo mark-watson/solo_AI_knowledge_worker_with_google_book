@@ -89,9 +89,8 @@ def get_schema(conn: lb.Connection) -> str:
             while info.has_next():
                 r = info.get_next()
                 props.append(f"  - {r[1]}: {r[2]}")
-            schema_lines.append(f"  :{table_name} {{{', '.join(p[2:] if len(p) > 2 else p[-1]) for p in [props]}}}")
-            for p in props:
-                schema_lines.append(p)
+            prop_summary = ", ".join(p.strip() for p in props)
+            schema_lines.append(f"   :{table_name} {{{prop_summary}}}")
         elif table_type == "REL":
             conn_info = conn.execute(f"CALL SHOW_CONNECTION('{table_name}') RETURN *;")
             rows = []

@@ -3,8 +3,10 @@ name = "5-knowledgegraphs"
 version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = [
-    "kuzu",
+    "ladybug>=0.16.1",
     "langchain>=1.2.17",
     "langchain-community>=0.4.1",
     "langchain-google-genai>=4.2.2",
+    "llama-index-core>=0.14.21",
+    "llama-index-graph-stores-ladybug>=0.3.0",
 ]
