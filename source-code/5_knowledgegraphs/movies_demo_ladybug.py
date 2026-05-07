@@ -110,7 +110,7 @@ print("-" * 30)
 # LLM setup
 # ---------------------------------------------------------------------------
 try:
-    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-preview")
+    llm = ChatGoogleGenerativeAI(model="gemini-3.1-flash-lite")
 except Exception as e:
     print(f"Error initializing Gemini LLM. Ensure GOOGLE_API_KEY is set.")
     print(f"Details: {e}")
@@ -145,11 +145,26 @@ cypher_chain = cypher_prompt | llm
 qa_chain = qa_prompt | llm
 
 
+def extract_text(content) -> str:
+    """Helper to extract text from LangChain message content."""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        text_parts = []
+        for part in content:
+            if isinstance(part, str):
+                text_parts.append(part)
+            elif isinstance(part, dict) and "text" in part:
+                text_parts.append(part["text"])
+        return "".join(text_parts)
+    return str(content)
+
+
 def ask_graph(question: str) -> str:
     """Ask a natural language question against the graph database."""
     # Step 1: Generate Cypher
     cypher_response = cypher_chain.invoke({"schema": SCHEMA, "question": question})
-    cypher = cypher_response.content.strip()
+    cypher = extract_text(cypher_response.content).strip()
     # Strip markdown fences if present
     if cypher.startswith("```"):
         cypher = cypher.split("\n", 1)[-1].rstrip("```")
@@ -167,8 +182,8 @@ def ask_graph(question: str) -> str:
         return f"Error executing Cypher query: {e}\nQuery was: {cypher}"
 
     # Step 3: Generate natural language answer
-    answer = qa_chain.invoke({"question": question, "context": rows})
-    return answer.content
+    answer_response = qa_chain.invoke({"question": question, "context": rows})
+    return extract_text(answer_response.content)
 
 
 # ---------------------------------------------------------------------------

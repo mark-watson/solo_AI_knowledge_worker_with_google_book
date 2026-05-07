@@ -8,5 +8,4 @@ dependencies = [
     "langchain-community>=0.4.1",
     "langchain-google-genai>=4.2.2",
     "llama-index-core>=0.14.21",
-    "llama-index-graph-stores-ladybug>=0.3.0",
 ]

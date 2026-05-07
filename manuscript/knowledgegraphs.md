@@ -1,15 +1,15 @@
-# Knowledge Graphs with Kuzu and Gemini
+# Knowledge Graphs with LadyBug and Gemini
 
 
 Knowledge graphs represent information as networks of entities (nodes) connected by relationships (edges). Unlike flat tables or plain text documents, graphs capture the *structure* of knowledge — who acted in which film, which company acquired which startup, which gene regulates which protein. For solo knowledge workers, knowledge graphs offer a powerful way to organize, query, and reason over interconnected data that would be awkward to fit into spreadsheets or relational databases.
 
 In this chapter we combine three technologies to build a natural language question-answering system over a knowledge graph:
 
-- **Kuzu** — a high-performance, embedded graph database that requires no server setup
-- **LangChain** — an orchestration framework that wires LLMs to external tools and data sources
+- **LadyBug** — a high-performance, embedded graph database (a fork of Kuzu) that requires no server setup
+- **LangChain** — an orchestration framework that we use to wire Gemini to our graph data
 - **Google Gemini** — the LLM that translates natural language questions into graph queries and formulates human-readable answers
 
-![System architecture for Knowledge Graph QA with Kuzu, LangChain, and Gemini](resources/FIG_5_knowledgegraphs.jpg)
+![System architecture for Knowledge Graph QA with LadyBug and Gemini](resources/FIG_5_knowledgegraphs.jpg)
 
 ## Why Knowledge Graphs Matter for Solo Knowledge Workers
 
@@ -21,11 +21,11 @@ For solo consultants, researchers, and content creators, knowledge graphs are es
 - **Client/project management**: Tracking relationships between contacts, companies, deliverables, and skills
 - **Content knowledge bases**: Organizing articles, tags, sources, and citations as a graph you can query in natural language
 
-## The Kuzu Embedded Graph Database
+## The LadyBug Embedded Graph Database
 
-Kuzu is an embedded, ACID-compliant graph database written in C++ with Python bindings. "Embedded" means it runs in-process — there is no separate database server to install or manage. You simply create a database directory and start issuing queries. This makes Kuzu ideal for solo developers and small projects where operational overhead should be minimal.
+LadyBug is an embedded, ACID-compliant graph database (forked from Kuzu) written in C++ with Python bindings. "Embedded" means it runs in-process — there is no separate database server to install or manage. You simply create a database directory and start issuing queries. This makes LadyBug ideal for solo developers and small projects where operational overhead should be minimal.
 
-Kuzu uses the **Cypher** query language, which is the most widely adopted language for property graphs. Cypher reads like ASCII art for graphs:
+LadyBug uses the **Cypher** query language, which is the most widely adopted language for property graphs. Cypher reads like ASCII art for graphs:
 
 ```cypher
 MATCH (p:Person)-[:ActedIn]->(m:Movie)
@@ -47,71 +47,94 @@ Our example builds a small movie knowledge graph with two node types (`Person` a
 The first part of the script creates the graph schema and inserts data using Cypher statements:
 
 ```python
-import kuzu
-from langchain.chains import KuzuQAChain
-from langchain_community.graphs import KuzuGraph
+import ladybug as lb
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.prompts import ChatPromptTemplate
 import os
+import shutil
 
-db = kuzu.Database("test_db_gemini")
-conn = kuzu.Connection(db)
+DB_PATH = "test_db_ladybug"
+db = lb.Database(DB_PATH)
+conn = lb.Connection(db)
 
 # Create schema
-conn.execute("CREATE NODE TABLE Movie (name STRING, PRIMARY KEY(name))")
-conn.execute(
-    "CREATE NODE TABLE Person (name STRING, birthDate STRING, PRIMARY KEY(name))"
-)
+conn.execute("CREATE NODE TABLE Movie (name STRING PRIMARY KEY)")
+conn.execute("CREATE NODE TABLE Person (name STRING, birthDate STRING PRIMARY KEY)")
 conn.execute("CREATE REL TABLE ActedIn (FROM Person TO Movie)")
 ```
 
-Each node table has a primary key (the `name` field), and the relationship table `ActedIn` defines directed edges from `Person` nodes to `Movie` nodes. We then insert actors, movies, and the relationships between them:
+Each node table has a primary key, and the relationship table `ActedIn` defines directed edges from `Person` nodes to `Movie` nodes. We then insert actors, movies, and the relationships between them:
 
 ```python
 conn.execute("CREATE (:Person {name: 'Al Pacino', birthDate: '1940-04-25'})")
-conn.execute("CREATE (:Person {name: 'Robert De Niro', birthDate: '1943-08-17'})")
 conn.execute("CREATE (:Movie {name: 'The Godfather'})")
-conn.execute("CREATE (:Movie {name: 'The Godfather: Part II'})")
-conn.execute(
-    "CREATE (:Movie {name: 'The Godfather Coda: The Death of Michael Corleone'})"
-)
 
 # Create relationships
 conn.execute(
-    "MATCH (p:Person), (m:Movie) WHERE p.name = 'Al Pacino' "
-    "AND m.name = 'The Godfather' CREATE (p)-[:ActedIn]->(m)"
+    f"MATCH (p:Person), (m:Movie) "
+    f"WHERE p.name = 'Al Pacino' AND m.name = 'The Godfather' "
+    f"CREATE (p)-[:ActedIn]->(m)"
 )
 ```
 
 Additional actors (Marlon Brando, Diane Keaton) and films (Apocalypse Now, Annie Hall) are added with their respective `ActedIn` relationships.
 
-## Connecting Gemini to the Graph via LangChain
+## Implementing a Text2Cypher Chain Manually
 
-The real power of this example emerges when we connect the knowledge graph to Gemini through LangChain's `KuzuQAChain`. This chain automates the entire question-answering pipeline:
+Since specialized LangChain integrations for LadyBug are evolving, we implement a robust "Text2Cypher" chain manually using LangChain Expression Language (LCEL). This involves two main steps: first, generating a Cypher query from the natural language question, and second, using the database results to generate a final answer.
 
-1. The user asks a natural language question
-2. Gemini generates a Cypher query based on the graph schema
-3. The Cypher query executes against the Kuzu database
-4. The query results are sent back to Gemini
-5. Gemini formulates a natural language answer
+We start by defining a helper to extract the schema from the database so Gemini knows what labels and properties are available:
 
 ```python
-graph = KuzuGraph(db, allow_dangerous_requests=True)
+def get_schema(conn: lb.Connection) -> str:
+    """Return a human-readable schema description for the LLM."""
+    tables = conn.execute("CALL SHOW_TABLES() RETURN *;")
+    schema_lines = ["Graph Schema:", "=============", "Node labels and properties:"]
+    while tables.has_next():
+        row = tables.get_next()
+        table_name, table_type = row[1], row[2]
+        if table_type == "NODE":
+            info = conn.execute(f"CALL TABLE_INFO('{table_name}') RETURN *;")
+            props = []
+            while info.has_next():
+                r = info.get_next()
+                props.append(f"  - {r[1]}: {r[2]}")
+            prop_summary = ", ".join(p.strip() for p in props)
+            schema_lines.append(f"   :{table_name} {{{prop_summary}}}")
+        elif table_type == "REL":
+            conn_info = conn.execute(f"CALL SHOW_CONNECTION('{table_name}') RETURN *;")
+            if conn_info.has_next():
+                r = conn_info.get_next()
+                schema_lines.append(f"  (: {r[0]} )-[:{table_name}]->(: {r[1]} )")
+    return "\n".join(schema_lines)
 
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro-latest")
-
-chain = KuzuQAChain.from_llm(
-    llm=llm,
-    graph=graph,
-    verbose=True,
-    allow_dangerous_requests=True,
-)
+SCHEMA = get_schema(conn)
 ```
 
-The `verbose=True` flag is especially instructive during development because it prints the generated Cypher query and the raw database results before the final answer — letting you see exactly how Gemini translates your question.
+Next, we set up the prompts and the LCEL chains:
+
+```python
+llm = ChatGoogleGenerativeAI(model="gemini-3.1-flash-lite")
+
+cypher_prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a Cypher query expert... [Schema and rules here]"),
+    ("human", "Question: {question}\n\nCypher:"),
+])
+
+qa_prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful assistant. Answer based on query results."),
+    ("human", "Question: {question}\n\nQuery Results: {context}\n\nAnswer:"),
+])
+
+cypher_chain = cypher_prompt | llm
+qa_chain = qa_prompt | llm
+```
+
+The `ask_graph` function orchestration involves invoking the `cypher_chain`, cleaning the output, executing it against the database, and finally passing the results to the `qa_chain`.
 
 ## Asking Natural Language Questions
 
-With the chain set up, we can ask questions in plain English and receive answers grounded in the graph data:
+With the setup complete, we can ask questions in plain English and receive answers grounded in the graph data:
 
 ```python
 questions = [
@@ -124,8 +147,8 @@ questions = [
 
 for question in questions:
     print(f"\n> Question: {question}")
-    result = chain.invoke(question)
-    print(f"< Answer: {result['result']}")
+    answer = ask_graph(question)
+    print(f"< Answer: {answer}")
 ```
 
 ### Example Output
@@ -134,31 +157,24 @@ Here is typical output from running the script. Notice how Gemini generates corr
 
 ```text
 > Question: Who acted in The Godfather: Part II?
-Generated Cypher:
-MATCH (p:Person)-[:ActedIn]->(m:Movie {name: 'The Godfather: Part II'}) RETURN p.name
-Full Context:
-[{'p.name': 'Al Pacino'}, {'p.name': 'Robert De Niro'}, {'p.name': 'Diane Keaton'}]
-< Answer: Al Pacino, Robert De Niro, and Diane Keaton acted in The Godfather: Part II.
+  Generated Cypher: MATCH (p:Person)-[:ActedIn]->(m:Movie {name: "The Godfather: Part II"})
+RETURN p.name
+< Answer: The actors in The Godfather: Part II include Al Pacino, Robert De Niro, and Diane Keaton.
 
 > Question: Robert De Niro played in which movies?
-Generated Cypher:
-MATCH (p:Person)-[:ActedIn]->(m:Movie) WHERE p.name = 'Robert De Niro' RETURN m.name
-Full Context:
-[{'m.name': 'The Godfather: Part II'}]
+  Generated Cypher: MATCH (p:Person {name: "Robert De Niro"})-[:ActedIn]->(m:Movie)
+RETURN m.name
 < Answer: Robert De Niro played in The Godfather: Part II.
 
 > Question: Which actors appeared in more than one movie in the database?
-Generated Cypher:
-MATCH (p:Person)-[:ActedIn]->(m:Movie)
-WITH p, COUNT(m) AS movieCount
+  Generated Cypher: MATCH (p:Person)-[:ActedIn]->(m:Movie)
+WITH p, count(m) AS movieCount
 WHERE movieCount > 1
-RETURN p.name
-Full Context:
-[{'p.name': 'Diane Keaton'}, {'p.name': 'Al Pacino'}]
-< Answer: Diane Keaton and Al Pacino appeared in more than one movie in the database.
+RETURN p.name, movieCount
+< Answer: The actors who appeared in more than one movie are Diane Keaton and Al Pacino.
 ```
 
-The last question is particularly noteworthy: Gemini correctly generates a Cypher query with aggregation (`COUNT`) and filtering (`WHERE movieCount > 1`) — demonstrating that the LLM understands both the graph schema and the semantics of the question.
+The last question demonstrates that Gemini understands both the graph schema and the semantics of the question, correctly using aggregation and filtering.
 
 ## Running the Example
 
@@ -166,11 +182,11 @@ Ensure your `GOOGLE_API_KEY` environment variable is set, then install the depen
 
 ```bash
 uv sync
-uv run movies_demo.py
+uv run movies_demo_ladybug.py
 ```
 
-The script creates a local `test_db_gemini/` directory for the Kuzu database. You can delete this directory to start fresh on subsequent runs.
+The script creates a local `test_db_ladybug/` directory for the database. You can delete this directory to start fresh on subsequent runs.
 
 ## Wrap Up
 
-Knowledge graphs paired with LLMs create a powerful pattern: the graph provides structured, reliable data while the LLM handles the translation between human language and formal queries. Kuzu's embedded architecture eliminates operational complexity, and LangChain's `KuzuQAChain` handles the orchestration automatically. This combination lets solo knowledge workers build domain-specific question-answering systems — over client data, research corpora, or any structured knowledge — with minimal code and no infrastructure to manage.
+Knowledge graphs paired with LLMs create a powerful pattern: the graph provides structured, reliable data while the LLM handles the translation between human language and formal queries. LadyBug's embedded architecture eliminates operational complexity, and manual Text2Cypher implementation via LangChain provides maximum control. This combination lets solo knowledge workers build domain-specific question-answering systems — over client data, research corpora, or any structured knowledge — with minimal code and no infrastructure to manage.
