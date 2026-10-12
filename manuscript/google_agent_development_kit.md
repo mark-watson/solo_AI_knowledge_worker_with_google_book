@@ -1,3 +1,27 @@
+# Python Research Agent Using Google ADK
+
+![System architecture for the Deep Search multi-agent research pipeline](resources/FIG_a_google_adk_example.jpg)
+
+The Google Agent Development Kit (ADK) is an open-source Python framework for building multi-agent AI systems. In this chapter we build a deep research agent that plans investigations, executes web searches, evaluates its own findings, and produces a professionally cited report, all orchestrated by cooperating LLM-powered agents running on the Gemini model family.
+
+## Overview of Google ADK
+
+The ADK provides composable agent primitives, `LlmAgent`, `SequentialAgent`, `LoopAgent`, and `BaseAgent`, that let you assemble complex workflows from simple, single-purpose agents. Each agent has its own instruction prompt, optional tools (such as Google Search), and structured output schemas enforced via Pydantic models. Agents communicate through shared session state, and the framework handles the event loop, tool dispatch, and callback lifecycle automatically. This design makes it straightforward to build systems where one agent plans, another researches, a third evaluates quality, and a fourth composes the final output.
+
+## Research Agent
+
+The example lives in `source-code/a_google_adk_example`. It needs Python 3.12 or newer and the `google-adk` package, which pulls in its own copy of the Gemini SDK:
+
+```bash
+cd source-code/a_google_adk_example
+uv sync
+uv run python deep-search.py
+```
+
+I rewrote Google's full research agent web app example program, simplifying it as a command line utility.
+The following listing shows the complete deep search agent. It defines seven specialized agents wired together in a sequential pipeline with an inner refinement loop. The `interactive_planner` root agent receives a research topic from the user, delegates plan creation to the `plan_generator`, and upon approval hands off to the `research_pipeline`. Inside the pipeline, the `section_researcher` executes Google searches and synthesizes findings, the `research_evaluator` grades coverage quality, and the `enhanced_search_executor` fills any gaps, looping up to three times until the evaluator passes. Finally, the `report_composer` writes a Markdown report with inline source citations.
+
+```python
 # Derived from: https://github.com/google/adk-samples/tree/main/python/agents/deep-search
 
 import re
@@ -16,10 +40,11 @@ from google.adk.planners import BuiltInPlanner
 from google.adk.tools import google_search
 from google.adk.tools.agent_tool import AgentTool
 
-# Defaults to Gemini 2.0 Flash for balanced speed/reasoning
-MODEL_NAME = "gemini-3-flash-preview"
+# Google ships new Flash models several times a year. See the model naming
+# note in python_auth_setup.md when this model ID stops working.
+MODEL_NAME = "gemini-3.8-flash"
 
-# Note: GOOGLE_API_KEY shuld be in your environment
+# Note: GOOGLE_API_KEY should be in your environment
 
 
 # --- Structured Outputs ---
@@ -274,3 +299,29 @@ if __name__ == "__main__":
                 break
 
     asyncio.run(main())
+```
+
+The deep search agent demonstrates several patterns that are broadly useful when building agentic AI systems: breaking a complex task into focused sub-agents, using structured Pydantic outputs to enforce data contracts between agents, implementing self-improving loops with quality evaluation, and tracking provenance through source citation callbacks. These same patterns can be adapted for other workflows such as competitive analysis, literature review, market research, or any task where iterative search and synthesis produces better results than a single LLM call.
+
+## Keeping This Example Working
+
+Agent frameworks move quickly, and this chapter depends on two of them: `google-adk` and the Gemini SDK that it pulls in. Two habits keep the example running:
+
+1. **Check that the code still loads before you run a session.** Change into `source-code/a_google_adk_example` and run:
+
+    ```bash
+    uv sync
+    GOOGLE_API_KEY=placeholder uv run python -c "
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('ds', 'deep-search.py')
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    print('root agent:', m.app.root_agent.name)
+    "
+    ```
+
+    This builds every agent and prints the root agent name without making a model call. It catches a removed class or a changed import in a few seconds, which is far cheaper than discovering it mid research session.
+
+2. **Treat the model name as data.** `MODEL_NAME` is one constant at the top of the file. When Google ships a newer Flash model, change that line. The model naming note in the authentication chapter explains stable and preview names.
+
+The `source-code/` directory has a `make verify` target that runs a check like this one for every chapter, and a GitHub Actions workflow runs it on each push. If you copy these examples into your own project, copy that habit too.

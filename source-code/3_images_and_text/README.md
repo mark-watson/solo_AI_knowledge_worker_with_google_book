@@ -6,25 +6,26 @@ This directory demonstrates Gemini's multimodal capabilities by sending an image
 
 ## Prerequisites
 
-- Python 3.10+
+- Python 3.12 or newer
 - A `GOOGLE_API_KEY` environment variable set with your Google AI API key
 
-Install dependencies:
+Install dependencies with `uv`:
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ## Script
 
 ### `photo_understanding.py`
 
-Loads an image (`../data/poker.jpeg`) using PIL, sends it to Gemini with two successive prompts:
+Loads an image (`../data/poker.jpeg`) using PIL, then sends it to Gemini with two successive prompts:
+
 1. **General identification** — detects people and returns bounding boxes with descriptions
 2. **Detailed analysis** — focuses on what each person is holding in their hands
 
 ```bash
-python photo_understanding.py
+uv run python photo_understanding.py
 ```
 
 ### Example Output
@@ -41,6 +42,6 @@ python photo_understanding.py
 
 ## Key Concepts
 
-- **Multimodal Input**: Gemini accepts a list of `[prompt, image]` as the `contents` parameter, enabling combined text+image reasoning.
-- **Bounding Box Detection**: The prompt instructs Gemini to return structured JSON with `box_2d` coordinates and `label` descriptions.
-- **ThinkingConfig with budget=0**: Disables internal reasoning for faster, more direct responses when deep analysis isn't needed.
+- **Multimodal Input**: Gemini accepts a list of `[prompt, image]` as the `contents` parameter, which enables combined text and image reasoning.
+- **Bounding Box Detection**: The prompt asks Gemini to return structured JSON with `box_2d` coordinates and `label` descriptions.
+- **ThinkingConfig with `thinking_level="low"`**: Keeps the response fast. Gemini 3.8 Flash cannot turn thinking off completely, and it does not accept `minimal`.

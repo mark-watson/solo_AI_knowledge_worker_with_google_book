@@ -1,29 +1,30 @@
-# Gemini Thinking Mode Example
+# Gemini Thinking Levels Example
 
-This directory contains a simple example demonstrating Gemini's "thinking" (reasoning) mode, where the model allocates a dedicated token budget for internal chain-of-thought reasoning before producing its final answer.
+This directory contains a simple example of Gemini's thinking feature, where the model reasons internally before it produces its final answer.
 
 ## Prerequisites
 
-- Python 3.10+
+- Python 3.12 or newer
 - A `GOOGLE_API_KEY` environment variable set with your Google AI API key
 
-Install dependencies:
+Install dependencies with `uv`:
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ## Script
 
 ### `demo_1.py`
 
-Sends a consulting-oriented prompt to Gemini with a `thinking_budget` of 500 tokens. This causes the model to perform internal reasoning before responding, often producing more structured and higher-quality output.
+Sends a consulting-oriented prompt to Gemini with `thinking_level="high"`. The model reasons at length before answering, which often produces a more structured response.
 
 ```bash
-python demo_1.py
+uv run python demo_1.py
 ```
 
 ## Key Concepts
 
-- **ThinkingConfig**: The `types.ThinkingConfig(thinking_budget=500)` parameter tells Gemini how many tokens to dedicate to internal reasoning before generating the visible response.
-- **Use Case**: Thinking mode is especially useful for complex tasks like brainstorming, planning, and analysis where deeper reasoning improves output quality.
+- **ThinkingConfig**: `types.ThinkingConfig(thinking_level="high")` sets how much internal reasoning the model does. Accepted levels are `minimal`, `low`, `medium`, and `high`, and each model supports a subset of them. Gemini 3.8 Flash supports `low`, `medium`, and `high`.
+- **Model ID Constant**: `MODEL_ID` is defined once per file. Change that one line when Google ships a newer Flash model.
+- **Legacy Alternative**: `thinking_budget`, a token count, is the older Gemini 2.5 control. It still works on Gemini 3 models, but new code should use `thinking_level`.

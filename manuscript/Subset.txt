@@ -3,6 +3,7 @@ part_1_introduction.md
 who_is_book_for.md
 rise_of_solo_ai_kw.md
 key_concepts.md
+power_prompting.md
 google_ai_ecosystem.md
 gemini_gmail_docs_sheets_meet.md
 part_2_programming.md
@@ -12,8 +13,8 @@ python_thinking.md
 python_images_text.md
 python_gemini_and_google_colab.md
 part_3_agents.md
-gemini-cli-introduction.md
-gemini-cli-agent-workflows.md
+agy-introduction.md
+agy-agent-workflows.md
 knowledgegraphs.md
-google_agent_toolkit.md
+google_agent_development_kit.md
 wrapup.md

@@ -4,21 +4,21 @@
 
 **Introduction**
 
-In the previous chapters, we explored how to interact with Gemini models using text-based prompts, including leveraging Thinking Mode for complex reasoning tasks. However, one of the significant advancements in modern AI is **multimodality** – the ability of models to process and understand information from multiple types of input simultaneously. Several Gemini models excel at this, allowing you to combine text prompts with images (and potentially other data types like audio or video in the future) in a single request.
+In the previous chapters, we explored how to interact with Gemini models using text-based prompts, including setting the thinking level for complex reasoning tasks. However, one of the significant advancements in modern AI is **multimodality**: the ability of models to process and understand information from multiple types of input at once. The Gemini models excel at this, so you can combine text prompts with images, audio, video, and PDF files in a single request.
 
 This chapter focuses on demonstrating how to use the Gemini Python SDK to send both an image and a text prompt to a capable Gemini model. We will ask the model to analyze the content of the image based on instructions provided in the text prompt. This opens up powerful possibilities for visual question answering, image description, object recognition, and more.
 
 ## Prerequisites and Setup
 
-1.  **Multimodal Model:** Ensure the `MODEL_ID` you use corresponds to a Gemini model version that supports image input (e.g., `gemini-1.5-pro`, `gemini-1.5-flash`, or specific preview versions like the one in the example).
-2.  **Python Environment:** You need your Python environment set up as discussed in Chapter 2.
-3.  **Updated Dependencies:** Image processing requires an additional library, Pillow (a fork of PIL - Python Imaging Library). Add it to your project using `uv`:
+1.  **Multimodal Model:** Ensure the `MODEL_ID` you use corresponds to a Gemini model version that supports image input. The examples in this book use `gemini-3.8-flash`, which accepts text, images, video, audio, and PDF files.
+2.  **Python Environment:** You need your Python environment set up as discussed in Chapter 2. Python 3.12 or newer.
+3.  **Updated Dependencies:** Image processing requires an additional library, Pillow (a fork of PIL, the Python Imaging Library). Add it to your project using `uv`:
 
     ```bash
-    uv add 'google-genai>=1.10.0' Pillow
+    uv add 'google-genai>=2.29.0' 'pillow>=12.3.0'
     ```
     * `google-genai`: The Gemini Python SDK, which provides the `genai.Client` interface for interacting with Gemini models.
-    * `Pillow`: This library is essential for opening, manipulating, and preparing image files in Python so they can be sent to the model.
+    * `Pillow`: This library opens, manipulates, and prepares image files in Python so they can be sent to the model.
 
     `uv` will resolve all dependencies, update your `pyproject.toml`, and regenerate the lockfile automatically.
 
@@ -40,122 +40,74 @@ This script demonstrates loading a local image file and sending it along with tw
 *(Please ensure you have an image file located at `../data/poker.jpeg` relative to where you run this script, or modify the `image` path accordingly.)*
 
 ```python
-# --- Example: Multimodal Input (Image and Text) ---
-# Purpose: Send an image and text prompts to Gemini
-#          to analyze the image content.
-
 from google import genai
 from google.genai import types
-from PIL import Image # Used for opening the image file
+from PIL import Image
 
-import os # Used for getting current working directory and API key
+import os
 
-# --- Configuration ---
-try:
-    # 1. Initialize Client
-    client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-    if not os.getenv("GOOGLE_API_KEY"):
-         raise ValueError("GOOGLE_API_KEY environment variable not set.")
+client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
-    # 2. Select a Multimodal Model ID
-    MODEL_ID="gemini-1.5-flash-preview-04-17"
+# Google ships new Flash models several times a year. See the model naming
+# note in python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-3.8-flash"
 
-    # --- First Analysis: General Description and Bounding Boxes ---
+prompt = """
+    Return bounding boxes around people as a JSON array with labels. Never return masks or code fencing. Limit to 10 people.
+    Describe each person identified in a picture.
+      """
 
-    # 3. Define the First Text Prompt
-    prompt = """
-        Return bounding boxes around people as a JSON array with labels. Never return masks or code fencing. Limit to 10 people.
-        Describe each person identified in a picture.
-        """
+image_path = os.path.join(os.getcwd(), "..", "data", "poker.jpeg")
 
-    # 4. Load the Image using Pillow
-    # Assumes the image is in ../data relative to the script's CWD
-    image_path = os.path.join(os.getcwd(), "..", "data", "poker.jpeg")
-    im = Image.open(image_path)
+im = Image.open(image_path)
 
-    # 5. Make the First API Call (Image + First Prompt)
-    #print(f"\n--- Sending Request 1 (General Description) for image: {image} ---")
-    response = client.models.generate_content(
-        model=MODEL_ID,
-        # Key: Pass prompt and image object together in a list
-        contents=[prompt, im],
-        # Configuration: Thinking budget set to 0 (minimal/default pre-computation)
-        config=types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(
-                thinking_budget=0
-            )
+# Gemini 3.8 Flash cannot turn thinking off completely. Use the lowest
+# thinking level when you want the fastest answer.
+response = client.models.generate_content(
+    model=MODEL_ID,
+    contents=[prompt, im],
+    config=types.GenerateContentConfig(
+        thinking_config=types.ThinkingConfig(
+            thinking_level="low"
         )
     )
+)
 
-    # 6. Print the First Response
-    #print("\n--- Response 1 ---")
-    if response.parts:
-        print(response.text)
-    else:
-        print("Response 1 was empty or blocked.")
-        try:
-            print(f"Safety feedback: {response.prompt_feedback}")
-        except AttributeError:
-            pass # Ignore if feedback isn't available
+print(response.text)
 
-    # --- Second Analysis: Focus on Hands ---
+prompt2 = """
+    Return bounding boxes around people as a JSON array with labels. Never return masks or code fencing. Limit to 10 people.
+    Describe each person identified in a picture, specifically what they are holding in their hands.
+      """
 
-    # 7. Define the Second, More Specific Text Prompt
-    prompt2 = """
-        Return bounding boxes around people as a JSON array with labels. Never return masks or code fencing. Limit to 10 people.
-        Describe each person identified in a picture, specifically what they are holding in their hands.
-        """
-
-    # 8. Make the Second API Call (Image + Second Prompt)
-    # Re-uses the loaded image 'im'
-    #print("\n--- Sending Request 2 (Focus on Hands) for the same image ---")
-    response = client.models.generate_content(
-        model=MODEL_ID,
-        # Key: Pass the *new* prompt and the *same* image object
-        contents=[prompt2, im],
-        # Configuration: Same thinking budget setting
-        config=types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(
-                thinking_budget=0
-            )
+response = client.models.generate_content(
+    model=MODEL_ID,
+    contents=[prompt2, im],
+    config=types.GenerateContentConfig(
+        thinking_config=types.ThinkingConfig(
+            thinking_level="low"
         )
     )
+)
 
-    # 9. Print the Second Response
-    #print("\n--- Response 2 ---")
-    if response.parts:
-        print(response.text)
-    else:
-        print("Response 2 was empty or blocked.")
-        try:
-            print(f"Safety feedback: {response.prompt_feedback}")
-        except AttributeError:
-            pass # Ignore if feedback isn't available
-
-except FileNotFoundError:
-     print(f"Error: Image file not found at expected path: {image}")
-     print("Please ensure the image exists at '../data/poker.jpeg' relative to your script execution directory.")
-except ValueError as e:
-     print(f"Configuration Error: {e}")
-except Exception as e:
-    print(f"An error occurred: {e}")
-
+print(response.text)
 ```
 
 
 **Explanation:**
 
-1.  **Imports:** We import `PIL.Image` for image handling, alongside the Gemini libraries and `os`.
-2.  **Client & Model:** Initialization uses `genai.Client` and selects the specified multimodal preview model.
-3.  **Prompt 1:** Defines the initial analysis task – identify people, provide bounding boxes in JSON format (with specific negative constraints like "Never return masks or code fencing"), limit the count, and provide descriptions.
-4.  **Image Loading:** The script constructs the path to the image file (`../data/poker.jpeg`) relative to the current working directory and uses `Image.open()` from the Pillow library to load it into the `im` variable. Error handling for `FileNotFoundError` is added for robustness.
+1.  **Imports:** `PIL.Image` for image handling, alongside the Gemini libraries and `os`.
+2.  **Client & Model:** Initialization uses `genai.Client`, and `MODEL_ID` selects the model. One constant at the top means a model change is a one line edit.
+3.  **Prompt 1:** Defines the first analysis task: identify people, provide bounding boxes in JSON format (with an explicit negative constraint, "Never return masks or code fencing"), limit the count, and provide descriptions.
+4.  **Image Loading:** The script builds the path to the image file (`../data/poker.jpeg`) relative to the working directory and uses `Image.open()` from Pillow to load it into `im`.
 5.  **API Call 1:** This is the core of the multimodal request.
-    * `contents=[prompt, im]`: The text prompt (`prompt`) and the loaded Pillow Image object (`im`) are passed together as a list.
-    * `config=...`: Thinking Mode is configured, but `thinking_budget=0` suggests minimal or default pre-computation is requested for this task, prioritizing speed or assuming the task doesn't require extended reasoning time.
-6.  **Response 1:** The generated `response.text` should contain the JSON array of bounding boxes and the general descriptions requested.
-7.  **Prompt 2:** A new prompt is defined, refining the request to focus specifically on what each person is holding.
-8.  **API Call 2:** A second call is made using the *same* loaded image (`im`) but a *new* text prompt (`prompt2`). The structure is identical, demonstrating how you can ask different questions about the same visual input.
-9.  **Response 2:** The output text should now contain the bounding boxes and descriptions focused on the objects held by the people in the image.
+    * `contents=[prompt, im]`: the text prompt and the loaded Pillow Image object go in one list.
+    * `config=...`: `thinking_level="low"` keeps the answer fast, because describing an image does not need extended reasoning.
+6.  **Response 1:** `response.text` holds the JSON array of bounding boxes and the descriptions.
+7.  **Prompt 2:** A new prompt refines the request to focus on what each person is holding.
+8.  **API Call 2:** A second call uses the *same* loaded image (`im`) with the *new* prompt (`prompt2`). The structure is identical, which shows how to ask several questions about one image.
+9.  **Response 2:** The output now contains bounding boxes and descriptions focused on what the people hold.
+10. **Error Handling:** `Image.open()` raises `FileNotFoundError` when the file is missing. Add a `try`/`except` block around the whole script when you write code that other people will run, and print the path you tried so the error is easy to act on.
 
 ### Interpreting the Output
 
@@ -203,4 +155,4 @@ This ability to process images and text together enables many applications, incl
 
 ## Wrap Up
 
-Gemini's multimodal capabilities significantly broaden the scope of tasks you can accomplish. By leveraging the Python SDK and libraries like Pillow, you can easily combine text prompts and image data in a single API call. The key is structuring the `contents` parameter as a list containing both your textual instructions and the loaded image object. This allows you to build sophisticated applications that can "see" and reason about visual information based on your specific textual guidance. Remember to use a model that supports multimodal input and include `Pillow` in your project dependencies (via `uv add Pillow`).
+Gemini's multimodal capabilities significantly broaden the scope of tasks you can accomplish. By using the Python SDK and a library like Pillow, you can combine text prompts and image data in a single API call. The key is structuring the `contents` parameter as a list that holds your textual instructions and the loaded image object. That lets you build applications that read and reason about visual information under your textual guidance. Remember to use a model that supports multimodal input, keep `Pillow` in your project dependencies (`uv add Pillow`), and use a low thinking level when you want a fast answer.

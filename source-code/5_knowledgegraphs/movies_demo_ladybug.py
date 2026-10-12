@@ -7,6 +7,7 @@ this implements a simple Text2Cypher chain manually:
   2. We execute it against LadyBug
   3. Gemini answers the question using the query results
 """
+
 import ladybug as lb
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -17,6 +18,10 @@ import shutil
 # os.environ["GOOGLE_API_KEY"] = "YOUR_GOOGLE_API_KEY"
 
 DB_PATH = "test_db_ladybug"
+
+# Google ships new Flash models several times a year. See the model naming
+# note in python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-3.8-flash"
 
 # ---------------------------------------------------------------------------
 # Database setup
@@ -110,7 +115,7 @@ print("-" * 30)
 # LLM setup
 # ---------------------------------------------------------------------------
 try:
-    llm = ChatGoogleGenerativeAI(model="gemini-3.1-flash-lite")
+    llm = ChatGoogleGenerativeAI(model=MODEL_ID)
 except Exception as e:
     print(f"Error initializing Gemini LLM. Ensure GOOGLE_API_KEY is set.")
     print(f"Details: {e}")

@@ -1,14 +1,14 @@
 # Deep Search Agent — Google Agent Development Kit (ADK)
 
-![System Design](FIG_a_google_agent_toolkit_example.jpg)
+![System Design](FIG_a_google_adk_example.jpg)
 
-This example implements a multi-agent deep research system using the [Google Agent Development Kit (ADK)](https://github.com/google/adk-python). It demonstrates a sophisticated pipeline that plans research, executes web searches, evaluates quality, and produces a cited report — all orchestrated by multiple cooperating AI agents.
+This example implements a multi-agent deep research system using the [Google Agent Development Kit (ADK)](https://github.com/google/adk-python). It demonstrates a sophisticated pipeline that plans research, executes web searches, evaluates quality, and produces a cited report, all orchestrated by multiple cooperating AI agents.
 
 Derived from: [google/adk-samples — deep-search](https://github.com/google/adk-samples/tree/main/python/agents/deep-search)
 
 ## Prerequisites
 
-- Python 3.10+
+- Python 3.12 or newer
 - A `GOOGLE_API_KEY` environment variable set with your Google AI API key
 
 Install dependencies (uses `uv`):

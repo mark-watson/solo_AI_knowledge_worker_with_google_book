@@ -27,19 +27,25 @@ When I work for corporate customers I use their WorkSpace instantiation but I ha
 
 Gemini serves as a versatile conversational AI assistant, capable of understanding and generating human-like text, engaging in dialogue, summarizing information, translating languages, writing different kinds of creative content, and generating software code.
 
-### Configuring Gemini Advanced Web App
+### Configuring the Gemini Web App
 
-*Note: I use Gemini Advanced but most examples in this book also work with the free version of Gemini.*
+*Note: I use Google AI Pro but most examples in this book also work with the free version of Gemini.*
 
 After logging into [https://gemini.google.com/](https://gemini.google.com/) use the menu in the upper let hand corner (looks like three horizontal lines: the “hamburger” icon) to expand the menu and select **Settings** (last menu item at the bottom) and then elect the **Apps** submenu. This is shown in the last figure. You can now connect Gemini to the Google apps that you want to grant Gemini access to. For work I connect all Google Workspace apps (Gmail, Calendar, Docs, Drive, Keep, and Tasks). For fun and personal use I also connect Google Flights and Hotels, as well as Google Maps, YouTube, and YouTube Music (which I use). Optionally connect to OpenStax to get access to licensed textbooks.
 
 ### Ask Gemini Chat
 
-I use Gemini Chat fairly often interchangeably with OpenAI’s ChatGPT and Anthropic’s Claude with one life hack: I usually only pay for one service at a time. As I write this in May 2025, I subscribe to Gemini Advanced and use Claude and ChatGPT in the free mode. Assuming that you subscribe to Gemini Advanced here are the current models to choose from:
+I use Gemini Chat fairly interchangeably with OpenAI's ChatGPT and Anthropic's Claude with one life hack: I usually only pay for one service at a time. As I write this in October 2026, I subscribe to Google AI Pro and use Claude and ChatGPT in the free mode.
 
-![Available Gemini Advanced models](resources/GeminiModels.jpg)
+The subscription names changed in 2025. What used to be called **Gemini Advanced** is now **Google AI Pro**. Google also sells **Google AI Plus** below it and **Google AI Ultra** above it. The plans differ in model access, rate limits, and which products the subscription covers. The free tier still gives you the Flash models, which is enough for most of the examples in this book.
 
-I usually select Gemini Flash 2.0 for general use because it is fastest and uses less resources (if you care about energy efficiency and the environment. If you want good background on the environmental costs of AI then I recommend reading Kate Crawford’s book **Atlas of AI**.)
+A Google AI Pro subscription now covers more than the chat app. It applies to the Gemini app, Gemini Notebook, Antigravity, and Google AI Studio, each with its own daily quota. That bundle is the reason a solo worker should consider the paid tier: you get one subscription across the tools you use all day.
+
+Assuming that you subscribe to Google AI Pro, here are the kinds of models to choose from. The model picker in the Gemini app lists the Gemini Flash and Pro models, and it also lists models from other vendors, including Claude and GPT-OSS, which Antigravity serves from the same harness:
+
+![Available Gemini models](resources/GeminiModels.jpg)
+
+I usually select a Gemini Flash model for general use because it is fastest and uses fewer resources (if you care about energy efficiency and the environment. If you want good background on the environmental costs of AI then I recommend reading Kate Crawford's book **Atlas of AI**.)
 
 You have four easily used options in the chat input as seen in this figure:
 
@@ -52,25 +58,27 @@ The options are:
 - **Canvas** - is useful for creating documents and software code that can later be downloaded to your computer.
 - **Microphone** - hit the icon that looks like a microphone to enter prompt text with voice input. If you are in a private work place, this is the option I recommend starting with, then hand edit dictated prompt text.
 
-### Using the macOS Gemini App
+### Using the Gemini Desktop and Mobile Apps
 
-If you run on Macs then I recommend that you download the Gemini App. Here is a screenshot:
+If you run on a Mac or on Windows then I recommend that you download the Gemini desktop app. Here is a screenshot:
 
 ![Gemini App for macOS](resources/GeminiMacOSApp.jpg)
 
-Functionally this app is equivalent to running the web app in the Chrome or Safari web browsers.
+Functionally this app is equivalent to running the web app in the Chrome or Safari web browsers. There is also an Android app on Google Play and an iOS app on the App Store, both of which are worth installing if you dictate prompts or take a lot of photographs while you work.
 
 ### Advice On Writing LLM Prompts
 
-Google's Gemini represents a family of sophisticated large language models (LLMs) engineered with powerful multimodal capabilities, capable of processing and understanding not just text, but also image, audio, and video inputs. You can drop image files, text, files containing software, and PDFs into the Gemini chat window and this data supplies context for any text chats and prompts you then manually enter.
+Google's Gemini represents a family of large language models (LLMs) with strong multimodal capabilities. They process not just text, but also image, audio, and video inputs. You can drop image files, text, files containing software, and PDFs into the Gemini chat window and this data supplies context for any text chats and prompts you then manually enter.
 
-You engage with advanced AI systems like Gemini through various interfaces, including web applications and mobile apps, primarily by providing 'prompts'. These prompts, which can range from simple text questions to complex instructions involving uploaded files or even spoken commands, serve as the fundamental mechanism for directing Gemini's behavior and eliciting specific responses, guiding the AI to perform tasks like generating text, analyzing data, creating code, or answering questions based on the provided input.   
+You engage with advanced AI systems like Gemini through various interfaces, including web applications and mobile apps, mainly by providing 'prompts'. These prompts, which can range from simple text questions to complex instructions involving uploaded files or even spoken commands, are the fundamental mechanism for directing Gemini's behavior and eliciting specific responses, guiding the AI to perform tasks like generating text, analyzing data, creating code, or answering questions based on the provided input.
 
-The practice of crafting these inputs effectively is known as prompt engineering or prompt writing. It is often described as both an art and a science, requiring a blend of creativity, linguistic precision, and an understanding of how LLMs like Gemini interpret instructions and generate outputs. At its core, prompt writing is the skill of communicating intent clearly to the AI, guiding it to leverage its vast knowledge and capabilities in the desired direction while navigating its inherent limitations. It bridges the gap between human intention and the AI's operational logic, enabling more controlled and predictable interactions.   
+The practice of crafting these inputs effectively is known as prompt engineering or prompt writing. It combines creativity, precision with language, and an understanding of how LLMs like Gemini interpret instructions and generate outputs. At its core, prompt writing is the skill of communicating intent clearly to the AI, guiding it to use its knowledge in the direction you want while working around its limitations. It bridges the gap between what you intend and how the AI operates, which enables more controlled and predictable interactions.
 
-Effective prompt writing hinges on several key principles designed to maximize the clarity and relevance of the AI's response. Central among these are clarity and specificity, ensuring instructions are unambiguous and detailed enough for the model to understand the exact task. Providing sufficient context is also crucial, giving Gemini the necessary background information to frame its response appropriately. Furthermore, defining the desired output format (e.g., bullet points, email, code block, or Markdown) and tone (e.g., formal, conversational, humorous) helps shape the final result to meet specific needs. Techniques like including examples (few-shot prompting) can further refine the output. Examples are important; for example, when asking Gemini to pull structured data from input text to formats like JSON it is useful to provide an example JSON output.
+Effective prompt writing rests on a few principles that maximize the clarity and relevance of the response. The first is clarity and specificity: make instructions unambiguous and detailed enough for the model to understand the exact task. The second is context: give Gemini the background it needs to frame the response. The third is format and tone: state whether you want bullet points, an email, a code block, or Markdown, and whether the tone should be formal, conversational, or humorous. Including examples (few-shot prompting) refines the output further. Examples matter a great deal when you ask Gemini to pull structured data out of input text into a format like JSON. Provide an example of the JSON you want.
 
-Mastering the art of prompt writing is paramount for unlocking the full potential and utility of powerful AI models like Gemini. Well-crafted prompts lead directly to higher-quality, more accurate, and significantly more useful responses, minimizing generic or irrelevant outputs. This skill translates into tangible benefits such as enhanced productivity, accelerated workflows, improved decision-making, and the ability to leverage Gemini for more complex creative and analytical tasks. Ultimately, skillful prompt writing transforms the interaction with Gemini from simple querying into a powerful collaboration, allowing users to harness its advanced capabilities more effectively and reliably.
+Skillful prompt writing unlocks the value of a model like Gemini. Well-crafted prompts produce higher-quality, more accurate, and more useful responses, and they cut down on generic or irrelevant output. The benefits are concrete: better productivity, faster workflows, better decisions, and the ability to use Gemini for more complex creative and analytical tasks. In the end, good prompt writing turns the interaction from simple querying into collaboration.
+
+If you want a longer treatment of this topic, Part 1 of this book covers power prompting in its own chapter.
 
 ### Creating Gemini Gems
 
@@ -159,35 +167,43 @@ I believe that the more effort you put into personalizing AI tools, the more ben
 
 ## Google NotebookLM
 
-When you, dear reader, have many source documents (text, PDFs, spreadsheets, videos, etc.) for a new or existing project and you need to understand this material with the minimum amount of your time and effort, import your source documents into a new NotebookLM notebook and as you browse or you carefully read source material you can ask questions about how the material relates to other material in the source documents, express what your current interest is and ask for a recommendation of the most critical documents, you can ask for summaries, etc.
+When you, dear reader, have many source documents (text, PDFs, spreadsheets, videos, etc.) for a new or existing project and you need to understand this material with the minimum amount of your time and effort, import your source documents into a new notebook and as you browse or you carefully read source material you can ask questions about how the material relates to other material in the source documents, express what your current interest is and ask for a recommendation of the most critical documents, you can ask for summaries, etc.
 
-In a loose sense, NotebookLM notebooks in a similar way as custom Gemini Gems, with a few differences:
+**A note on the name.** Google has begun renaming this product from **NotebookLM** to **Gemini Notebook**. Both names appear in Google's own documentation. The book uses NotebookLM because that is the name most readers still recognize, but the URL you want is [notebooklm.google.com](https://notebooklm.google.com/).
 
-- I use NotebookLM notebooks when I want to study 3rd party technology (i.e., something that I did not create myself) to collect relevant documents and web sites to study in one place, with a Gemini chat interface for “taking about” this content.
-- I use NotebookLM notebooks when I am starting a new writing or software development project to organize my thoughts and to “brainstorm” with Gemini, given as context the material in a notebook.
+The product has grown well past question answering over your sources. It now generates artifacts from a notebook: an **Audio Overview** that turns your sources into a two host discussion, a **Video Overview**, written **Reports**, **Flashcards**, and a **Slide Deck**. Adding sources to a new notebook may generate one of these automatically. You can share a notebook and let other people ask their own questions against the same sources.
 
-I tend to remove old notebooks when I am done with them. I find this to be analogous to how twenty years ago I used to organize new writing and also software projects with handwritten notes on yellow pads and spread the sheets of paper around. I would clean up the paper artifacts when a project is done, and I also like to keep my NotebookLM work environment tidy. Here is a screenshot of the notebooks that I am currently using:
+Plan limits matter here, because a research project can outgrow the free tier quickly. On the standard free plan you get 100 notebooks and 50 sources per notebook. Google AI Plus raises that to 200 notebooks and 100 sources. Google AI Pro and Ultra raise it further, to 300 to 600 sources per notebook. Notebooks are cheap to create, so the source limit per notebook is the one that bites when you are studying a large body of material.
 
-![My current NotebookLM notebooks](NotebookLM.jpg)
+In a loose sense, notebooks work like custom Gemini Gems, with a few differences:
+
+- I use notebooks when I want to study third party technology (something that I did not create myself) to collect relevant documents and web sites to study in one place, with a Gemini chat interface for talking about this content.
+- I use notebooks when I am starting a new writing or software development project to organize my thoughts and to brainstorm with Gemini, given as context the material in a notebook.
+
+I tend to remove old notebooks when I am done with them. I find this to be analogous to how twenty years ago I used to organize new writing and also software projects with handwritten notes on yellow pads and spread the sheets of paper around. I would clean up the paper artifacts when a project is done, and I also like to keep my notebook work environment tidy. Here is a screenshot of the notebooks that I am currently using:
+
+![My current NotebookLM notebooks](resources/NotebookLM.jpg)
 
 Using the NotebookLM web app is straightforward and I know you will find it useful.
 
 ## Google AI Studio
 
-Before starting to read this section, dear reader, please open the [Google AI Studio web app](https://aistudio.google.com/) and login with your Google (or Gmail) account. Google AI Studio is tailored to workflows for developers:
+Before starting to read this section, dear reader, please open the [Google AI Studio web app](https://aistudio.google.com/) and login with your Google (or Gmail) account. Google AI Studio is tailored to workflows for developers.
 
-The fundamental distinction between the Google AI Studio (aistudio.google.com) and the Gemini web application (gemini.google.com) lies in their target audience and primary purpose: AI Studio is a web-based developer tool focused on prototyping and experimenting with Google's generative models via the Gemini APIs, whereas the Gemini web app is a direct-to-consumer application designed for general users to interact conversationally with the Gemini models for assistance, content generation, and information retrieval. While both interfaces ultimately leverage Google's powerful AI models like Gemini, AI Studio provides a structured environment specifically for developers and builders to craft, test, and refine prompts, adjust model parameters (like temperature, top-k, top-p), compare outputs from different prompt variations, and ultimately generate API keys and corresponding code snippets (in languages like Python, JavaScript, curl, etc.) to integrate the model's capabilities into their own applications or services. In contrast, the Gemini web app offers a more streamlined, conversational chat interface optimized for direct interaction, task completion, and creative exploration by end-users, without exposing the underlying API controls, parameter tuning, or explicit code generation features found in AI Studio; its focus is on the experience of using AI, while AI Studio's focus is on the process of building with the AI via its API.
+The fundamental distinction between Google AI Studio (aistudio.google.com) and the Gemini web application (gemini.google.com) lies in their target audience and primary purpose. AI Studio is a web based developer tool for prototyping and experimenting with Google's generative models through the Gemini APIs. The Gemini web app is a direct to consumer application for general users who want to interact conversationally with the Gemini models for assistance, content generation, and information retrieval. Both interfaces use the same models, but AI Studio provides a structured environment for developers and builders to craft, test, and refine prompts, adjust model parameters (like temperature, top-k, top-p), compare outputs from different prompt variations, and generate API keys and code snippets (in languages like Python, JavaScript, and curl) to integrate a model into their own applications. The Gemini web app offers a streamlined chat interface tuned for direct interaction and creative exploration, without exposing API controls, parameter tuning, or code generation. Its focus is the experience of using AI, while the focus of AI Studio is the process of building with the AI.
 
 Here is a screenshot of the Google AI Studio web app:
 
-![Google AI Studio web app](GoogleAIStudio1.jpg)
+![Google AI Studio web app](resources/GoogleAIStudio1.jpg)
 
-This screenshot shows what you will see the first time you open the web app with one exception: on the lower left corner of the app window under **History** you see a few of my existing projects like “Hy playground”, Clojure Research agent, Prolog and LLMs, etc.
+This screenshot shows what you will see the first time you open the web app with one exception: on the lower left corner of the app window under **History** you see a few of my existing projects like "Hy playground", Clojure Research agent, Prolog and LLMs, etc.
 
-Google AI Studio serves as an accessible gateway to Google's powerful generative artificial intelligence models, most notably the Gemini family. It's a web-based platform designed for rapid experimentation and prototyping with AI. Whether you're looking to understand what modern AI can do, build a proof-of-concept for a new application, or simply explore creative possibilities, AI Studio provides an interactive environment to directly engage with sophisticated AI capabilities without complex setup requirements.
+Google AI Studio serves as an accessible gateway to Google's generative artificial intelligence models, most notably the Gemini family. It is a web based platform for rapid experimentation and prototyping with AI. Whether you want to understand what modern AI can do, build a proof of concept for a new application, or explore creative possibilities, AI Studio provides an interactive environment to engage with these capabilities without complex setup requirements.
 
-For developers, AI Studio is an invaluable tool for quickly iterating on prompts and tuning model parameters like temperature or top-k to achieve desired outputs before integration. You can craft and refine prompts for various tasks, test different model versions, and seamlessly generate API keys to embed the power of Gemini models directly into your own applications and workflows. This significantly accelerates the development cycle for AI-powered features, allowing for faster testing and deployment.
+Two additions since this chapter was first written are worth knowing about. **Build mode** lets you describe an application in plain language and have AI Studio generate the code, which is useful for prototyping but not a substitute for reading the code before you rely on it. The **Playground** also hosts agents, including a Deep Research agent, though access to agents requires a paid API key rather than a Google AI plan.
 
-For marketing professionals, small business owners, and other non-technical users, AI Studio demystifies generative AI by providing an intuitive interface to explore its potential. You can experiment with generating creative text formats, brainstorming ideas, summarizing information, drafting communications, or even analyzing images, all through simple prompt interactions. This hands-on experience allows users to discover practical applications for AI within their specific business context or creative endeavors, fostering innovation without needing to write a single line of code.
+For developers, AI Studio is a valuable tool for quickly iterating on prompts and tuning model parameters like temperature or top-k before integration. You can craft and refine prompts for various tasks, test different model versions, and generate API keys to embed Gemini models directly into your own applications and workflows. This shortens the development cycle for AI powered features.
 
-The last section of this book contains Python programs using the Gemini APIs. When writing Python applications using Gemini you can save time prototyping prompts and API parameters using the AI Studio.
+For marketing professionals, small business owners, and other non-technical users, AI Studio demystifies generative AI by providing an intuitive interface to explore its potential. You can experiment with generating creative text formats, brainstorming ideas, summarizing information, drafting communications, or analyzing images, all through simple prompt interactions. This hands on experience lets you discover practical applications for AI within your own business context or creative work without needing to write a single line of code.
+
+The last section of this book contains Python programs using the Gemini APIs. When writing Python applications using Gemini you can save time prototyping prompts and API parameters using AI Studio.

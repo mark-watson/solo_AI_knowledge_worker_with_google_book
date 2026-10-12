@@ -4,3 +4,7 @@ OLD_STUFF
 .clj-kondo
 .lsp
 .venv
+.uv-cache/
+.scratch/
+__pycache__/
+*.pyc

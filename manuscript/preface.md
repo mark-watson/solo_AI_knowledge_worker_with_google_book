@@ -1,16 +1,19 @@
 # Preface
 
-*This book was substantially updated in November 2025.*
+*This book was substantially updated in October 2026.*
 
-Most books I have written are deeply technical - this is not one of them. Here, I attempt to make state of the art AI approachable and usable to a wider and not necessarily technical audience. For those readers most interested in practical examples, you can skip to the chapter “Google’s AI Ecosystem.”
+Most books I have written are deeply technical - this is not one of them. Here, I attempt to make state-of-the-art AI approachable and usable to a wider and not necessarily technical audience. For those readers most interested in practical examples, you can skip to the chapter "Google's AI Ecosystem."
 
 Here we cover:
 
 - Practical general tips for being an effective solo knowledge worker.
+- Power prompting: how to write inputs that produce usable work.
 - Gemini (mostly) non-programming interface to Google's AI models.
 - NotebookLM platform for research and study.
 - Google AI Studio for experimenting with new AI models, software prototyping, and using models for video and image generation.
+- The Antigravity CLI (`agy`) for agentic work in the terminal, including headless scripting for batch jobs.
 - Optional material for writing short Python programs to use the Google AI platform.
+- Building a research agent with Google's Agent Development Kit (ADK).
 
 Since the 1980s, I've been deeply involved in the development of commercial Artificial Intelligence (AI) tools and applications. My journey has led me to deliver AI systems and conduct research for organizations like Capital One, Google, SAIC, DARPA, Olive AI, PacBell, and Babylist. I have 55 US patents and I have written over 20 books on AI.
 
@@ -48,9 +51,15 @@ I hope that you both enjoy this book and find it useful!
 
 ## Structure of This Book
 
-We start with material that non-programming tech savvy readers will have no problems working through: a general introduction of available tools and then cover general “non-programming” skills that you will want to master.
+The book has three parts.
 
-The last part of the book is aimed at readers who have some knowledge of the Python programming language. The programming examples are designed to be both simple to understand and useful. For more technical and software-intensive material please see my other books at [https://leanpub.com/u/markwatson](https://leanpub.com/u/markwatson).
+Part 1 is for every solo knowledge worker. It covers the tools, the concepts behind them, and how to write prompts that produce usable work. No programming is required.
+
+Part 2 is for readers who want to write short Python programs against the Gemini API. The examples are designed to be simple to read and immediately useful.
+
+Part 3 covers AI agents. It starts with the Antigravity CLI and agentic workflows in the terminal, then builds a research agent with Google's Agent Development Kit. For more technical and software-intensive material please see my other books at [https://leanpub.com/u/markwatson](https://leanpub.com/u/markwatson).
+
+Every code example in the book lives in the `source-code/` directory. Run `make verify` there to check that the examples still compile and still name a current Gemini model.
 
 ## Things Said and Things Left Unsaid
 

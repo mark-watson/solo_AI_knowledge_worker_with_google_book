@@ -1,32 +1,28 @@
+# --- Example 2: Text Generation ---
+# Purpose: Use the Gemini client to generate text
+#          based on a given prompt.
+
 from google import genai
 import os
-import sys
 
-# Best practice: Store your API key in an environment variable
-# (e.g., GOOGLE_API_KEY) rather than hardcoding it.
-# You can set this in your system or using a .env file with python-dotenv.
-try:
-    client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
+client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
 
-    # Define the prompt
-    prompt = "Brainstorm 5 blog post ideas about remote work productivity for solo knowledge workers."
+# Google ships new Flash models several times a year. See the model naming
+# note in python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-3.8-flash"
 
-    # Generate content
-    response = client.models.generate_content(
-        model='gemini-2.5-flash',
-        contents=prompt
-    )
+# Define the prompt (your instruction to the model)
+prompt = "Brainstorm 5 blog post ideas about remote work productivity for solo knowledge workers."
 
-    # Print the generated text
-    print("\n--- Blog Post Ideas ---")
-    # Basic error check for blocked content
-    if response.text:
-        print(response.text)
-    else:
-        print("Response was empty or blocked.")
+# Generate content by calling the model. This makes the actual API request.
+response = client.models.generate_content(
+    model=MODEL_ID,
+    contents=prompt,
+)
 
-
-except AttributeError:
-    print("Error: Gemini API likely not configured. Run Example 1 first.")
-except Exception as e:
-    print(f"An error occurred during text generation: {e}")
+# Responses can be empty when safety filters block them, so check for text.
+print("\n--- Blog Post Ideas ---")
+if response.text:
+    print(response.text)
+else:
+    print("Response was empty or potentially blocked.")

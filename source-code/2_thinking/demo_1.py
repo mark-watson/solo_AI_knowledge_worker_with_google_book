@@ -4,7 +4,9 @@ import os
 
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
-MODEL_ID="gemini-2.5-flash-preview-04-17"
+# Google ships new Flash models several times a year. See the model naming
+# note in python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-3.8-flash"
 
 prompt = """
    I am starting a AI/LLM consulting company. Suggest
@@ -16,7 +18,7 @@ response = client.models.generate_content(
     contents=prompt,
     config=types.GenerateContentConfig(
         thinking_config=types.ThinkingConfig(
-            thinking_budget=500
+            thinking_level="high"
         )
     )
 )

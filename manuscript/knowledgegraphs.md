@@ -54,6 +54,11 @@ import os
 import shutil
 
 DB_PATH = "test_db_ladybug"
+
+# Google ships new Flash models several times a year. See the model naming
+# note in python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-3.8-flash"
+
 db = lb.Database(DB_PATH)
 conn = lb.Connection(db)
 
@@ -114,7 +119,7 @@ SCHEMA = get_schema(conn)
 Next, we set up the prompts and the LCEL chains:
 
 ```python
-llm = ChatGoogleGenerativeAI(model="gemini-3.1-flash-lite")
+llm = ChatGoogleGenerativeAI(model=MODEL_ID)
 
 cypher_prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a Cypher query expert... [Schema and rules here]"),

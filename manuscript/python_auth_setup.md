@@ -14,7 +14,7 @@ This chapter focuses on the crucial first step: setting up your environment, ins
 
 Before you begin coding, ensure you have the following:
 
-1.  **Python Installed:** You'll need a compatible version of Python installed on your system (typically Python 3.9 or newer is recommended for modern libraries). You can check your version using `python --version` or `python3 --version` in your terminal.
+1.  **Python Installed:** You'll need a recent version of Python installed on your system. This book uses Python 3.12 or newer, because that is the oldest version the examples and the Google Agent Development Kit both support. You can check your version using `python --version` or `python3 --version` in your terminal.
 2.  **Google API Key:** You need an API key associated with a Google Cloud project where the "Generative Language API" (or potentially newer related APIs like Vertex AI) is enabled.
     * Navigate to the Google Cloud Console.
     * Create a new project or select an existing one.
@@ -24,7 +24,7 @@ Before you begin coding, ensure you have the following:
 
 ## Installation with `uv`
 
-To use the Gemini Python SDK, you first need to install it. We use **uv** — a fast, modern Python package and project manager — to handle dependencies and virtual environments automatically.
+To use the Gemini Python SDK, you first need to install it. We use **uv**, a fast, modern Python package and project manager, to handle dependencies and virtual environments automatically.
 
 **What is `uv`?**
 `uv` is a drop-in replacement for `pip`, `venv`, and `pip-tools` that is dramatically faster and manages project dependencies through a standard `pyproject.toml` file. It automatically creates and manages an isolated virtual environment for each project, and generates a `uv.lock` lockfile for fully reproducible installs. This means you never need to manually create or activate a virtual environment.
@@ -48,6 +48,14 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
     uv add google-genai
     ```
     `uv` will resolve all dependencies, create a virtual environment automatically, and generate a `uv.lock` lockfile for reproducibility.
+
+`uv` uses whatever Python interpreter it finds, and it can also install one for you. The examples in this book set `requires-python = ">=3.12"` and I develop them on Python 3.14. If `uv` picks an older interpreter, ask it for a specific version:
+
+```bash
+uv sync --python 3.14
+```
+
+Every project in `source-code/` carries its own virtual environment and lockfile, so nothing you install for one chapter can break another.
 
 ## Authentication: Connecting Securely
 
@@ -138,54 +146,40 @@ This script builds upon the authentication setup to send a prompt to a Gemini mo
 
 from google import genai
 import os
-import sys
 
-# Best practice: Store your API key in an environment variable
-# (e.g., GOOGLE_API_KEY) rather than hardcoding it.
-try:
-    # 1. Create the client
-    client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
+client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
 
-    # 2. Define the prompt (Your instruction to the model)
-    prompt = "Brainstorm 5 blog post ideas about remote work productivity for solo knowledge workers."
+# Google ships new Flash models several times a year. See the model naming
+# note in python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-3.8-flash"
 
-    # 3. Generate content by calling the model
-    # This makes the actual API request to the Gemini service.
-    response = client.models.generate_content(
-        model='gemini-2.5-flash',
-        contents=prompt
-    )
+# Define the prompt (your instruction to the model)
+prompt = "Brainstorm 5 blog post ideas about remote work productivity for solo knowledge workers."
 
-    # 4. Process and print the response
-    print("\n--- Blog Post Ideas ---")
-    # Check if the response contains text content
-    # Responses might be empty if blocked due to safety settings or other issues.
-    if response.text:
-        print(response.text) # Access the generated text
-    else:
-        # Provide feedback if the response was empty or blocked
-        print("Response was empty or potentially blocked.")
+# Generate content by calling the model. This makes the actual API request.
+response = client.models.generate_content(
+    model=MODEL_ID,
+    contents=prompt,
+)
 
-
-# 5. Handle potential errors during generation
-except AttributeError:
-    print("Error: Gemini API likely not configured. Ensure GOOGLE_API_KEY is set and valid.")
-except Exception as e:
-    # Catch other errors during client creation or generation
-    print(f"An error occurred during text generation: {e}")
-    # This could include API errors, network issues, invalid model names, etc.
-
+# Responses can be empty when safety filters block them, so check for text.
+print("\n--- Blog Post Ideas ---")
+if response.text:
+    print(response.text)
+else:
+    print("Response was empty or potentially blocked.")
 ```
 
 **Explanation:**
 
 1.  **Create Client:** `genai.Client(api_key=...)` creates the client instance, authenticating using the `GOOGLE_API_KEY` environment variable.
-2.  **Define Prompt:** This is the input text you provide to the model.
-3.  **Generate Content:** `client.models.generate_content(model='gemini-2.5-flash', contents=prompt)` sends the prompt to the specified Gemini model via the API and waits for the response.
-4.  **Process Response:** The result is a response object.
+2.  **Model ID:** `MODEL_ID` names the model once, at the top of the file. Every example in this book follows that pattern so you have one line to change when Google ships a new model.
+3.  **Define Prompt:** This is the input text you provide to the model.
+4.  **Generate Content:** `client.models.generate_content(model=MODEL_ID, contents=prompt)` sends the prompt to the specified Gemini model via the API and waits for the response.
+5.  **Process Response:** The result is a response object.
     * `response.text` provides the primary generated text content if available.
     * It's crucial to check if the response contains content. Sometimes, a response might be blocked due to safety filters or other reasons.
-5.  **Error Handling:** Includes checks for `AttributeError` (if the client wasn't created properly), and general `Exception`s for API or network issues during the generation call.
+6.  **Error Handling:** The Gemini client raises an exception when the API key is missing or invalid, or when the network is unavailable. Wrap the call in a `try`/`except` block when you write production code, as the previous example does.
 
 **Running the Script:**
 Save the code as `text_generation.py`. Ensure your `GOOGLE_API_KEY` is set, then run:
@@ -193,6 +187,41 @@ Save the code as `text_generation.py`. Ensure your `GOOGLE_API_KEY` is set, then
 uv run python text_generation.py
 ```
 You should see the brainstormed blog post ideas printed to your console.
+
+## Google's Model Naming, and What To Do When a Model ID Changes
+
+This section is the one to reread in six months, because it is the part of the book most likely to go stale.
+
+Google ships Gemini models on a fast schedule, and it names them in a way that tells you how long they will live:
+
+- **Stable names** look like `gemini-3.8-flash`. A stable name points at the current release in that family, so `gemini-3.8-flash` keeps working as Google patches the model behind it. The examples in this book use stable names.
+- **Preview names** carry a suffix such as `-preview` or a date such as `-04-17`. Previews exist so developers can try a model before it is finished. Google retires them first, usually within a few months, and calls to a retired preview fail with an error.
+
+The practical rule is simple. Never put a preview model in something you want to keep working. Use a stable name and update it when a new generation ships.
+
+When an example in this book stops working, the error message names the problem. A retired or misspelled model produces a `404 NOT_FOUND` error. An API key problem produces `400 INVALID_ARGUMENT` with `API_KEY_INVALID`. Read the message before you change code.
+
+To find the current model IDs, open the [models page](https://ai.google.dev/gemini-api/docs/models) in Google's Gemini API documentation, or run this in any project you have set up with `uv`:
+
+```bash
+uv run python -c "
+from google import genai
+import os
+client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
+for m in client.models.list():
+    print(m.name)
+"
+```
+
+Then change the one line at the top of the example:
+
+```python
+MODEL_ID = "gemini-3.8-flash"   # replace with the current Flash model
+```
+
+Two related details are worth remembering. First, Google also accepts the environment variable name `GEMINI_API_KEY`. The examples here use `GOOGLE_API_KEY`, and if you set both then `GOOGLE_API_KEY` wins. Second, Google has started steering new code toward the Interactions API, where a request reads `client.interactions.create(...)` and the reply arrives in `interaction.output_text`. The examples in this book use `client.models.generate_content`, which Google still supports, because the shape of that call is simpler to learn and it is what most existing code you will encounter uses. When you are ready to move on, Google publishes a migration guide for moving from `generate_content` to the Interactions API.
+
+Finally, keep an eye on the age of the SDK. The examples in this book pin `google-genai` to 2.29.0 or newer. Google has announced that the next major version changes how automatic function calling works, so pin the SDK version in any project you cannot afford to fix in a hurry.
 
 ## Wrap Up
 

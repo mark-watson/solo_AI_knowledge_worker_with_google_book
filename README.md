@@ -13,8 +13,8 @@ This book is written for solo knowledge workers who use the Google AI Platform. 
 - **NotebookLM** — Google's platform for research and study
 - **Google AI Studio** — experimenting with new AI models, software prototyping, and using models for video and image generation
 - **Python programming** — writing short Python programs to use the Google AI platform (optional, for developers)
-- **Gemini CLI** — command-line AI agent workflows
-- **Google Agent Toolkit** — building AI agents with Google's tools
+- **Antigravity CLI (agy)** — command-line AI agent workflows, including headless scripting
+- **Google ADK** — building AI agents with Google's Agent Development Kit
 
 ## Get the Book
 
@@ -29,7 +29,9 @@ The `source-code/` directory contains working examples for the programming chapt
 - Image and text processing with Gemini
 - Knowledge graphs
 - Google Workspace app integrations (Gmail, Calendar, etc.)
-- Google Agent Toolkit examples
+- Google ADK examples
+
+Run `make verify` inside `source-code/` to smoke test every example.
 
 ## Author
 

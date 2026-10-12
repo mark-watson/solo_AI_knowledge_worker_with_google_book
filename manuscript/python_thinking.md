@@ -1,37 +1,42 @@
-# Gemini Thinking Mode
-
+# Gemini Thinking Levels and Extended Reasoning
 
 **Introduction**
 
-In the previous chapter, we covered the fundamentals of authenticating with the Gemini API and performing basic text generation using the Python SDK. Those examples focused on getting a direct response to a prompt. However, some tasks benefit from the model having more allocated time or computational resources to "think" or plan *before* generating the final output. This is where **Gemini Thinking Mode** comes into play.
+In the previous chapter, we covered authenticating with the Gemini API and performing basic text generation using the Python SDK. Those examples asked for a direct answer to a prompt. Some tasks do better when the model takes time to plan before it writes the answer. Gemini exposes that planning as a feature you control, and this chapter shows how.
 
-Thinking Mode is an advanced feature designed for complex prompts that might involve multi-step reasoning, intricate analysis, or detailed planning. By enabling Thinking Mode, you instruct the API to dedicate a specific budget of internal processing time or compute units towards understanding and structuring its response *before* it begins generating the text you see. This can lead to higher-quality, more coherent, and better-reasoned outputs for challenging tasks.
+Three terms appear in Google's documentation and in this book:
 
-## When to Use Thinking Mode
+- **Thinking** is the model's internal reasoning before it produces the answer you see.
+- **Thinking level** is the setting that decides how much of that reasoning happens. It is a coarse setting: minimal, low, medium, or high.
+- **Thinking budget** is the older setting, which asked for a number of tokens instead of a level. `thinking_budget` still works on Gemini 3 models as a compatibility path, but thinking level is what new code should use.
 
-While standard generation is fast and efficient for many prompts, Thinking Mode is particularly beneficial when:
+## When to Raise the Thinking Level
 
-1.  **Complex Problem Solving:** The prompt requires breaking down a problem into steps, evaluating different approaches, or synthesizing information from various angles (e.g., "Develop a phased marketing strategy for launching a new SaaS product targeting small businesses").
-2.  **Detailed Analysis or Summarization:** You need the model to deeply analyze a complex piece of text or data and provide a nuanced summary or critique.
-3.  **Creative Tasks Requiring Planning:** Generating elaborate stories, complex code structures, or detailed project plans where upfront structuring improves the final result.
-4.  **Multi-Step Instructions:** The prompt contains several dependent instructions that the model needs to process sequentially or holistically before responding.
+Standard generation is fast and good enough for most prompts. Raised thinking levels help when:
 
-For simple prompts (e.g., "What is the capital of France?"), Thinking Mode is likely unnecessary and might only add latency without significantly improving the output. It's a tool best reserved for computationally intensive generative tasks.
+1.  **Complex problem solving.** The prompt requires breaking a problem into steps, weighing several approaches, or synthesizing information from many angles. For example: "Develop a phased marketing strategy for launching a new SaaS product that targets small businesses."
+2.  **Detailed analysis or summarization.** You need a close reading of a complex document and a nuanced summary or critique.
+3.  **Creative work that needs planning.** Long stories, complex code, and detailed project plans all improve when the model structures them first.
+4.  **Multi-step instructions.** The prompt contains several dependent instructions that the model must handle in order.
 
-## Enabling Thinking Mode with the Python SDK
+For simple prompts such as "What is the capital of France?", a higher thinking level only adds latency.
 
-Activating Thinking Mode involves configuring specific parameters within the `generate_content` method call, using helper objects from the `google.genai.types` module.
+A word of caution about cost. You pay for thinking tokens even though you never see them. Raising the level on a prompt that does not need it is the easiest way to spend money for nothing. Start at the default, raise the level when the output is visibly shallow, and lower it for bulk work.
 
-1.  **`types.GenerateContentConfig`:** This object acts as a container for various advanced generation settings, including safety settings, stop sequences, and, crucially for us, the thinking configuration.
-2.  **`types.ThinkingConfig`:** This object specifically controls the Thinking Mode feature.
-3.  **`thinking_budget`:** This parameter within `ThinkingConfig` specifies the amount of computational resources or time allocated for the model's "thinking" phase. The exact unit is an internal measure, but a higher value generally allows the model more pre-computation time, potentially leading to better results on complex prompts, possibly at the cost of increased latency. You may need to experiment with this value based on the complexity of your prompts and desired output quality.
+## Setting the Thinking Level with the Python SDK
 
-**Client Initialization:**
-As in the previous chapter, we use `genai.Client(api_key=...)` to create an explicit client instance for authenticating requests using the API key.
+Two objects from `google.genai.types` are involved:
 
-## Example: `demo_1.py` - Advertising Strategy Brainstorm with Thinking Mode
+1.  **`types.GenerateContentConfig`** holds the generation settings, including the thinking configuration.
+2.  **`types.ThinkingConfig`** holds the thinking setting. Set `thinking_level` on it.
 
-This script demonstrates how to request advertising ideas for a new consulting company, specifically enabling Thinking Mode to potentially generate more structured or well-reasoned options.
+The accepted values are `"minimal"`, `"low"`, `"medium"`, and `"high"`. Not every model accepts every value. Gemini 3.8 Flash supports `low`, `medium`, and `high`, and asks for `minimal` is an error. Gemini 3.6 Flash and the Flash-Lite models accept all four. When you switch models, check the model page for the levels it supports.
+
+**Client initialization:** As in the previous chapter, we use `genai.Client(api_key=...)` to create a client that authenticates with your API key.
+
+## Example: `demo_1.py` - Advertising Strategy Brainstorm
+
+This script asks for advertising ideas for a new consulting company. The task rewards structure, so it asks for a high thinking level.
 
 ```python
 from google import genai
@@ -40,7 +45,9 @@ import os
 
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
-MODEL_ID="gemini-2.5-flash-preview-04-17"
+# Google ships new Flash models several times a year. See the model naming
+# note in python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-3.8-flash"
 
 prompt = """
    I am starting a AI/LLM consulting company. Suggest
@@ -52,7 +59,7 @@ response = client.models.generate_content(
     contents=prompt,
     config=types.GenerateContentConfig(
         thinking_config=types.ThinkingConfig(
-            thinking_budget=500
+            thinking_level="high"
         )
     )
 )
@@ -62,18 +69,17 @@ print(response.text)
 
 **Explanation:**
 
-1.  **Imports:** Includes `google.genai`, `google.genai.types` (specifically for `GenerateContentConfig` and `ThinkingConfig`), and `os`.
-2.  **Client Initialization:** `genai.Client()` creates the client instance, authenticating using the `GOOGLE_API_KEY` environment variable.
-3.  **Model ID:** Specifies the model to use (`gemini-1.5-flash-preview-04-17` as per the user's example). Note that using preview models means behavior might change in the future.
-4.  **Prompt:** A moderately complex prompt asking for structured suggestions, suitable for Thinking Mode.
-5.  **`generate_content` Call:**
-    * `model` and `contents` are specified as usual.
-    * `config=types.GenerateContentConfig(...)`: This argument is used to pass advanced settings. (*Correction based on user code:* The user's example directly used a `config` parameter holding a `GenerateContentConfig` which in turn held the `ThinkingConfig`. While nesting under `generation_config` or `request_options` is common in newer/other SDK methods, we follow the user's example structure here).
-    * `thinking_config=types.ThinkingConfig(...)`: Inside the `GenerateContentConfig`, we create a `ThinkingConfig` instance.
-    * `thinking_budget=500`: This assigns the budget for the thinking phase. The value `500` is relative; experimentation might be needed to find optimal values for different tasks.
-6.  **Output:** The script prints the `response.text`, which contains the model's generated advertising options. We include basic checks for empty/blocked responses.
+1.  **Imports:** `google.genai`, `google.genai.types` for `GenerateContentConfig` and `ThinkingConfig`, and `os`.
+2.  **Client Initialization:** `genai.Client()` authenticates using the `GOOGLE_API_KEY` environment variable.
+3.  **Model ID:** One `MODEL_ID` constant, so a model change is a one line edit.
+4.  **Prompt:** A moderately complex prompt that asks for structured suggestions, which suits a raised thinking level.
+5.  **`generate_content` call:**
+    * `model` and `contents` work as before.
+    * `config=types.GenerateContentConfig(...)` passes the advanced settings.
+    * `thinking_config=types.ThinkingConfig(thinking_level="high")` asks the model to reason at length before answering.
+6.  **Output:** `response.text` holds the advertising options.
 
-This example generates a report that is several pages in length; here is the beginning of the output:
+This example generates a report that runs several pages. Here is the beginning of the output:
 
 ```text
 Okay, starting an AI/LLM consulting company is exciting! Since it's a B2B service focused on technology and strategy, your advertising needs to reach business decision-makers and demonstrate expertise. Here are three distinct options for advertising your services:
@@ -87,24 +93,43 @@ Okay, starting an AI/LLM consulting company is exciting! Since it's a B2B servic
 -   **Whitepapers/Ebooks:** Offer downloadable, in-depth guides on topics like "The Executive's Guide to Implementing AI in [Industry]" or "Evaluating LLM Solutions for Your Business."
 -   **Webinars/Online Workshops:** Host free sessions demonstrating how AI/LLMs can solve specific business problems. This allows direct interaction and showcases expertise.
 -   **Case Studies:** Showcase successful projects (anonymized if necessary) highlighting the business results you achieved for clients.
--   **LinkedIn:** The primary platform for B2B networking and advertising.
--   Share your content organically.
--   Run targeted LinkedIn Ads based on job titles (CEO, CTO, CIO, Head of Innovation, Department Heads), industry, company size, and even specific companies. Focus ad copy on solving business problems rather than just listing services.
 ...
 ```
 
-Run the example to see a full report.
+Run the example to see the full report.
 
-## Observing the Difference
+## Seeing the Difference
 
-While this example doesn't run a side-by-side comparison, if you were to run the same complex prompt *with* and *without* Thinking Mode (and an appropriate `thinking_budget`), you might observe:
+This example does not run a side by side comparison, but if you run the same complex prompt at two thinking levels you will notice:
 
-* **With Thinking Mode:** The output *may* be more structured, coherent, address all parts of the prompt more effectively, or show deeper reasoning.
-* **Without Thinking Mode:** The output might still be good, but potentially less organized or might miss some nuances for very complex requests.
-* **Latency:** The request with Thinking Mode enabled will take longer to return a response due to the dedicated pre-computation phase.
+* **At a higher level:** The output tends to be more structured, covers more of the prompt, and shows its reasoning in the organization of the answer.
+* **At a lower level:** The output can still be good, but it is more likely to miss nuance on a complex request.
+* **Latency:** A higher level takes longer, because the model reasons before it answers.
+* **Cost:** You pay for the thinking tokens, so the higher level costs more for the same visible answer.
 
-The key is that Thinking Mode provides an *opportunity* for the model to improve its response quality on complex tasks by allocating specific resources *before* generation starts.
+The cheapest way to decide is to run the prompt at the default level, read the answer, and raise the level only if the answer is shallow.
+
+## Compatibility with Gemini 2.5 Models
+
+Gemini 2.5 models predate thinking levels. They were controlled with `thinking_budget`, a token count:
+
+```python
+config=types.GenerateContentConfig(
+    thinking_config=types.ThinkingConfig(
+        thinking_budget=500
+    )
+)
+```
+
+The Gemini 3 models still accept `thinking_budget` for compatibility, so this code runs, but it is the legacy path. Two limits are worth knowing. First, `thinking_budget=0` used to turn thinking off on 2.5 models, and on Gemini 3 models thinking cannot be fully disabled. Second, a budget is harder to reason about than a level, because the same budget means different amounts of work on different models. Use `thinking_level` in new code. Reach for `thinking_budget` only when you must keep an older script running unchanged.
 
 ## Wrap Up
 
-Gemini Thinking Mode offers a powerful way to enhance the quality of responses for complex prompts by allowing the model dedicated time and resources for planning and reasoning. By using `types.GenerateContentConfig` and `types.ThinkingConfig` with an appropriate `thinking_budget` in your `generate_content` calls via the Python SDK, you can leverage this feature for tasks demanding deeper analysis, structuring, or problem-solving. Remember to experiment with the `thinking_budget` and reserve this feature for prompts where the added pre-computation phase is likely to yield significant benefits.
+Thinking level is the current way to control how much Gemini reasons before it answers. Set `thinking_level` on a `types.ThinkingConfig` inside a `types.GenerateContentConfig`, and choose a level that matches the difficulty of the task. Remember four points:
+
+- Raise the level for multi-step analysis and planning, and leave it alone for simple prompts.
+- You pay for thinking tokens, so a high level on a trivial prompt is wasted money.
+- Gemini 3.8 Flash supports `low`, `medium`, and `high`, but not `minimal`, and you cannot turn thinking off completely on Gemini 3 models.
+- `thinking_budget` is the legacy control for Gemini 2.5 models. It still works, but new code should use `thinking_level`.
+
+In the next chapter we add images to the prompt and use a low thinking level to keep the answers fast.
