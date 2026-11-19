@@ -10,4 +10,14 @@ The development of multimodal generative AI has led to models capable of produci
 
 The convergence of LLMs, generative AI, and multimodality is reshaping the landscape of AI applications. By integrating capabilities across different data types, AI systems can achieve a more holistic understanding and generation of content, leading to more intuitive and effective interactions. This integration is pivotal in developing AI agents that can seamlessly operate across various tasks and environments, enhancing their utility in real-world applications. 
 
+## Three Ideas the Rest of This Book Uses
+
+**Thinking models.** Current Gemini models reason internally before they write the answer you see. Google calls this *thinking*. You can set how much thinking a model does, from low to extra high, and you pay for the thinking tokens even though they stay hidden. More thinking helps with planning, analysis, and multi-step problems, and only adds delay to simple questions. The Python chapter on thinking levels shows how to set it and how to measure what it costs.
+
+**Context windows.** A model can only use what fits in its context window, the text, images, and files it sees in one request. Current Gemini models accept about one million tokens, roughly 700,000 words, which is enough for several books or a large code base in one prompt. A large window does not mean the model weighs every part equally, so put the material that matters most where the instructions point to it, and ask questions that name the part you care about.
+
+**Agents.** An agent is a model that works in a loop: it plans a step, calls a tool such as web search or a file editor, reads the result, and decides the next step, until the task is done. A chat answers one prompt; an agent can carry out a task with many steps, such as researching a topic and writing a report to a file. Part 3 covers two ways to use agents: the Antigravity CLI, which needs no programming, and Google's Agent Development Kit for Python.
+
+## Opportunities and Risks
+
 As these technologies continue to evolve, they present both opportunities and challenges. The potential for more sophisticated and versatile AI applications is vast, but it also necessitates careful consideration of ethical, technical, and societal implications. Ensuring responsible development and deployment of these systems is crucial to harnessing their benefits while mitigating risks.

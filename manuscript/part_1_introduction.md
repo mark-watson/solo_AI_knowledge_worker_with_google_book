@@ -7,4 +7,4 @@ This first section is useful for all solo knowledge workers. The second section 
 - Key Concepts: LLMs, Generative AI, Multimodality
 - The Power of Prompts: Engineering Good Inputs for LLMs
 - Google's AI Ecosystem
-- Gemini Integration with Gmail, Google Docs, Google Sheets, Google Meet, Google Drive, and Google Calendar
+- Gemini in Gmail, Google Docs, Google Sheets, Google Drive, and Google Calendar

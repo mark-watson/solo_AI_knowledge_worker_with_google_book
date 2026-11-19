@@ -11,8 +11,8 @@ The Antigravity CLI is the terminal surface of Google Antigravity, the agent har
 Why this matters for the solo practitioner:
 
 - **No server, no setup project.** One binary installs with one command and needs no Node.js, no npm, and no Python.
-- **Runs on the plan you already have.** It signs in with your Google account. On the free and Google AI Plus tiers you still get Gemini Flash models.
-- **Model choice in one harness.** You can switch among Gemini, Claude, and GPT-OSS models with the `/model` command. That is useful when one model is better at drafting and another is better at checking work.
+- **Runs on the plan you already have.** It signs in with your Google account, and every tier gets Google's fast everyday models.
+- **Model choice in one harness.** You can switch among Gemini, Claude, and GPT-OSS models with the `/model` command or the `--model` flag. That is useful when one model is better at drafting and another is better at checking work.
 - **It works with any folder.** The agent does not care whether the folder holds software, a manuscript, or a set of spreadsheets.
 - **Headless mode.** `agy -p "prompt"` runs one prompt and exits. That makes the tool scriptable for batch work.
 
@@ -82,11 +82,25 @@ You do not need an account session if you have a Gemini API key. This suits head
 
 Start `agy` again. It skips the sign-in screen and the header shows **Gemini API key** instead of your email address. Set a key in `GOOGLE_API_KEY` and nothing happens, which is the mistake readers hit first.
 
+With an API key you pay per token through your AI Studio billing instead of using your plan's quota, so `/usage` has nothing to show and points you to AI Studio instead. Remote Control and voice input also need an account sign-in and are not available with a key.
+
 ### Choose a model
 
-Type `/model` in the prompt box to open the model picker. The choice persists across sessions. The Gemini models carry a reasoning effort setting, from low through high, so you can trade latency for depth per task.
+Type `/model` in the prompt box to open the model picker. The choice persists across sessions. Each model comes in several reasoning effort levels, from low up to high or extra high, so you can trade speed for depth per task. `/effort` changes the level without changing the model. To see every model your account can use without starting a session, run:
 
-Model availability depends on your plan, and it changes monthly. The picker is the source of truth. As I write this in October 2026, Antigravity serves the Gemini Flash and Pro models on every tier, and it also offers Claude Sonnet and Opus and GPT-OSS 120B, with those non-Google models limited to the paid tiers. Google has announced that the Claude and GPT-OSS options listed today will be removed on November 2, 2026. Treat that as the normal state of affairs rather than an exception: check the picker, and expect a different list next year.
+```console
+agy models
+```
+
+Model availability depends on your plan, and it changes monthly. The picker is the source of truth. As I write this in November 2026, `agy models` on my Google AI Pro account lists:
+
+- **Gemini 4 Hydrogen**, Google's fast everyday model and the one I use most
+- **Gemini 4 Neon** and **Gemini 4 Argon**, stronger Gemini 4 models for harder work
+- **Gemini 3.8 Flash**, the previous generation
+- **Orchestrator**, which plans with a strong model and hands the steps to a faster one
+- **Claude Opus 5.5** and **Claude Sonnet 5.5** from Anthropic, and **GPT-OSS 120B**
+
+An earlier version of this chapter warned that the Claude and GPT-OSS options would be removed in November 2026, but they were still in the picker when I checked. Treat that as the normal state of affairs: check the picker, and expect a different list next year.
 
 ## Core Concepts and Commands
 
@@ -98,17 +112,29 @@ Some inputs are commands rather than conversation. A leading forward slash marks
 | --- | --- |
 | `/model` | Choose the reasoning model |
 | `/permissions` | Open the tool permissions manager |
-| `/agents` | Open the Agent Manager and watch background subagents |
+| `/agents` | List the custom agents you have defined |
 | `/resume` | Pick up an earlier conversation |
 | `/diff` | Review changes the agent made |
+| `/effort` | Set the reasoning effort |
 | `/usage` | Show model quota usage |
+| `/skills` | List the Agent Skills the agent can load |
+| `/plugin` | Install, enable, and disable plugins |
 | `/config` | Open the settings editor |
 | `/help` | List commands and keybindings |
 | `@path/to/file` | Add a file to the working context |
 
 A leading exclamation mark runs a shell command and puts the output in the conversation, for example `!ls -la`.
 
-The agent shows you what it is about to do. Press `y` to approve a tool call and `n` to reject it. The `Ctrl+K` shortcut approves the pending action without leaving the prompt. If you tire of approving every write, open `/permissions` and raise the approval level, but understand the tradeoff: `always-proceed` lets the agent write files and run commands with no confirmation. The settings file `~/.gemini/antigravity-cli/settings.json` exposes the same choice through `toolPermission`, and `enableTerminalSandbox` confines the commands the agent runs.
+How much the agent does without asking depends on its **Agent Mode**:
+
+| Mode | What it does |
+| --- | --- |
+| Default | Asks you to approve each tool call that changes something. Press `y` to approve and `n` to reject. |
+| Auto | Runs commands in a terminal sandbox without asking. A reviewer model checks any command that would leave the sandbox, and asks you only when it is unsure. |
+| accept-edits | Applies file edits without asking, but still asks before running commands. |
+| plan | Reads and plans, but does not change anything. Use it to review the agent's approach before you let it act. |
+
+**Auto is now the default**, including for headless `-p` runs, wherever your account supports it. That is convenient, but it means a fresh install no longer stops to ask before most actions. If you want the older behavior, choose Default for **Agent Mode** in `/config`. You can also set the mode for one session with `--mode`, for example `agy --mode plan`, and the `--sandbox` flag runs the session with terminal restrictions turned on. Setting **Tool Permission** to `strict` in `/config` makes the agent ask before every file edit, whatever the mode. `/permissions` shows and changes which tools the agent may use.
 
 Run the tool inside a folder you are willing to let the agent modify. That one habit prevents almost every unpleasant surprise.
 
@@ -207,15 +233,20 @@ answer=$(agy -p "Name three popular version control systems, comma-separated.")
 
 Headless mode uses your cached credentials, so sign in once interactively first. On a machine with no terminal the run exits with an `authentication required` error rather than hanging.
 
-Three flags make headless mode useful in practice:
+These flags make headless mode useful in practice:
 
 | Flag | Purpose |
 | --- | --- |
 | `-p "prompt"` | Run one prompt and exit |
 | `--output-format json` | Print one JSON object with the response, timing, and token usage |
 | `--json-schema '<schema>'` | Force the answer into a JSON schema you supply |
+| `--model <id>` | Use a model for this run only, for example `gemini-4-hydrogen-low` |
+| `--effort <level>` | Set the reasoning effort for this run (`low` through `max`) |
+| `--mode <mode>` | Set the Agent Mode for this run, for example `plan` |
+| `--add-dir <dir>` | Let the agent work in a second directory as well |
+| `-c` | Continue the most recent conversation |
 
-The JSON envelope contains more than the answer. It reports `status`, `duration_seconds`, `num_turns`, and a `usage` object with input, output, thinking, and cached token counts. That makes cost tracking and logging straightforward.
+The JSON envelope contains more than the answer. It reports `status`, `duration_seconds`, `num_turns`, `conversation_id`, and a `usage` object with input, output, thinking, and cached token counts. That makes cost tracking and logging straightforward. It also shows something worth knowing before you run a batch: even a one line question used about 12,500 input tokens when I tried it, because every run sends the agent's own instructions and tool descriptions. For a large batch of tiny prompts, a short Python script against the Gemini API, as in Part 2, costs far less.
 
 ### Batch summarization
 
@@ -230,7 +261,7 @@ for f in notes/*.md; do
 done
 ```
 
-Run this once and you have turned a folder of raw notes into a folder you can skim. Run it from a scheduled task and it stays current. Lower the reasoning effort with a model that supports it if you care more about throughput than depth.
+Run this once and you have turned a folder of raw notes into a folder you can skim. Run it from a scheduled task and it stays current. Add `--effort low` if you care more about throughput than depth.
 
 ### Structured output for downstream tools
 
@@ -243,7 +274,7 @@ agy -p "Extract the vendor, invoice number, and total from invoice.txt." \
   | jq '.structured_output'
 ```
 
-The same pattern works for a scheduled research task. Combine a cron entry, headless mode, and a schema, and the agent writes a row of structured data into your notes every morning, with no human in the loop. Keep such jobs inside a dedicated directory and leave the approval level strict, because an unattended agent that can write anywhere is a bad idea.
+The same pattern works for a scheduled research task. Combine a cron entry, headless mode, and a schema, and the agent writes a row of structured data into your notes every morning, with no human in the loop. Keep such jobs inside a dedicated directory, and remember that headless runs now start in Auto mode. Add `--sandbox` so the commands the agent runs stay inside the terminal sandbox, because an unattended agent that can write anywhere is a bad idea. Do not reach for `--mode plan` here: in a headless run, plan mode returns the agent's plan for the task rather than the result.
 
 ## Migrating from the Gemini CLI
 

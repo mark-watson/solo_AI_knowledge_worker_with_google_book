@@ -2,116 +2,139 @@
 
 **Introduction**
 
-In the previous chapter, we covered authenticating with the Gemini API and performing basic text generation using the Python SDK. Those examples asked for a direct answer to a prompt. Some tasks do better when the model takes time to plan before it writes the answer. Gemini exposes that planning as a feature you control, and this chapter shows how.
+In the previous chapter, we authenticated with the Gemini API and generated text with the Python SDK. Those examples asked for a direct answer to a prompt. Some tasks go better when the model plans before it writes the answer. Gemini lets you control that planning, and this chapter shows how.
 
 Three terms appear in Google's documentation and in this book:
 
 - **Thinking** is the model's internal reasoning before it produces the answer you see.
-- **Thinking level** is the setting that decides how much of that reasoning happens. It is a coarse setting: minimal, low, medium, or high.
-- **Thinking budget** is the older setting, which asked for a number of tokens instead of a level. `thinking_budget` still works on Gemini 3 models as a compatibility path, but thinking level is what new code should use.
+- **Thinking level** is the setting that decides how much reasoning happens. It is a coarse setting: `minimal`, `low`, `medium`, `high`, or `xhigh`.
+- **Thinking budget** is the older Gemini 2.5 setting, which asked for a number of tokens instead of a level. New code should use thinking level.
 
 ## When to Raise the Thinking Level
 
-Standard generation is fast and good enough for most prompts. Raised thinking levels help when:
+Raised thinking levels help when:
 
-1.  **Complex problem solving.** The prompt requires breaking a problem into steps, weighing several approaches, or synthesizing information from many angles. For example: "Develop a phased marketing strategy for launching a new SaaS product that targets small businesses."
-2.  **Detailed analysis or summarization.** You need a close reading of a complex document and a nuanced summary or critique.
-3.  **Creative work that needs planning.** Long stories, complex code, and detailed project plans all improve when the model structures them first.
-4.  **Multi-step instructions.** The prompt contains several dependent instructions that the model must handle in order.
+1.  **The problem is complex.** The prompt requires breaking a problem into steps, weighing several approaches, or pulling together information from many angles. For example: "Develop a phased marketing strategy for launching a new SaaS product that targets small businesses."
+2.  **You need detailed analysis.** You want a close reading of a complex document and a careful summary or critique.
+3.  **Creative work needs planning.** Long stories, complex code, and detailed project plans all improve when the model structures them first.
+4.  **The prompt has several steps.** The prompt contains dependent instructions that the model must handle in order.
 
-For simple prompts such as "What is the capital of France?", a higher thinking level only adds latency.
+For simple prompts such as "What is the capital of France?", a higher thinking level only adds delay.
 
 A word of caution about cost. You pay for thinking tokens even though you never see them. Raising the level on a prompt that does not need it is the easiest way to spend money for nothing. Start at the default, raise the level when the output is visibly shallow, and lower it for bulk work.
 
 ## Setting the Thinking Level with the Python SDK
 
-Two objects from `google.genai.types` are involved:
+Two classes from `google.genai.types` are involved:
 
 1.  **`types.GenerateContentConfig`** holds the generation settings, including the thinking configuration.
 2.  **`types.ThinkingConfig`** holds the thinking setting. Set `thinking_level` on it.
 
-The accepted values are `"minimal"`, `"low"`, `"medium"`, and `"high"`. Not every model accepts every value. Gemini 3.8 Flash supports `low`, `medium`, and `high`, and asks for `minimal` is an error. Gemini 3.6 Flash and the Flash-Lite models accept all four. When you switch models, check the model page for the levels it supports.
+Not every model accepts every level, and each model has its own default. Here are the current models as of November 2026:
 
-**Client initialization:** As in the previous chapter, we use `genai.Client(api_key=...)` to create a client that authenticates with your API key.
+| Model | Levels accepted | Default |
+| --- | --- | --- |
+| `gemini-4-hydrogen`, `gemini-4-neon` | `low`, `medium`, `high`, `xhigh` | `high` |
+| `gemini-4-carbon`, `gemini-4-argon` | `low`, `medium`, `high` | `medium` |
+| `gemini-3.8-flash` | `low`, `medium`, `high` | `medium` |
+| `gemini-3.6-flash`, Flash-Lite models | `minimal`, `low`, `medium`, `high` | varies |
+
+A level the model does not accept produces an error. For example, asking `gemini-3.8-flash` for `xhigh` returns `400 INVALID_ARGUMENT` with the message "Thinking level XHIGH is not supported for this model." When you switch models, check the [thinking page](https://aistudio.google.com/docs/thinking) in Google's documentation for the levels it supports.
 
 ## Example: `demo_1.py` - Advertising Strategy Brainstorm
 
-This script asks for advertising ideas for a new consulting company. The task rewards structure, so it asks for a high thinking level.
+This script asks for advertising ideas for a new consulting company. It runs the prompt twice, at `low` and at `high`, and prints how long each run took and how many tokens it used.
 
 ```python
+import time
+
 from google import genai
 from google.genai import types
-import os
 
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+client = genai.Client()
 
-# Google ships new Flash models several times a year. See the model naming
-# note in python_auth_setup.md when this model ID stops working.
-MODEL_ID = "gemini-3.8-flash"
+# Google ships new models several times a year. See the model naming note in
+# python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-4-hydrogen"
 
 prompt = """
-   I am starting a AI/LLM consulting company. Suggest
+   I am starting an AI/LLM consulting company. Suggest
    three different options for advertising services.
 """
 
-response = client.models.generate_content(
-    model=MODEL_ID,
-    contents=prompt,
-    config=types.GenerateContentConfig(
-        thinking_config=types.ThinkingConfig(
-            thinking_level="high"
-        )
-    )
-)
 
-print(response.text)
+def ask(thinking_level):
+    start = time.perf_counter()
+    response = client.models.generate_content(
+        model=MODEL_ID,
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            thinking_config=types.ThinkingConfig(thinking_level=thinking_level)
+        ),
+    )
+    seconds = time.perf_counter() - start
+
+    usage = response.usage_metadata
+    print(f"\n===== thinking_level={thinking_level} =====")
+    print(f"time: {seconds:.1f}s  "
+          f"thinking tokens: {usage.thoughts_token_count or 0}  "
+          f"answer tokens: {usage.candidates_token_count}")
+    print(response.text)
+
+
+for level in ["low", "high"]:
+    ask(level)
 ```
 
 **Explanation:**
 
-1.  **Imports:** `google.genai`, `google.genai.types` for `GenerateContentConfig` and `ThinkingConfig`, and `os`.
-2.  **Client Initialization:** `genai.Client()` authenticates using the `GOOGLE_API_KEY` environment variable.
+1.  **Imports:** `google.genai`, `google.genai.types` for `GenerateContentConfig` and `ThinkingConfig`, and `time` to measure each call.
+2.  **Client:** `genai.Client()` reads your key from the environment.
 3.  **Model ID:** One `MODEL_ID` constant, so a model change is a one line edit.
-4.  **Prompt:** A moderately complex prompt that asks for structured suggestions, which suits a raised thinking level.
-5.  **`generate_content` call:**
-    * `model` and `contents` work as before.
-    * `config=types.GenerateContentConfig(...)` passes the advanced settings.
-    * `thinking_config=types.ThinkingConfig(thinking_level="high")` asks the model to reason at length before answering.
-6.  **Output:** `response.text` holds the advertising options.
+4.  **Prompt:** A moderately complex prompt that asks for structured suggestions.
+5.  **The `ask` function** makes one `generate_content` call:
+    * `config=types.GenerateContentConfig(...)` passes the settings.
+    * `thinking_config=types.ThinkingConfig(thinking_level=thinking_level)` sets how much the model reasons.
+6.  **Usage metadata:** `response.usage_metadata` reports the tokens the call used. `thoughts_token_count` counts the thinking tokens and `candidates_token_count` counts the tokens in the answer. You pay for both.
+7.  **The loop** runs the same prompt at `low` and then at `high`, so you can compare them.
 
-This example generates a report that runs several pages. Here is the beginning of the output:
+Here are the two summary lines from one run, followed by the start of the `low` answer:
 
 ```text
-Okay, starting an AI/LLM consulting company is exciting! Since it's a B2B service focused on technology and strategy, your advertising needs to reach business decision-makers and demonstrate expertise. Here are three distinct options for advertising your services:
+===== thinking_level=low =====
+time: 8.2s  thinking tokens: 460  answer tokens: 665
+Here are three distinct advertising options tailored for an AI/LLM consulting company, each targeting potential B2B clients at different stages of the buying journey:
 
-**Targeted Content Marketing & LinkedIn Advertising:**
+### 1. LinkedIn Ads (Targeted B2B Outreach)
+LinkedIn is the premier platform for B2B consulting because it allows you to target decision-makers directly by job title, industry, and company size.
+* **Why it works for AI consulting:** You can put your services directly in front of CTOs, VPs of Engineering, and Founders who are actively thinking about AI strategy.
+...
 
-**Strategy:** Position yourself as a thought leader and educator in the AI/LLM space. Create valuable content that addresses the pain points and opportunities businesses face with AI (e.g., improving customer service with chatbots, automating tasks, leveraging data with LLMs, ethical considerations, choosing the right models).
-
-**Tactics:**
--   **Blog Posts/Articles:** Write detailed articles on your website covering specific use cases, implementation strategies, benefits, and challenges.
--   **Whitepapers/Ebooks:** Offer downloadable, in-depth guides on topics like "The Executive's Guide to Implementing AI in [Industry]" or "Evaluating LLM Solutions for Your Business."
--   **Webinars/Online Workshops:** Host free sessions demonstrating how AI/LLMs can solve specific business problems. This allows direct interaction and showcases expertise.
--   **Case Studies:** Showcase successful projects (anonymized if necessary) highlighting the business results you achieved for clients.
+===== thinking_level=high =====
+time: 10.6s  thinking tokens: 567  answer tokens: 810
 ...
 ```
 
-Run the example to see the full report.
+Run the example to see both full answers.
 
-## Seeing the Difference
+## Reading the Numbers
 
-This example does not run a side by side comparison, but if you run the same complex prompt at two thinking levels you will notice:
+On this prompt the two levels came out close. The `high` run used about 25% more thinking tokens, took about 30% longer, and wrote a somewhat longer answer. Both answers suggested LinkedIn ads and Google search ads, and both were usable. The thinking level is an upper limit on effort, not a fixed amount: the model decides how much of that room a prompt needs, and a three item brainstorm does not need much.
 
-* **At a higher level:** The output tends to be more structured, covers more of the prompt, and shows its reasoning in the organization of the answer.
-* **At a lower level:** The output can still be good, but it is more likely to miss nuance on a complex request.
-* **Latency:** A higher level takes longer, because the model reasons before it answers.
-* **Cost:** You pay for the thinking tokens, so the higher level costs more for the same visible answer.
+The gap grows with the difficulty of the task. I changed the prompt to ask for a twelve month launch plan with a budget table that must sum to a fixed total, the dependencies between activities, and the three riskiest assumptions. At `low` the model used 1,179 thinking tokens. At `high` it used 4,585, almost four times as many, and wrote an answer more than twice as long.
 
-The cheapest way to decide is to run the prompt at the default level, read the answer, and raise the level only if the answer is shallow.
+When you compare levels on your own prompts, look at four things:
 
-## Compatibility with Gemini 2.5 Models
+* **Quality:** At a higher level the output tends to be more structured and covers more of the prompt. At a lower level the output can still be good, but it is more likely to miss detail on a complex request.
+* **Time:** A higher level takes longer, because the model reasons before it answers.
+* **Tokens:** You pay for the thinking tokens, so a higher level costs more for the same visible answer.
+* **Default:** Gemini 4 Hydrogen already defaults to `high`. If you leave out `thinking_config`, you get the most expensive setting short of `xhigh`. Set `low` explicitly for bulk work such as tagging or short summaries.
 
-Gemini 2.5 models predate thinking levels. They were controlled with `thinking_budget`, a token count:
+The cheapest way to decide is to run the prompt at a low level, read the answer, and raise the level only if the answer is shallow.
+
+## Migrating from `thinking_budget`
+
+Gemini 2.5 models predated thinking levels. They used `thinking_budget`, a token count:
 
 ```python
 config=types.GenerateContentConfig(
@@ -121,15 +144,15 @@ config=types.GenerateContentConfig(
 )
 ```
 
-The Gemini 3 models still accept `thinking_budget` for compatibility, so this code runs, but it is the legacy path. Two limits are worth knowing. First, `thinking_budget=0` used to turn thinking off on 2.5 models, and on Gemini 3 models thinking cannot be fully disabled. Second, a budget is harder to reason about than a level, because the same budget means different amounts of work on different models. Use `thinking_level` in new code. Reach for `thinking_budget` only when you must keep an older script running unchanged.
+You will still see this in older code and older tutorials. Google deprecated `gemini-2.5-pro` and `gemini-2.5-flash` on November 2, 2026, and from December 1, 2026 it routes their requests to newer models. Google's migration notes list replacing `thinking_budget` with `thinking_level` as one of the changes to make. Two other differences matter when you move old code. First, `thinking_budget=0` turned thinking off on 2.5 models, but you cannot turn thinking off on Gemini 3 and Gemini 4 models: the lowest level is `low` or `minimal`. Second, a budget is harder to reason about than a level, because the same budget means different amounts of work on different models.
 
 ## Wrap Up
 
-Thinking level is the current way to control how much Gemini reasons before it answers. Set `thinking_level` on a `types.ThinkingConfig` inside a `types.GenerateContentConfig`, and choose a level that matches the difficulty of the task. Remember four points:
+Thinking level controls how much Gemini reasons before it answers. Set `thinking_level` on a `types.ThinkingConfig` inside a `types.GenerateContentConfig`, and pick a level that fits the task. Remember these points:
 
-- Raise the level for multi-step analysis and planning, and leave it alone for simple prompts.
-- You pay for thinking tokens, so a high level on a trivial prompt is wasted money.
-- Gemini 3.8 Flash supports `low`, `medium`, and `high`, but not `minimal`, and you cannot turn thinking off completely on Gemini 3 models.
-- `thinking_budget` is the legacy control for Gemini 2.5 models. It still works, but new code should use `thinking_level`.
+- Raise the level for multi-step analysis and planning, and lower it for simple or bulk prompts.
+- You pay for thinking tokens. Read `usage_metadata.thoughts_token_count` to see how many you used.
+- Each model accepts its own set of levels. Gemini 4 Hydrogen accepts `low` through `xhigh` and defaults to `high`.
+- `thinking_budget` is the old Gemini 2.5 control. Replace it with `thinking_level` when you update old code.
 
 In the next chapter we add images to the prompt and use a low thinking level to keep the answers fast.

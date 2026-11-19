@@ -1,6 +1,6 @@
 # Preface
 
-*This book was substantially updated in October 2026.*
+*This book was last updated in November 2026. The examples now use Google's Gemini 4 models and version 3 of the Gemini Python SDK.*
 
 Most books I have written are deeply technical - this is not one of them. Here, I attempt to make state-of-the-art AI approachable and usable to a wider and not necessarily technical audience. For those readers most interested in practical examples, you can skip to the chapter "Google's AI Ecosystem."
 
@@ -8,8 +8,8 @@ Here we cover:
 
 - Practical general tips for being an effective solo knowledge worker.
 - Power prompting: how to write inputs that produce usable work.
-- Gemini (mostly) non-programming interface to Google's AI models.
-- NotebookLM platform for research and study.
+- Gemini, the (mostly) non-programming interface to Google's AI models.
+- Gemini Notebook (formerly NotebookLM) for research and study.
 - Google AI Studio for experimenting with new AI models, software prototyping, and using models for video and image generation.
 - The Antigravity CLI (`agy`) for agentic work in the terminal, including headless scripting for batch jobs.
 - Optional material for writing short Python programs to use the Google AI platform.
@@ -59,16 +59,16 @@ Part 2 is for readers who want to write short Python programs against the Gemini
 
 Part 3 covers AI agents. It starts with the Antigravity CLI and agentic workflows in the terminal, then builds a research agent with Google's Agent Development Kit. For more technical and software-intensive material please see my other books at [https://leanpub.com/u/markwatson](https://leanpub.com/u/markwatson).
 
-Every code example in the book lives in the `source-code/` directory. Run `make verify` there to check that the examples still compile and still name a current Gemini model.
+Every code example in the book lives in the `source-code/` directory. Run `make sync` and then `make verify` there to check that the examples still compile and still name a current Gemini model.
 
 ## Things Said and Things Left Unsaid
 
 I leave out most material specific to enterprise use of the Google AI Platform and concentrate on tools more likely used by individuals. As a result:
 
 - We will concentrate on Gemini App, Google AI Studio App, and directly calling the Gemini model APIs (requires a simple to obtain API key)
-- We will cover with simple examples the tight Gemini integration with the apps Gmail, Google Docs, Google Sheets, Google Meet, Google Drive, and Google Calendar.
-- Relatively little coverage here for Google Vertex. Vertex AI is Google Cloud's comprehensive, unified platform for building, deploying, and managing machine learning models and AI applications. If you are a professional software developer you can augment the material here with [https://cloud.google.com/vertex-ai/docs](https://cloud.google.com/vertex-ai/docs).
-- Little coverage of the Google WorkSpace product that is used by companies, schools, and government agencies. Individuals tend to use the Gemini app that interacts directly with data in the free Google apps like Gmail, Google Calendar, Google Docs, etc. I created a fresh Google WorkSPace account for the purpose of writing this book but most of the material pertains to the “free” Gmail and other Google apps (the setup I use for my personal work flow).
+- We will cover with simple examples the Gemini integration with Gmail, Google Docs, Google Sheets, Google Drive, and Google Calendar.
+- Little coverage of Google Cloud's Vertex AI, which Google's newer documentation calls the Gemini Enterprise Agent Platform. It is Google Cloud's platform for building, deploying, and managing machine learning models and AI applications. If you are a professional software developer you can add to the material here with [https://cloud.google.com/vertex-ai/docs](https://cloud.google.com/vertex-ai/docs).
+- Little coverage of Google Workspace, the product used by companies, schools, and government agencies. Individuals tend to use the Gemini app with the data in their personal Google apps like Gmail, Google Calendar, and Google Docs. I created a fresh Google Workspace account while writing this book, but most of the material covers personal Google accounts with a Google AI plan, which is the setup I use for my own work.
 
 ## Acknowledgements
 

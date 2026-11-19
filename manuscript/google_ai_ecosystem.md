@@ -4,24 +4,21 @@ This chapter serves as an introduction to tools we will use repeatedly in many e
 
 The Google AI ecosystem offers a diverse range of tools, from user-friendly applications integrated into daily workflows to powerful cloud-based platforms and APIs. For the solo knowledge worker, navigating this landscape requires focusing on tools that are realistically accessible, useful for individual or very small team contexts, and considerate of potential budget and technical expertise limitations.
 
-## Differences Between AI Support in Paid For Google Workspace and Free Apps Like Gmail, Calendar, and Docs
+## How Much Gemini You Get Depends on Your Account
 
-The integration of AI capabilities, primarily through Gemini, differs somewhat between the paid Google Workspace platform and the suite of free Google applications (Gmail, Calendar, Docs, Drive, etc.) accessible with a standard Google account. The core distinction lies in the depth and nature of this integration, impacting user workflow and the scope of AI assistance.
+How deeply Gemini works inside Gmail, Calendar, Docs, Drive, and Sheets depends on the kind of account you have. As I write this in November 2026, there are three cases:
 
-Gemini’s integration is deeper in the commercial Workspace product because it functions as a co-pilot when dealing with workflows across Workspace apps.  Gemini operates within the application you're using. When drafting in Docs, it can help write, summarize, or change the tone based on the existing document content. In Gmail, it can draft replies aware of the email thread's context. In Sheets, it can help generate formulas or analyze data present in the sheet.
+- **Free personal Google accounts.** You mostly use Gemini through the Gemini app on the web ([gemini.google.com](https://gemini.google.com/)) or on your phone. Once you connect your Google apps in the Gemini settings, the app can search and summarize your mail, files, and calendar, for example "summarize my recent emails from John Doe", "find the document titled 'Project Phoenix proposal'", or "what's on my calendar tomorrow?". Inside Gmail itself, free accounts get only a few features, such as thread summaries and suggested replies (US only at the time of writing).
+- **Personal accounts with a Google AI plan (Plus, Pro, or Ultra).** Gemini also appears *inside* the apps: a side panel in Gmail, Docs, Sheets, Slides, and Drive, "Help me write" in Docs, proofreading in Gmail, and Gemini in Sheets, which can build or fill in a whole spreadsheet. These features have monthly usage limits that vary by plan.
+- **Google Workspace business accounts.** Gemini works inside the apps much as with a Google AI plan, under your organization's plan and admin settings.
 
-For users of the free Google apps, Gemini integration operates differently. It's not typically embedded directly within the free versions of Docs, Sheets, or standard Gmail in the same co-pilot manner. Instead, the interaction primarily occurs:
+Google moves features between these tiers often, so check the plan page for your account before you rely on a specific feature. The rest of this book uses my personal account with Google AI Pro.
 
-- Through the Gemini App/Web Interface: Users interact with Gemini via its dedicated mobile apps (Android/iOS) or the web interface (gemini.google.com).
-- Via Extensions/Connections: To allow Gemini to access data from free apps like Gmail, Drive, or Calendar, users must explicitly enable specific "Extensions" or connections within the Gemini settings. This grants Gemini permission to query that data. (See figure below.)
-- Querying and Summarization: The focus is more on using Gemini as a central hub to ask questions about or summarize information from your connected services. For example, you can ask Gemini to "summarize my recent emails from John Doe," "find the document titled 'Project Phoenix proposal'," or "what's on my calendar tomorrow?".
-- Less Integrated Workflow: While Gemini can access this data, the workflow is less seamless. You generally need to switch from your primary application (e.g., Gmail) to the Gemini interface to invoke its capabilities regarding that application's data. While it might help draft a basic email from the Gemini interface, it doesn't offer the same level of contextual, in-app writing assistance as the Workspace version.
+Whichever account you have, you must explicitly allow the Gemini app to use data in your other Google apps:
 
-As seen in the following figure, we need to explicitly allow Gemini access to data in other Google apps:
+![In Gemini’s menu, select Settings & help ->Apps and enable data sharing with Gemini](resources/permissions.jpg)
 
-![In Gemini’s menu, select Settings & help ->Apps and enable data sharing with Gemini](permissions.jpg)
-
-When I work for corporate customers I use their WorkSpace instantiation but I have never used it for an extended period of time for my own workflow. One feature I find very useful in WorkSpace is the **Cloud Search** application that searches across all your data in Google apps and Google Drive: very convenient!
+When I work for corporate customers I use their Workspace accounts, but I have never used it for an extended period of time for my own workflow. One feature I find very useful in Workspace is the **Cloud Search** application that searches across all your data in Google apps and Google Drive: very convenient!
 
 ## Conversational AI Using the Gemini App and Web App
 
@@ -31,21 +28,21 @@ Gemini serves as a versatile conversational AI assistant, capable of understandi
 
 *Note: I use Google AI Pro but most examples in this book also work with the free version of Gemini.*
 
-After logging into [https://gemini.google.com/](https://gemini.google.com/) use the menu in the upper let hand corner (looks like three horizontal lines: the “hamburger” icon) to expand the menu and select **Settings** (last menu item at the bottom) and then elect the **Apps** submenu. This is shown in the last figure. You can now connect Gemini to the Google apps that you want to grant Gemini access to. For work I connect all Google Workspace apps (Gmail, Calendar, Docs, Drive, Keep, and Tasks). For fun and personal use I also connect Google Flights and Hotels, as well as Google Maps, YouTube, and YouTube Music (which I use). Optionally connect to OpenStax to get access to licensed textbooks.
+After logging into [https://gemini.google.com/](https://gemini.google.com/) use the menu in the upper left hand corner (it looks like three horizontal lines, the “hamburger” icon) to expand the menu, select **Settings** (the last menu item at the bottom), and then select the **Apps** submenu. This is shown in the last figure. You can now connect Gemini to the Google apps that you want to grant Gemini access to. For work I connect all Google Workspace apps (Gmail, Calendar, Docs, Drive, Keep, and Tasks). For fun and personal use I also connect Google Flights and Hotels, as well as Google Maps, YouTube, and YouTube Music (which I use). Optionally connect to OpenStax to get access to licensed textbooks.
 
 ### Ask Gemini Chat
 
-I use Gemini Chat fairly interchangeably with OpenAI's ChatGPT and Anthropic's Claude with one life hack: I usually only pay for one service at a time. As I write this in October 2026, I subscribe to Google AI Pro and use Claude and ChatGPT in the free mode.
+I use Gemini Chat fairly interchangeably with OpenAI's ChatGPT and Anthropic's Claude with one life hack: I usually only pay for one service at a time. As I write this in November 2026, I subscribe to Google AI Pro and use Claude and ChatGPT in the free mode.
 
-The subscription names changed in 2025. What used to be called **Gemini Advanced** is now **Google AI Pro**. Google also sells **Google AI Plus** below it and **Google AI Ultra** above it. The plans differ in model access, rate limits, and which products the subscription covers. The free tier still gives you the Flash models, which is enough for most of the examples in this book.
+The subscription names changed in 2025. What used to be called **Gemini Advanced** is now **Google AI Pro**. Google also sells **Google AI Plus** below it and **Google AI Ultra** above it. The plans differ in model access, usage limits, and which products the subscription covers. The free tier uses automatic model selection, which can give you Google's everyday model, Gemini 4 Hydrogen, and that is enough for most of the examples in this book.
 
-A Google AI Pro subscription now covers more than the chat app. It applies to the Gemini app, Gemini Notebook, Antigravity, and Google AI Studio, each with its own daily quota. That bundle is the reason a solo worker should consider the paid tier: you get one subscription across the tools you use all day.
+A Google AI Pro subscription now covers more than the chat app. It applies to the Gemini app, Gemini Notebook, Antigravity, and Google AI Studio, each with its own usage limits. That bundle is the reason a solo worker should consider the paid tier: you get one subscription across the tools you use all day.
 
-Assuming that you subscribe to Google AI Pro, here are the kinds of models to choose from. The model picker in the Gemini app lists the Gemini Flash and Pro models, and it also lists models from other vendors, including Claude and GPT-OSS, which Antigravity serves from the same harness:
+The Gemini 4 models arrived between October and November 2026, and Google names them after chemical elements instead of calling them Flash and Pro. **Hydrogen** is the fast everyday model, **Neon** is a stronger model for harder tasks, and **Carbon** is Google's strongest reasoning model. As I write this, choosing the larger models requires Google AI Pro or above, Pro subscribers can choose Gemini 4 Neon, and Carbon needs Google AI Ultra. Google changes this lineup every few months, so treat the model picker in the app as the source of truth. Here is the picker as it looked in an earlier version of the app:
 
 ![Available Gemini models](resources/GeminiModels.jpg)
 
-I usually select a Gemini Flash model for general use because it is fastest and uses fewer resources (if you care about energy efficiency and the environment. If you want good background on the environmental costs of AI then I recommend reading Kate Crawford's book **Atlas of AI**.)
+I usually select the fastest model, today Gemini 4 Hydrogen, for general use because it uses fewer resources (if you care about energy efficiency and the environment. If you want good background on the environmental costs of AI then I recommend reading Kate Crawford's book **Atlas of AI**.)
 
 You have four easily used options in the chat input as seen in this figure:
 
@@ -165,15 +162,17 @@ Most of the books that I write are tech-heavy with many programming examples. I 
 
 I believe that the more effort you put into personalizing AI tools, the more benefit you get.
 
-## Google NotebookLM
+## Gemini Notebook (formerly NotebookLM)
 
 When you, dear reader, have many source documents (text, PDFs, spreadsheets, videos, etc.) for a new or existing project and you need to understand this material with the minimum amount of your time and effort, import your source documents into a new notebook and as you browse or you carefully read source material you can ask questions about how the material relates to other material in the source documents, express what your current interest is and ask for a recommendation of the most critical documents, you can ask for summaries, etc.
 
-**A note on the name.** Google has begun renaming this product from **NotebookLM** to **Gemini Notebook**. Both names appear in Google's own documentation. The book uses NotebookLM because that is the name most readers still recognize, but the URL you want is [notebooklm.google.com](https://notebooklm.google.com/).
+**A note on the name.** Google renamed **NotebookLM** to **Gemini Notebook** on July 16, 2026. It is the same product at the same web address, [notebooklm.google.com](https://notebooklm.google.com/), and old shared links still work. You will see both names in articles and videos for a while. Notebooks you create in the Gemini app also appear in Gemini Notebook.
 
 The product has grown well past question answering over your sources. It now generates artifacts from a notebook: an **Audio Overview** that turns your sources into a two host discussion, a **Video Overview**, written **Reports**, **Flashcards**, and a **Slide Deck**. Adding sources to a new notebook may generate one of these automatically. You can share a notebook and let other people ask their own questions against the same sources.
 
-Plan limits matter here, because a research project can outgrow the free tier quickly. On the standard free plan you get 100 notebooks and 50 sources per notebook. Google AI Plus raises that to 200 notebooks and 100 sources. Google AI Pro and Ultra raise it further, to 300 to 600 sources per notebook. Notebooks are cheap to create, so the source limit per notebook is the one that bites when you are studying a large body of material.
+Plan limits matter here, because a research project can outgrow the free tier quickly. On the standard free plan you get 100 notebooks and 50 sources per notebook. Google AI Plus raises that to 200 notebooks and 100 sources. Google AI Pro and Ultra raise it further, to 300 to 600 sources per notebook. Notebooks are cheap to create, so the source limit per notebook is the one that matters when you are studying a large body of material. Usage limits also changed on September 2, 2026: instead of a fixed number of chats and Audio Overviews per day, your allowance refills every five hours up to a weekly cap, and heavier features such as video use more of it.
+
+Google has also begun adding code execution to notebooks, starting with Google AI Pro, so you can ask for charts and calculations over a spreadsheet you added as a source. That overlaps with the Colab chapter in Part 2.
 
 In a loose sense, notebooks work like custom Gemini Gems, with a few differences:
 
@@ -182,15 +181,15 @@ In a loose sense, notebooks work like custom Gemini Gems, with a few differences
 
 I tend to remove old notebooks when I am done with them. I find this to be analogous to how twenty years ago I used to organize new writing and also software projects with handwritten notes on yellow pads and spread the sheets of paper around. I would clean up the paper artifacts when a project is done, and I also like to keep my notebook work environment tidy. Here is a screenshot of the notebooks that I am currently using:
 
-![My current NotebookLM notebooks](resources/NotebookLM.jpg)
+![My current Gemini Notebook notebooks](resources/NotebookLM.jpg)
 
-Using the NotebookLM web app is straightforward and I know you will find it useful.
+Using Gemini Notebook is straightforward and I know you will find it useful.
 
 ## Google AI Studio
 
 Before starting to read this section, dear reader, please open the [Google AI Studio web app](https://aistudio.google.com/) and login with your Google (or Gmail) account. Google AI Studio is tailored to workflows for developers.
 
-The fundamental distinction between Google AI Studio (aistudio.google.com) and the Gemini web application (gemini.google.com) lies in their target audience and primary purpose. AI Studio is a web based developer tool for prototyping and experimenting with Google's generative models through the Gemini APIs. The Gemini web app is a direct to consumer application for general users who want to interact conversationally with the Gemini models for assistance, content generation, and information retrieval. Both interfaces use the same models, but AI Studio provides a structured environment for developers and builders to craft, test, and refine prompts, adjust model parameters (like temperature, top-k, top-p), compare outputs from different prompt variations, and generate API keys and code snippets (in languages like Python, JavaScript, and curl) to integrate a model into their own applications. The Gemini web app offers a streamlined chat interface tuned for direct interaction and creative exploration, without exposing API controls, parameter tuning, or code generation. Its focus is the experience of using AI, while the focus of AI Studio is the process of building with the AI.
+The fundamental distinction between Google AI Studio (aistudio.google.com) and the Gemini web application (gemini.google.com) lies in their target audience and primary purpose. AI Studio is a web based developer tool for prototyping and experimenting with Google's generative models through the Gemini APIs. The Gemini web app is a direct to consumer application for general users who want to interact conversationally with the Gemini models for assistance, content generation, and information retrieval. Both interfaces use the same models, but AI Studio provides a structured environment for developers and builders to craft, test, and refine prompts, adjust settings such as the thinking level, structured output, and system instructions, compare outputs from different prompt variations, and generate API keys and code snippets (in languages like Python, JavaScript, and curl) to integrate a model into their own applications. The Gemini web app offers a streamlined chat interface tuned for direct interaction and creative exploration, without exposing API controls, parameter tuning, or code generation. Its focus is the experience of using AI, while the focus of AI Studio is the process of building with the AI.
 
 Here is a screenshot of the Google AI Studio web app:
 
@@ -200,10 +199,10 @@ This screenshot shows what you will see the first time you open the web app with
 
 Google AI Studio serves as an accessible gateway to Google's generative artificial intelligence models, most notably the Gemini family. It is a web based platform for rapid experimentation and prototyping with AI. Whether you want to understand what modern AI can do, build a proof of concept for a new application, or explore creative possibilities, AI Studio provides an interactive environment to engage with these capabilities without complex setup requirements.
 
-Two additions since this chapter was first written are worth knowing about. **Build mode** lets you describe an application in plain language and have AI Studio generate the code, which is useful for prototyping but not a substitute for reading the code before you rely on it. The **Playground** also hosts agents, including a Deep Research agent, though access to agents requires a paid API key rather than a Google AI plan.
+Several additions since this chapter was first written are worth knowing about. **Build mode** lets you describe an application in plain language and have AI Studio generate the code, which is useful for prototyping but not a substitute for reading the code before you rely on it. Google announced at I/O 2026 that Build can also generate native Android apps. AI Studio can also generate images with Nano Banana, Google's image model. The Gemini API documentation now lives inside AI Studio, at [aistudio.google.com/docs](https://aistudio.google.com/docs). The **Playground** also hosts agents, including a Deep Research agent, though access to agents requires a paid API key rather than a Google AI plan.
 
-For developers, AI Studio is a valuable tool for quickly iterating on prompts and tuning model parameters like temperature or top-k before integration. You can craft and refine prompts for various tasks, test different model versions, and generate API keys to embed Gemini models directly into your own applications and workflows. This shortens the development cycle for AI powered features.
+For developers, AI Studio is a valuable tool for quickly iterating on prompts and settings before you write code. One change from older tutorials: Google deprecated the temperature, top-p, and top-k sampling settings starting with the Gemini 3.6 models in July 2026. On current models the settings that matter are the thinking level, the system instructions, and structured output. You can craft and refine prompts for various tasks, test different model versions, and generate API keys to embed Gemini models directly into your own applications and workflows. This shortens the development cycle for AI powered features.
 
 For marketing professionals, small business owners, and other non-technical users, AI Studio demystifies generative AI by providing an intuitive interface to explore its potential. You can experiment with generating creative text formats, brainstorming ideas, summarizing information, drafting communications, or analyzing images, all through simple prompt interactions. This hands on experience lets you discover practical applications for AI within your own business context or creative work without needing to write a single line of code.
 
-The last section of this book contains Python programs using the Gemini APIs. When writing Python applications using Gemini you can save time prototyping prompts and API parameters using AI Studio.
+Part 2 of this book contains Python programs using the Gemini APIs. When writing Python applications using Gemini you can save time prototyping prompts and API parameters using AI Studio.

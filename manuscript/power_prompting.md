@@ -62,7 +62,7 @@ The model follows the shape of the example, including the field names and the nu
 
 For any task that involves judgment, ask the model to work through the problem before it commits to a conclusion. "First list the tradeoffs, then recommend one" produces a better recommendation than "recommend one". Visible reasoning also gives you something to argue with, which beats receiving a conclusion you cannot audit.
 
-Some models do this work internally through a thinking setting. Even then, ask for the short version of the reasoning in the answer when you will act on the result. The chapter on thinking levels covers the API side of this.
+Current Gemini models already reason internally before they answer, so the old trick of adding "think step by step" matters less than it used to. What still helps is asking for the short version of the reasoning *in the answer* when you will act on the result, because the model's internal thinking stays hidden from you. If the answer is shallow, raise the thinking level rather than adding more instructions. The chapter on thinking levels covers the API side of this.
 
 ### Assign a role, but keep it honest
 
@@ -137,7 +137,7 @@ A prompt that works is an asset, so store it where you will find it again.
 
 - **A notes file** is enough at first. One file per project, each prompt followed by a line saying what it produces.
 - **Gems** in the Gemini app save instructions and knowledge files, so a recurring task becomes a named tool you can select.
-- **Agent Skills** in the Antigravity CLI save instructions as files in your project, which the agent loads when the task matches. This is the right home for a multi-step workflow, such as the research brief workflow in Part 3.
+- **Agent Skills** in the Antigravity CLI save instructions as files in your project, which the agent loads when the task matches. This is the right home for a multi-step workflow, such as the research brief workflow in Part 3. To share skills between projects or with other people, package them as an Antigravity plugin.
 - **A script** is the right home when the prompt runs on a schedule. Headless mode plus your saved prompt gives you a repeatable job with no typing.
 
 The progression is the point. You start by typing a prompt, and you end with a process that runs without you.

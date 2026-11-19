@@ -1,15 +1,14 @@
 # --- Example 2: Text Generation ---
-# Purpose: Use the Gemini client to generate text
-#          based on a given prompt.
+# Purpose: Use the Gemini client to generate text from a prompt.
 
 from google import genai
-import os
 
-client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
+# genai.Client() reads your key from GOOGLE_API_KEY (or GEMINI_API_KEY).
+client = genai.Client()
 
-# Google ships new Flash models several times a year. See the model naming
-# note in python_auth_setup.md when this model ID stops working.
-MODEL_ID = "gemini-3.8-flash"
+# Google ships new models several times a year. See the model naming note in
+# python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-4-hydrogen"
 
 # Define the prompt (your instruction to the model)
 prompt = "Brainstorm 5 blog post ideas about remote work productivity for solo knowledge workers."

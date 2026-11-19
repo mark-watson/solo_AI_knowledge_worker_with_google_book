@@ -28,18 +28,26 @@ import re
 import subprocess
 import sys
 
-# Model ID patterns. Google retires dated previews first, so the book must not
+# Model ID patterns. Gemini 3 models use family names such as
+# gemini-3.8-flash. Gemini 4 models use element code names such as
+# gemini-4-hydrogen. Google retires dated previews first, so the book must not
 # use them. Must match every model ID in the examples and the manuscript.
-MODEL_ID_PATTERN = re.compile(r"^gemini-[0-9]+(\.[0-9]+)?-(flash|pro)[a-z0-9-]*$")
-RETIRED_MODEL_PATTERN = re.compile(r"gemini-(1\.5|2\.0|2\.5)")
+MODEL_ID_PATTERN = re.compile(
+    r"^gemini-(?:[0-9]+(?:\.[0-9]+)?-(?:flash|pro)[a-z0-9-]*|[4-9]-[a-z]+)$"
+)
+# Shut down, deprecated, or rerouted families. 3.5 and 3.7 Flash were
+# deprecated on 2026-10-08. The -latest aliases are not on the v1 API that
+# google-genai 3.x uses by default.
+RETIRED_MODEL_PATTERN = re.compile(r"gemini-(?:1\.5|2\.0|2\.5|3\.5-flash$|3\.7)|-latest$")
 DATE_SUFFIX_PATTERN = re.compile(r"-\d{2}-\d{2}$")
 
 # The model every example is standardised on. See python_auth_setup.md.
-EXPECTED_MODEL = "gemini-3.8-flash"
+EXPECTED_MODEL = "gemini-4-hydrogen"
 
 # Examples that talk to the real API and can run unattended.
 LIVE_EXAMPLES = {
     "text_generation.py",
+    "interactions_demo.py",
     "demo_1.py",
     "photo_understanding.py",
     "movies_demo_ladybug.py",
@@ -47,12 +55,12 @@ LIVE_EXAMPLES = {
 
 # Examples that need an OAuth consent screen, a saved credential, or an
 # interactive terminal, so they are never run here.
-NO_LIVE_RUN = {"auth_test1.py", "summarize_gmail.py", "deep-search.py"}
+NO_LIVE_RUN = {"auth_test1.py", "create_gmail_token.py", "summarize_gmail.py", "deep_search.py"}
 
 LIVE_TIMEOUT_SECONDS = 300
 
-# Catches assignments such as MODEL_ID = "gemini-3.8-flash" plus keyword
-# arguments such as ChatGoogleGenerativeAI(model="gemini-3.8-flash").
+# Catches assignments such as MODEL_ID = "gemini-4-hydrogen" plus keyword
+# arguments such as ChatGoogleGenerativeAI(model="gemini-4-hydrogen").
 MODEL_ASSIGNMENT_PATTERN = re.compile(
     r"""(?:^|\s)model\s*=|\bMODEL_(?:ID|NAME)\s*[=:]""",
     re.IGNORECASE,
@@ -86,7 +94,7 @@ def model_check(path):
 
     ok = True
     for model_id in sorted(set(found)):
-        if RETIRED_MODEL_PATTERN.match(model_id):
+        if RETIRED_MODEL_PATTERN.search(model_id):
             print(f"  FAIL  model   {path.name}: {model_id} is retired")
             ok = False
         elif DATE_SUFFIX_PATTERN.search(model_id):

@@ -25,6 +25,18 @@ This table maps each chapter file in `./manuscript` to its source code example d
 | `manuscript/google_agent_development_kit.md` | `source-code/a_google_adk_example` |
 | `manuscript/wrapup.md` | (none) |
 
-The examples follow the current model naming and dependency pins in
-`source-code/pyproject.toml` files. Run `make verify` inside `source-code/` to
-check that every example still compiles and still names a current Gemini model.
+Every example uses the model `gemini-4-hydrogen` and pins its dependencies in
+its own `pyproject.toml`. The ADK project uses `google-genai` 2.x because
+`google-adk` requires it; every other project uses `google-genai` 3.x. Run
+`make sync` and then `make verify` inside `source-code/` to check that every
+example still compiles and still names the current Gemini model. Set `LIVE=1`
+to also run the examples that need no OAuth sign-in or keyboard input.
+
+| Directory | Files |
+| --- | --- |
+| `1_start_with_auth_and_setup` | `auth_test1.py`, `text_generation.py`, `interactions_demo.py` |
+| `2_thinking` | `demo_1.py` |
+| `3_images_and_text` | `photo_understanding.py` |
+| `5_knowledgegraphs` | `demo_ladybug_basics.py`, `movies_demo_ladybug.py` |
+| `9_optional_google_apps` | `create_gmail_token.py`, `summarize_gmail.py` |
+| `a_google_adk_example` | `deep_search.py` |

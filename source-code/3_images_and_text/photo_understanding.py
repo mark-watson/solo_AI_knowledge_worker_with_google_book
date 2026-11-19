@@ -1,51 +1,67 @@
+import pathlib
+import sys
+
 from google import genai
 from google.genai import types
 from PIL import Image
+from pydantic import BaseModel, Field
 
-import os
+client = genai.Client()
 
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+# Google ships new models several times a year. See the model naming note in
+# python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-4-hydrogen"
 
-# Google ships new Flash models several times a year. See the model naming
-# note in python_auth_setup.md when this model ID stops working.
-MODEL_ID = "gemini-3.8-flash"
+IMAGE_PATH = pathlib.Path(__file__).parent.parent / "data" / "poker.jpeg"
 
-prompt = """
-    Return bounding boxes around people as a JSON array with labels. Never return masks or code fencing. Limit to 10 people.
-    Describe each person identified in a picture.
-      """
 
-image_path = os.path.join(os.getcwd(), "..", "data", "poker.jpeg")
-
-im = Image.open(image_path)
-
-# Gemini 3.8 Flash cannot turn thinking off completely. Use the lowest
-# thinking level when you want the fastest answer.
-response = client.models.generate_content(
-    model=MODEL_ID,
-    contents=[prompt, im],
-    config=types.GenerateContentConfig(
-        thinking_config=types.ThinkingConfig(
-            thinking_level="low"
-        )
+class Person(BaseModel):
+    box_2d: list[int] = Field(
+        description="Bounding box as [ymin, xmin, ymax, xmax], scaled to 0-1000."
     )
-)
+    description: str = Field(description="What the person looks like.")
+    holding: str = Field(description="What the person holds in their hands.")
 
-print(response.text)
 
-prompt2 = """
-    Return bounding boxes around people as a JSON array with labels. Never return masks or code fencing. Limit to 10 people.
-    Describe each person identified in a picture, specifically what they are holding in their hands.
-      """
-
-response = client.models.generate_content(
-    model=MODEL_ID,
-    contents=[prompt2, im],
-    config=types.GenerateContentConfig(
-        thinking_config=types.ThinkingConfig(
-            thinking_level="low"
-        )
+def describe_people(image):
+    response = client.models.generate_content(
+        model=MODEL_ID,
+        contents=[
+            "Find up to 10 people in this picture. For each person, give a "
+            "bounding box, a short description, and what they hold in their hands.",
+            image,
+        ],
+        config=types.GenerateContentConfig(
+            response_mime_type="application/json",
+            response_schema=list[Person],
+            thinking_config=types.ThinkingConfig(thinking_level="low"),
+        ),
     )
-)
+    return response.parsed
 
-print(response.text)
+
+def summarize_scene(image):
+    response = client.models.generate_content(
+        model=MODEL_ID,
+        contents=["Describe what is happening in this picture in three sentences.", image],
+        config=types.GenerateContentConfig(
+            thinking_config=types.ThinkingConfig(thinking_level="low"),
+        ),
+    )
+    return response.text
+
+
+try:
+    im = Image.open(IMAGE_PATH)
+except FileNotFoundError:
+    sys.exit(f"Image not found: {IMAGE_PATH}")
+
+people = describe_people(im)
+print(f"Found {len(people)} people:\n")
+for i, person in enumerate(people, 1):
+    print(f"{i}. box={person.box_2d}")
+    print(f"   {person.description}")
+    print(f"   holding: {person.holding}")
+
+print("\nScene summary:")
+print(summarize_scene(im))

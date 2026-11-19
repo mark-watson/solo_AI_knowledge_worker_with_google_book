@@ -6,18 +6,19 @@ The modern economy is witnessing a significant rise in independent professionals
 
 ## Freelance Creatives
 
-Writers, designers, and marketers  often face challenges such as inconsistent work, unclear project details, and the need to constantly find new clients. Google AI tools like Gemini, especially when integrated with Google Workspace, can be really helpful for them. For example, Gemini can assist with brainstorming content ideas, drafting initial versions of articles or marketing copy, and even generating images for their projects. Tools like NotebookLM can also speed up their research process by quickly summarizing documents and identifying key information.
+Writers, designers, and marketers often face challenges such as inconsistent work, unclear project details, and the need to constantly find new clients. Google AI tools like Gemini, especially inside Gmail and Google Docs, can help them. For example, Gemini can assist with brainstorming content ideas, drafting initial versions of articles or marketing copy, and even generating images for their projects. Gemini Notebook (formerly NotebookLM) can also speed up their research by quickly summarizing documents and identifying key information.
 
 ## Software Developers
 
 I am a software developer and using LLMs has totally changed my work flows, including:
 
-- Entering source code and runtime errors into a prompt and ask for debugging advice. Often systems like Gemini and ChatGPT will ask for additional debug printout statements to be added, then after having these additional debug printouts added to the chat context, LLMs can offer advice on fixing errors.
+- Entering source code and runtime errors into a prompt and asking for debugging advice. Often systems like Gemini and ChatGPT will ask for additional debug printout statements to be added, then after having these additional debug printouts added to the chat context, LLMs can offer advice on fixing errors.
 - Entering source code and asking for additional error handling to be added.
 - Entering source code and asking for an LLM to make the code more concise, or alternatively ask for the code to be annotated with detailed comments.
 - Writing new code.
+- Handing whole tasks to a coding agent, such as the Antigravity CLI covered in Part 3, that reads my project, edits files, and runs the tests itself.
 
-As I write this chapter in May 2025, I estimate that on average using LLM-based tools reduces my development time on projects by about 50%.
+When I first wrote this chapter in May 2025, I estimated that LLM-based tools cut my development time on projects by about 50% on average.
 
 ## AI for Marketing Tasks
 
@@ -29,4 +30,4 @@ AI offers significant advantages for individual consultants and researchers, enh
 
 Researchers can leverage AI to accelerate the pace of discovery and improve the rigor of their investigations. LLMs can assist in literature reviews by efficiently processing and summarizing numerous academic papers, identifying key themes, and highlighting potential gaps in current knowledge. AI tools can also aid in data analysis, helping to identify complex patterns and correlations in large datasets that might be missed through traditional methods. In fields like scientific research, AI can even assist in generating hypotheses and designing experiments. Moreover, AI-powered writing and editing tools can help researchers refine their manuscripts, ensuring clarity and accuracy before publication. By automating routine tasks and providing powerful analytical capabilities, AI empowers individual researchers to dedicate more time to critical thinking, creative problem-solving, and pushing the boundaries of their respective fields.
 
-For researchers, Google’s NotebookLM offers a transformative approach to managing and synthesizing information. Imagine uploading a collection of research papers, interview transcripts, and field notes, and then being able to ask NotebookLM nuanced questions that draw connections across all those documents. Instead of manually sifting through disparate sources, researchers can use NotebookLM to quickly identify key themes, compare and contrast different findings, and extract specific evidence to support their arguments. This capability streamlines the literature review process, facilitates deeper understanding of complex topics, and ultimately frees up researchers to focus on higher-level analysis and the development of novel insights.
+For researchers, Google’s Gemini Notebook (formerly NotebookLM) offers a transformative approach to managing and synthesizing information. Imagine uploading a collection of research papers, interview transcripts, and field notes, and then being able to ask Gemini Notebook detailed questions that draw connections across all those documents. Instead of manually sifting through disparate sources, researchers can use Gemini Notebook to quickly identify key themes, compare and contrast different findings, and extract specific evidence to support their arguments. This capability streamlines the literature review process, facilitates deeper understanding of complex topics, and ultimately frees up researchers to focus on higher-level analysis and the development of novel insights.

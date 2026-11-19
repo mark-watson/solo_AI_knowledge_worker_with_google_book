@@ -1,24 +1,24 @@
 # The Rise of the AI-Powered Solo Knowledge Worker
 
-Dear reader, as I write this in May 2025, the world economy is going through a lot of changes. Large corporations, taking advantage of the “AI productivity boost,” have either cut back on hiring or in a lot of cases have reduced head count. For many workers, being an independent consultant or starting a business is now an economic necessity and for others the control of one’s economic future is a benefit.
+Dear reader, when I started this book in May 2025, the world economy was going through a lot of changes, and as I update it in November 2026 that is still true. Large corporations, taking advantage of the “AI productivity boost,” have either cut back on hiring or in a lot of cases have reduced head count. For many workers, being an independent consultant or starting a business is now an economic necessity and for others the control of one’s economic future is a benefit.
 
 For whatever reason, more people are working outside the realm of traditional jobs with corporations or in government.
 
 ## AI Tools: Powering the Solo Revolution
-The emergence of the AI-powered solo knowledge worker is fundamentally enabled by an expanding ecosystem of sophisticated yet accessible Artificial Intelligence tools. As of May 2025, this landscape has moved beyond novelty, offering individuals capabilities that, until recently, were the exclusive domain of large organizations with dedicated teams and substantial budgets. Understanding the specific categories of these tools and the deeper benefits they confer beyond mere task automation is crucial to grasping the magnitude of this shift.
+The emergence of the AI-powered solo knowledge worker is fundamentally enabled by an expanding ecosystem of sophisticated yet accessible Artificial Intelligence tools. This landscape has moved beyond novelty, offering individuals capabilities that, until recently, were the exclusive domain of large organizations with dedicated teams and substantial budgets. Understanding the specific categories of these tools and the deeper benefits they confer beyond mere task automation is crucial to grasping the magnitude of this shift.
 
-## AI Tool Categories for Solo Knowledge Workers (May 2025)
+## AI Tool Categories for Solo Knowledge Workers
 
-The following table shows a subset of available AI tools, their key functionality, and potential benefits fro solo knowledge workers:
+The following table shows a subset of available AI tools, their key functionality, and potential benefits for solo knowledge workers. Tool names change quickly, so treat the examples as a starting point for your own search:
 
-| Category | Example Tools (Source IDs) | Key AI-Enabled Functionality | Benefit for Solo Worker |
+| Category | Example Tools | Key AI-Enabled Functionality | Benefit for Solo Worker |
 | --- | --- | --- | --- |
 | Marketing & Sales | HubSpot CRM, Semrush, Adzooma, involve.me, Wisepops, Wishpond, Clay, Instantly.ai | CRM integration, SEO analysis/optimization, ad campaign management, interactive lead funnels, behavior-based pop-ups, AI website/copy generation, competitive intelligence, automated outreach | Design, execute, and analyze complex marketing campaigns; generate leads; optimize ad spend; gain market insights; acquire clients efficiently. |
-| Content Creation & Design | GPT/Claude/Gemini, Jasper/Copy.ai, Midjourney/DALL-E 3, Synthesia/Runway/Zebracat, Canva/Visme/Adobe Firefly | Text generation, grammar/style check, image/video/voice/music generation, graphic design templates/suggestions, background removal, logo design, font pairing | Produce professional-grade text, visuals, audio, and video content quickly; overcome creative blocks; create marketing assets; maintain brand consistency across multiple formats. |
+| Content Creation & Design | GPT/Claude/Gemini, Jasper/Copy.ai, Midjourney/Nano Banana, Veo/Synthesia/Runway, Canva/Visme/Adobe Firefly | Text generation, grammar/style check, image/video/voice/music generation, graphic design templates/suggestions, background removal, logo design, font pairing | Produce professional-grade text, visuals, audio, and video content quickly; overcome creative blocks; create marketing assets; maintain brand consistency across multiple formats. |
 | Operations & Productivity | Asana/ClickUp, Notion AI, Reclaim/Clockwise, Fathom/Fireflies, Guru, Zapier, Motion | Project/task management automation, AI scheduling, meeting transcription/summarization, contextual knowledge delivery, workflow automation across apps, smart task prioritization | Reduce administrative burden; streamline workflows; improve time management; enhance collaboration (if applicable); centralize knowledge; focus cognitive resources on core tasks. |
 | Analysis & Decision Support | Tableau, Power BI, Alteryx, Rows, quantilope, Google AutoML, KNIME | Data visualization, natural language querying, predictive analytics, automated reporting, automated market research methods/analysis, custom ML model building (no-code), data workflow design | Gain deeper insights from data; make data-driven decisions; forecast trends; automate complex analysis and research; create sophisticated reports and visualizations without deep technical expertise. |
 | Client Management & Comm. | Intercom, Pylon, Rasa, Tidio AI, Guru, SaneBox | AI chatbots, automated support responses, AI-generated support articles, contextual knowledge for support, intelligent email management | Provide scalable and responsive 24/7 client support; personalize interactions; manage communication efficiently; build stronger client relationships. |
-| Specialized & Technical | Cursor/Copilot, Bubble/v0, Duda/Wix/Shopify, Harvey/Abridge, DataLab AI, Talend | AI code generation/debugging, no-code app building, AI website design/content, legal/medical AI assistants, AI-assisted data science coding, ML algorithm integration | Accelerate development cycles; build applications/websites faster; access domain-specific AI knowledge; streamline technical workflows in specialized fields like law, medicine, or data science. |
+| Specialized & Technical | Antigravity/Claude Code/Codex/Cursor/Copilot, Bubble/v0, Duda/Wix/Shopify, Harvey/Abridge, DataLab AI, Talend | AI code generation/debugging, no-code app building, AI website design/content, legal/medical AI assistants, AI-assisted data science coding, ML algorithm integration | Accelerate development cycles; build applications/websites faster; access domain-specific AI knowledge; streamline technical workflows in specialized fields like law, medicine, or data science. |
 
 ## Beyond Automation: AI as Creative Catalyst, Market Navigator, and Personalization Engine
 
@@ -34,9 +34,9 @@ For independent consultants, AI presents a powerful opportunity to enhance effic
 
 ## Programmers and Developers: Productivity Surge, Evolving Skillset
 
-Dear reader, this topic *hits home* for me because I have spent my adult life working as a programer/computer scientist and in the last two years AI tools have revolutionized my work flow as well as my personal research.
+Dear reader, this topic *hits home* for me because I have spent my adult life working as a programmer and computer scientist, and in the last few years AI tools have changed my work flow as well as my personal research.
 
-Software development is being profoundly impacted by AI, primarily through coding assistants like GitHub Copilot, Aider, Cursor, and others. These tools significantly accelerate the process of writing code, with substantial portions of new code now being AI-generated. AI also assists in debugging, code optimization, and even aspects of testing. The rise of low-code and no-code platforms, often incorporating AI features, further abstracts traditional coding tasks, potentially reducing demand for some routine programming roles.
+Software development is being profoundly impacted by AI, first through coding assistants like GitHub Copilot and Cursor, and now through coding agents like the Antigravity CLI, Claude Code, and Codex that read a whole project, edit files, and run tests on their own. These tools significantly accelerate the process of writing code, with substantial portions of new code now being AI-generated. AI also assists in debugging, code optimization, and even aspects of testing. The rise of low-code and no-code platforms, often incorporating AI features, further abstracts traditional coding tasks, potentially reducing demand for some routine programming roles.
 
 Earlier we discussed the two-way relationship between human knowledge worker and AI: sometimes AI is the copilot, asked to write code, documentation, unit tests, etc. Other times the human worker is the copilot, asked to add debug printout or provide further information or guidance.
 
@@ -44,6 +44,6 @@ For solo freelance developers, AI coding tools offer a significant productivity 
 
 ## Wrap Up for AI Powers Solo Work Revolution
 
-The World Economic Forum predicted that a majority of employees would require significant reskilling in 2025 and beyond due to AI's impact. Solo workers, lacking the structured training programs of large organizations, must take personal responsibility for staying abreast of developments. This involves not only learning how to use new tools but also understanding their underlying capabilities, limitations, and appropriate use cases. 
+The World Economic Forum has predicted that most employees will need significant reskilling because of AI. Solo workers, lacking the structured training programs of large organizations, must take personal responsibility for staying abreast of developments. This involves not only learning how to use new tools but also understanding their underlying capabilities, limitations, and appropriate use cases. 
 
-Strategies for solo workers include actively seeking out learning resources, such as online courses from platforms like Coursera or Udacity, which may offer AI-powered personalized learning paths. Hopefully this book will provide you, dear reader, with new ideas and strategies for navigating a turbulent  but promising future.
+Strategies for solo workers include actively seeking out learning resources, such as online courses from platforms like Coursera or Udacity, which may offer AI-powered personalized learning paths. Hopefully this book will provide you, dear reader, with new ideas and strategies for navigating a turbulent but promising future.

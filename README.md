@@ -4,17 +4,17 @@
 
 ![Book Cover](manuscript/resources/title.jpg)
 
-This book is written for solo knowledge workers who use the Google AI Platform. It covers practical techniques for leveraging AI tools effectively in your work and research — whether you're a freelance creative, small business owner, solo software developer, independent marketing professional, general consultant, or independent researcher.
+This book is written for solo knowledge workers who use the Google AI Platform. It covers practical techniques for leveraging AI tools effectively in your work and research: whether you're a freelance creative, small business owner, solo software developer, independent marketing professional, general consultant, or independent researcher.
 
 ## Topics Covered
 
 - Practical general tips for being an effective solo knowledge worker
-- **Gemini** — Google's AI assistant for non-programming workflows
-- **NotebookLM** — Google's platform for research and study
-- **Google AI Studio** — experimenting with new AI models, software prototyping, and using models for video and image generation
-- **Python programming** — writing short Python programs to use the Google AI platform (optional, for developers)
-- **Antigravity CLI (agy)** — command-line AI agent workflows, including headless scripting
-- **Google ADK** — building AI agents with Google's Agent Development Kit
+- **Gemini**: Google's AI assistant for non-programming workflows, now including the Gemini 4 models
+- **Gemini Notebook** (formerly NotebookLM): Google's platform for research and study
+- **Google AI Studio**: experimenting with new AI models, software prototyping, and using models for video and image generation
+- **Python programming**: writing short Python programs to use the Google AI platform (optional, for developers)
+- **Antigravity CLI (agy)**: command-line AI agent workflows, including headless scripting
+- **Google ADK**: building AI agents with Google's Agent Development Kit
 
 ## Get the Book
 
@@ -31,7 +31,7 @@ The `source-code/` directory contains working examples for the programming chapt
 - Google Workspace app integrations (Gmail, Calendar, etc.)
 - Google ADK examples
 
-Run `make verify` inside `source-code/` to smoke test every example.
+Run `make sync` and then `make verify` inside `source-code/` to smoke test every example. The examples use the `gemini-4-hydrogen` model and version 3 of the `google-genai` SDK (the ADK example uses version 2, which ADK requires).
 
 ## Author
 

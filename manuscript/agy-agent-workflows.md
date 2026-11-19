@@ -28,8 +28,8 @@ The tools fall into a few families:
 | Files | Read a file, read many files at once, search file contents, find files, write a new file, edit an existing file |
 | Shell | Run a command and read its output |
 | Web | Search with Google Search, fetch a URL |
-| Context | Add a directory with `/add-dir`, hold a whole folder in the working context |
-| Extensions | Call tools from MCP servers, follow Agent Skills you install |
+| Context | Add a second directory with the `--add-dir` flag, hold a whole folder in the working context |
+| Extensions | Call tools from MCP servers (`agy mcp add`), follow Agent Skills, install plugins that bundle both |
 
 You do not have to memorize this list. Ask the agent what it can do, and check `/permissions` to see and change what it is allowed to do. The agent reports each tool call as it happens, so you always know how a conclusion was reached.
 
@@ -65,6 +65,8 @@ key topics I need to cover to explain this to a non-technical business executive
 ```
 
 Agent action: the agent outlines a structure, for example what it is, why it matters, use cases, and challenges.
+
+If you want to be sure the agent only plans at this stage, start the session with `agy --mode plan`. In plan mode the agent reads and proposes, but changes nothing. Switch back to your usual mode in `/config` when you are ready for it to act.
 
 Step 3: Research against that structure.
 
@@ -201,9 +203,20 @@ Step 5: Keep the work. Ask the agent to write the summary into a file next to th
 
 ## Turning a Workflow into a Skill
 
-Once a workflow works, stop retyping it. The Antigravity CLI supports Agent Skills, which are reusable instruction files the agent loads on demand. Open `/skills` to see what is loaded and where the files live.
+Once a workflow works, stop retyping it. The Antigravity CLI supports Agent Skills, which are reusable instruction files the agent loads on demand. Each skill is a folder with a `SKILL.md` file, whose frontmatter gives the skill a `name` and a short description the agent uses to decide when to load it. Open `/skills` to see what is loaded and where the files live.
 
 The practical pattern is to take the five steps above, write them into a Markdown file as instructions, and keep that file with the project. A research brief skill, a weekly review skill, and a newsletter skill cover most of what a solo knowledge worker repeats. A skill also documents the process for the version of you who comes back to it in six months.
+
+To use a skill in more than one project, or to share it, package it as a **plugin**. A plugin bundles skills, MCP servers, and hooks into one folder. `agy plugin install` adds a plugin, and `agy plugin validate` checks one first, whether it is a local folder, a `.zip` file, or a GitHub URL.
+
+A saved workflow also runs headless. This command runs the research brief end to end and leaves the draft on disk:
+
+```bash
+agy -p "Research Federated Learning for a non-technical executive. Plan the topics, find two or three recent sources for each with web search, and write a one page brief with cited URLs to brief_draft.md." \
+    --model gemini-4-hydrogen-high --sandbox
+```
+
+Read the draft before you use it. The verification step from the research brief workflow matters even more when nobody watched the agent work.
 
 ## Wrap Up
 

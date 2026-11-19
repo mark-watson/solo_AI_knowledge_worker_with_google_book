@@ -1,44 +1,49 @@
 """Summarize recent Gmail messages with Gemini.
 
-Requires an OAuth 2.0 credential stored at ~/.gmail_cred. See README.md in
-this directory for the Google Cloud Console steps that create it.
+Run create_gmail_token.py once first. It saves an OAuth token at
+~/.gmail_token.json. See README.md in this directory for the setup steps.
 """
 
 import base64
-import os
-import pickle
+import pathlib
+import sys
 
 from bs4 import BeautifulSoup
 from google import genai
 from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
-# Google ships new Flash models several times a year. See the model naming
-# note in python_auth_setup.md when this model ID stops working.
-MODEL_ID = "gemini-3.8-flash"
+# Google ships new models several times a year. See the model naming note in
+# python_auth_setup.md when this model ID stops working.
+MODEL_ID = "gemini-4-hydrogen"
 
-CREDENTIALS_PATH = os.path.expanduser("~/.gmail_cred")
+SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
+TOKEN_PATH = pathlib.Path.home() / ".gmail_token.json"
 
 
 def load_credentials():
-    """Load the saved OAuth 2.0 credentials, refreshing them if needed."""
-    with open(CREDENTIALS_PATH, "rb") as f:
-        creds = pickle.load(f)
+    """Load the saved OAuth token, refreshing it if it has expired."""
+    if not TOKEN_PATH.exists():
+        sys.exit(f"No token at {TOKEN_PATH}. Run create_gmail_token.py first.")
+    creds = Credentials.from_authorized_user_file(str(TOKEN_PATH), SCOPES)
     if not creds.valid:
         if creds.expired and creds.refresh_token:
             creds.refresh(Request())
+            TOKEN_PATH.write_text(creds.to_json())
         else:
-            raise RuntimeError(
-                f"Credentials in {CREDENTIALS_PATH} are not usable. "
-                "Delete the file and create a new credential."
-            )
+            sys.exit(f"The token in {TOKEN_PATH} is not usable. Run create_gmail_token.py again.")
     return creds
+
+
+def decode(data):
+    return base64.urlsafe_b64decode(data).decode("utf-8", errors="replace")
 
 
 def extract_body(payload):
     """Return the text of a Gmail message payload, preferring text/plain."""
     if payload.get("mimeType") == "text/plain" and "data" in payload.get("body", {}):
-        return base64.urlsafe_b64decode(payload["body"]["data"]).decode("utf-8")
+        return decode(payload["body"]["data"])
 
     for part in payload.get("parts", []):
         text = extract_body(part)
@@ -46,75 +51,55 @@ def extract_body(payload):
             return text
 
     if payload.get("mimeType") == "text/html" and "data" in payload.get("body", {}):
-        html = base64.urlsafe_b64decode(payload["body"]["data"]).decode("utf-8")
-        return BeautifulSoup(html, "html.parser").get_text()
+        return BeautifulSoup(decode(payload["body"]["data"]), "html.parser").get_text()
 
     return ""
 
 
+def header(headers, name, default):
+    return next((h["value"] for h in headers if h["name"].lower() == name), default)
+
+
 def summarize_recent_emails(gmail_service, query, max_results=5):
-    """Fetch and summarize recent emails matching a query using Gemini."""
+    """Fetch recent emails that match a Gmail search query and summarize them."""
     print(f"\n--- Summarizing Emails (Query: {query}) ---")
 
     results = gmail_service.users().messages().list(
         userId="me", q=query, maxResults=max_results
     ).execute()
     messages = results.get("messages", [])
-
     if not messages:
         print("No messages found matching the query.")
         return
 
-    email_contents = []
     print(f"Found {len(messages)} emails. Fetching content...")
+    email_contents = []
     for msg_info in messages:
-        msg_id = msg_info["id"]
         msg = gmail_service.users().messages().get(
-            userId="me", id=msg_id, format="full"
+            userId="me", id=msg_info["id"], format="full"
         ).execute()
-
         payload = msg.get("payload", {})
         headers = payload.get("headers", [])
-        subject = next(
-            (h["value"] for h in headers if h["name"].lower() == "subject"),
-            "No Subject",
-        )
-        sender = next(
-            (h["value"] for h in headers if h["name"].lower() == "from"),
-            "Unknown Sender",
-        )
-
-        body = extract_body(payload)[:1000]
         email_contents.append(
-            f"--- Email ID: {msg_id} ---\n"
-            f"Subject: {subject}\nFrom: {sender}\n"
-            f"Snippet: {msg.get('snippet', '')}\n\n{body}\n"
+            f"--- Email ---\n"
+            f"Subject: {header(headers, 'subject', 'No Subject')}\n"
+            f"From: {header(headers, 'from', 'Unknown Sender')}\n\n"
+            f"{extract_body(payload)[:2000]}\n"
         )
 
-    full_context = "\n".join(email_contents)
     prompt = (
-        "Please summarize the key points from the following emails matching "
-        f"the query '{query}':\n\n{full_context}"
+        "Summarize the key points of the following emails. For each email give "
+        "one line with the sender and the main point, then list any action items "
+        "for me at the end.\n\n" + "\n".join(email_contents)
     )
 
-    client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-    response = client.models.generate_content(
-        model=MODEL_ID,
-        contents=prompt,
-    )
+    client = genai.Client()
+    response = client.models.generate_content(model=MODEL_ID, contents=prompt)
 
     print("\n--- Gemini Summary ---")
-    if response.text:
-        print(response.text.strip())
-    else:
-        print("Blocked or empty response.")
+    print(response.text.strip() if response.text else "Blocked or empty response.")
 
 
 if __name__ == "__main__":
-    # Build service objects from the stored OAuth 2.0 credential.
     gmail_service = build("gmail", "v1", credentials=load_credentials())
-    # calendar_service = build('calendar', 'v3', credentials=creds)
-    # docs_service = build('docs', 'v1', credentials=creds)
-    # drive_service = build('drive', 'v3', credentials=creds)
-
     summarize_recent_emails(gmail_service, "newer_than:7d", max_results=5)

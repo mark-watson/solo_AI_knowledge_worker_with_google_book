@@ -1,13 +1,13 @@
-# Using Gemini with Images — Multimodal Photo Understanding
+# Using Gemini with Images: Multimodal Photo Understanding
 
 ![System Design](FIG_3_images_and_text.jpg)
 
-This directory demonstrates Gemini's multimodal capabilities by sending an image along with a text prompt to the API. The script analyzes a photograph and returns structured JSON with bounding boxes and descriptions of people in the image.
+This directory shows Gemini's multimodal input by sending an image along with a text prompt. The script analyzes a photograph and gets back typed Python objects that hold a bounding box, a description, and what each person holds.
 
 ## Prerequisites
 
 - Python 3.12 or newer
-- A `GOOGLE_API_KEY` environment variable set with your Google AI API key
+- A `GOOGLE_API_KEY` environment variable set with your Gemini API key
 
 Install dependencies with `uv`:
 
@@ -19,10 +19,12 @@ uv sync
 
 ### `photo_understanding.py`
 
-Loads an image (`../data/poker.jpeg`) using PIL, then sends it to Gemini with two successive prompts:
+Loads `../data/poker.jpeg` with Pillow, then makes two requests:
 
-1. **General identification** — detects people and returns bounding boxes with descriptions
-2. **Detailed analysis** — focuses on what each person is holding in their hands
+1. **Structured detection**: finds the people and returns a list of `Person` objects, using a Pydantic schema and JSON output mode.
+2. **Free text summary**: describes the scene in three sentences.
+
+The script finds the image relative to its own location, so you can run it from any directory.
 
 ```bash
 uv run python photo_understanding.py
@@ -30,18 +32,21 @@ uv run python photo_understanding.py
 
 ### Example Output
 
-```json
-[
-  {"box_2d": [204, 156, 467, 348], "label": "a man with a grey sweater and black shirt is sitting at a table"},
-  {"box_2d": [255, 0, 998, 331], "label": "a man with a black baseball cap is sitting at a table"},
-  {"box_2d": [178, 596, 998, 998], "label": "a man with a green shirt is sitting at a table"},
-  {"box_2d": [257, 734, 525, 875], "label": "a woman with a white shirt and a purple scarf is sitting at a table"},
-  {"box_2d": [198, 435, 393, 629], "label": "a woman with a red scarf is sitting at a table"}
-]
+```text
+Found 5 people:
+
+1. box=[254, 0, 991, 323]
+   Older man wearing a dark baseball cap, glasses, and a grey sweatshirt.
+   holding: playing cards
+2. box=[204, 140, 466, 349]
+   Older bald man wearing a grey zip-up hoodie.
+   holding: nothing
+...
 ```
 
 ## Key Concepts
 
-- **Multimodal Input**: Gemini accepts a list of `[prompt, image]` as the `contents` parameter, which enables combined text and image reasoning.
-- **Bounding Box Detection**: The prompt asks Gemini to return structured JSON with `box_2d` coordinates and `label` descriptions.
-- **ThinkingConfig with `thinking_level="low"`**: Keeps the response fast. Gemini 3.8 Flash cannot turn thinking off completely, and it does not accept `minimal`.
+- **Multimodal input**: `contents=[prompt, image]` sends text and a Pillow image in one request.
+- **Structured output**: `response_mime_type="application/json"` plus `response_schema=list[Person]` makes the model return JSON that matches the schema. `response.parsed` holds the result as `Person` objects.
+- **Bounding boxes**: Gemini returns boxes as `[ymin, xmin, ymax, xmax]` scaled to 0 through 1000, whatever the image size.
+- **Low thinking level**: `thinking_level="low"` keeps the response fast. You cannot turn thinking off on Gemini 4 models.

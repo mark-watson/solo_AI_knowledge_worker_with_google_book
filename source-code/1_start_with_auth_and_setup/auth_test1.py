@@ -1,24 +1,32 @@
 # --- Example 1: Basic Authentication & Setup ---
-# Purpose: Configure the Gemini API client using an API key
-#          stored securely in an environment variable.
+# Purpose: Confirm that your API key works by creating a Gemini client and
+#          listing the models you can call.
 
-from google import genai
 import os
 import sys
 
-# Best practice: Store your API key in an environment variable
-# (e.g., GOOGLE_API_KEY) rather than hardcoding it.
-# You can set this in your system or using a .env file with python-dotenv.
+from google import genai
+
+# Best practice: store your API key in an environment variable rather than
+# in your source code. The client reads GOOGLE_API_KEY or GEMINI_API_KEY.
+# If both are set, GOOGLE_API_KEY wins.
+if not (os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")):
+    print("Error: set the GOOGLE_API_KEY environment variable to your API key.")
+    print("Create a key at https://aistudio.google.com/app/api-keys")
+    sys.exit(1)
+
 try:
-    client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
+    client = genai.Client()
+    print(f"google-genai SDK version: {genai.__version__}")
 
-    # Verify configuration by listing available models (optional)
-    print("\nAvailable models:")
+    # The full list includes speech, embedding, and live audio models. Show
+    # only the models that answer text prompts with generate_content.
+    print("\nModels that support generate_content:")
     for m in client.models.list():
-        print(m.name)
+        if "generateContent" in (m.supported_actions or []):
+            print(f"  {m.name.removeprefix('models/'):40} {m.display_name}")
 
-except KeyError:
-    print("Error: GOOGLE_API_KEY environment variable not found.")
-    print("Please set the GOOGLE_API_KEY environment variable with your API key.")
 except Exception as e:
-    print(f"An error occurred during configuration: {e}")
+    # An invalid key produces a 400 INVALID_ARGUMENT error with API_KEY_INVALID.
+    print(f"An error occurred: {e}")
+    sys.exit(1)

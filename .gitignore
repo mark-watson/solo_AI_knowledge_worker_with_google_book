@@ -8,3 +8,7 @@ OLD_STUFF
 .scratch/
 __pycache__/
 *.pyc
+*.lbug
+test_db_ladybug/
+token.json
+client_secret*.json
